@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>CernVM WebAPI</title>
+
+		<!-- Bootstrap -->
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+		<!-- jQuery UI -->
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+		<!-- Stylesheets -->
+		<link rel="stylesheet" href="style/css/challenge.css">
+
+		<!-- Rundial -->
+		<link rel="stylesheet" href="style/css/rundial.css">
+
+		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+		  <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+		  <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+		<![endif]-->
+
+	</head>
+	<body class="fixed-fullscreen">
+
+		<div id="challenge" class="content-fluid fullscreen">
+
+			<div id="gauge-frame" class="frame frame-status">
+				<div class="container">
+
+					<div class="panel panel-default">
+
+					    <div class="panel-heading">
+							<div class="back-progress">
+								<div class="back-animation"></div>
+							</div>
+					    	<span id="gauge-frame-title"></span>
+					    </div>
+					    <div class="panel-body">
+
+							<div class="widgets">
+								<div class="row">
+								  <div class="col-xs-3">
+								  	<h3>CPU Load</h3>
+									<div class="details">How much your virtual CPU is loaded with work.</div>
+									<input class="ui-dial" id="inp-cpuload" value="0"></input>
+								  </div>
+								  <div class="col-xs-3">
+								  	<h3>Event Rate</h3>
+									<div class="details">How many events per minute is your virtual machine is producing.</div>
+									<input class="ui-dial" id="inp-eventrate" value="0"></input>
+								  </div>
+								  <div class="col-xs-3">
+								  	<h3>Job Rate</h3>
+									<div class="details">How many jobs per hour is your virtual machine completing.</div>
+									<input class="ui-dial" id="inp-jobrate" value="0"></input>
+								  </div>
+								  <div class="col-xs-3">
+								  	<h3>Ranking</h3>
+									<div class="details">Your ranking along the volunteers competing in this project.</div>
+									<input class="ui-dial" id="inp-ranking" value="0"></input>
+								  </div>
+								</div>
+							</div>
+						</div>
+
+						<div class="panel-alert">
+							<h1>Challenge Aborted</h1>
+							<p>Could not start session: User denied</p>
+						</div>
+
+					</div>
+					
+				</div>
+			</div>
+
+			<div id="description-frame" class="frame frame-description">
+				<div class="container">
+					<div class="well">
+
+						<div class="desc-install">
+							<div class="row">
+								<div class="col-xs-4">
+									Install
+								</div>
+								<div class="col-xs-4">
+									Guidelines
+								</div>
+								<div class="col-xs-4">
+									of WebAPI
+								</div>
+							</div>
+						</div>
+
+						<div class="desc-intro">
+							Introduction to what this is
+						</div>
+
+						<div class="desc-starting">
+							<div class="valign-middle">
+								<img src="style/img/vmspinner.gif" alt="Loading" />
+								<p>We are starting your Virtual Atom Smasher. This could take some minutes...</p>
+							</div>
+						</div>
+
+						<div class="desc-recovery">
+							Recovery from error...
+						</div>
+
+						<div class="desc-idle">
+							Idle
+						</div>
+
+						<div class="desc-waitjob">
+							We are waiting for a job..
+						</div>
+						<div class="desc-live">
+							We are now live!
+							<pre id="live-debug">
+							</pre>
+						</div>
+
+
+					</div>
+				</div>
+			</div>
+
+			<div class="button-footer">
+				<div class="container">
+					<div class="text-center">
+						<button class="btn btn-primary btn-lg-w btn-lg" id="btn-power">Start</button>
+						<a class="btn btn-default btn-lg" id="btn-status"><span class="glyphicon glyphicon-cog"></span></a>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<!-- Libraries -->
+		<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+		<script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+		<script src="//cernvm.cern.ch/releases/webapi/js/cvmwebapi-2.0.2.js"></script>
+		<script src="script/lib/rundial.js"></script>
+		<!-- Challenge -->
+		<script src="script/challenge-common.js"></script>
+		<script src="script/challenge-run.js"></script>
+
+	</body>
+</html>
