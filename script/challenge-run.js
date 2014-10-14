@@ -779,6 +779,13 @@ $(function() {
 			// Initialize description frames
 			this.descFrameInit();
 
+			// accounting frame
+			this.accBtnLogin = $("#acc-login");
+			this.accBtnLogut = $("#acc-logout");
+
+			// Initialize accounting frame
+			this.accFrameInit();
+
 			// Footer buttons
 			this.footerBtnPower = $("#btn-power");
 			this.footerBtnGear = $("#btn-status");
@@ -1215,6 +1222,25 @@ $(function() {
 		}
 
 		///////////////////////////////////////////////
+		//               * ACCOUNTING *              //
+		///////////////////////////////////////////////
+
+		/**
+		 * Initialize footer buttons
+		 */
+		ChallengeInterface.prototype.accFrameInit = function() {
+
+			// Bind events
+			this.accBtnLogin.click(function() {
+				alert("This feature is not yet available, but it will be soon :)")
+			});
+
+			// Hide logout
+			this.accBtnLogut.hide();
+
+		}
+
+		///////////////////////////////////////////////
 		//             * EXPOSED API *               //
 		///////////////////////////////////////////////
 
@@ -1360,7 +1386,7 @@ $(function() {
 
 	// Resize description frame well in order to fit height
 	var resizeDesc = function() {
-		var h = $(window).height() - 360;
+		var h = $(window).height() - 370;
 		if (h<100) h=100;
 		$("#description-frame .well").css({
 			'height': h

@@ -191,6 +191,13 @@ body.no-top-scroll .navbar .nav a:hover {
 }
 #challenge div.frame-status div.panel div.panel-heading {
   position: relative;
+  text-align: right;
+}
+#challenge div.frame-status div.panel div.panel-heading span#gauge-frame-title {
+  line-height: 30px;
+  height: 30px;
+  float: left !important;
+  text-align: left;
 }
 #challenge div.frame-status div.panel div.panel-heading div.back-progress {
   visibility: hidden;
@@ -198,7 +205,7 @@ body.no-top-scroll .navbar .nav a:hover {
   left: 0;
   top: 0;
   width: 50%;
-  height: 40px;
+  height: 50px;
   overflow: hidden;
 }
 #challenge div.frame-status div.panel div.panel-heading div.back-progress div.back-animation {
