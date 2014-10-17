@@ -276,6 +276,22 @@ body.no-top-scroll .navbar .nav a:hover {
   top: 10px;
   bottom: 10px;
 }
+#challenge div.frame-description .well div.desc-starting {
+  background: url(../img/wm-loading.png) no-repeat left top;
+  padding-left: 270px;
+  text-align: left;
+}
+#challenge div.frame-description .well div.desc-recovery {
+  background: url(../img/wm-chill.png) no-repeat left top;
+  padding-left: 270px;
+  text-align: left;
+}
+#challenge div.frame-description .well div.desc-recovery ul {
+  margin: 20px 0;
+}
+#challenge div.frame-description .well div.desc-recovery ul li {
+  margin: 5px 5px;
+}
 #challenge div.frame-description div.valign-middle {
   padding-top: 80px;
 }

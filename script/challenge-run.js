@@ -18,6 +18,73 @@ $(function() {
 
 
 	/**
+	 */
+	var SystemMessages = function() {
+		//////////////////////////////
+
+		/**
+		 * SystemMessages are dynamic user interface 
+		 */
+		var SystemMessages = function( baseDir ) {
+
+			// Initialize variables
+			this.index = {};
+			this.visited = {};
+			this.baseDir = baseDir;
+
+			// Fetch the message index
+			$.ajax({
+				'url': baseDir + '/index.json',
+				'dataType': 'json',
+				'success': (function(data,status,xhr) {
+					this.index = data;
+				}).bind(this),
+				'error': (function(data,status,xhr) {
+				}).bind(this)
+			});
+
+		};
+
+		/**
+		 * Fetch a message for the given context key and render
+		 * it to the hostElm container.
+		 */
+		SystemMessages.prototype.fetchAndRender = function( key, hostElm ) {
+			var indexInfo = this.index[key];
+			if (!indexInfo) return;
+
+			// Check for visit information
+			var visit_index = 0, visit_doc = false;
+			if (this.visited[key] != undefined)
+				visit_index=this.visited[key]+1;
+
+			// Check if we have sequence
+			if (indexInfo['sequence'] != undefined) {
+				if (visit_index < indexInfo['sequence'].length)
+					visit_doc = indexInfo['sequence'][visit_index];
+			}
+
+			// Check if we have randomized chunks
+			if (!visit_doc && (indexInfo['random'] != null)) {
+				var i = Math.floor( Math.random() * indexInfo['random'].length );
+				visit_doc = indexInfo['random'][i];
+			}
+
+			// Keep the visit index
+			this.visited[key] = visit_index;
+
+			// Load that document
+			$(hostElm).load( this.baseDir + "/" + visit_doc );
+
+		};
+
+
+
+		//////////////////////////////
+		return SystemMessages;
+	}();
+
+	/**
 	 * Development wrapper to isolate the autonomous VM code
 	 */
 	var AutonomousVM = function() {
@@ -738,6 +805,7 @@ $(function() {
 	}();
 
 	/**
+	 * Development wrapper to isolate the Challenge Interface code
 	 */
 	var ChallengeInterface = function() {
 		//////////////////////////////
@@ -746,7 +814,10 @@ $(function() {
 		 * Helper class that organizes all the UI operations in the challenge
 		 * dashboard interface.
 		 */
-		var ChallengeInterface = function() {
+		var ChallengeInterface = function( systemMessages ) {
+
+			// System messages class
+			this.systemMessages = systemMessages;
 
 			// Gauge frame & subparts
 			this.gaugeFrame = $("#gauge-frame");
@@ -909,6 +980,12 @@ $(function() {
 			// Update active frame id
 			this.descriptionActiveFrame = index;
 
+			// Try to load text according to the frame type
+			var dynamicDocElm = this.descriptionFrames[ index ].find(".dynamic-content");
+			if (index == this.FRAME_STARTING) {
+				this.systemMessages.fetchAndRender( "starting", dynamicDocElm );
+			}
+
 		}
 
 		/**
@@ -958,7 +1035,7 @@ $(function() {
 				} else {
 					// Stop VM
 					this.avm.stop();
-					this.this.shutdownCommandActive = true;
+					this.shutdownCommandActive = true;
 					this.gaugeFrameResetGauges();
 					this.descFrameSetActive( this.FRAME_IDLE );
 				}
@@ -1377,11 +1454,14 @@ $(function() {
 	if (hash[0] == "#") hash = hash.substr(1);
 	if (hash.length > 0) context_id=hash;
 
+	// Create a system messages helper class
+	var sysMessages = new SystemMessages( "messages" );
+
 	// Create an AVM for this session
 	var avm = new AutonomousVM('http://test4theory.cern.ch/vmcp?config='+context_id);
 
 	// Create the challenge interface
-	var challenge = new ChallengeInterface();
+	var challenge = new ChallengeInterface( sysMessages );
 	challenge.bindToAVM(avm);
 
 	// Resize description frame well in order to fit height
