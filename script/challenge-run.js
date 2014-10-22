@@ -909,7 +909,7 @@ $(function() {
 		}
 
 		/**
-		 * Update gauge frame progress label
+		 * Update gauge frame progress
 		 */
 		ChallengeInterface.prototype.gaugeFrameProgress = function(v, text) {
 			this.gagueFrameTitle.text( text );
@@ -921,6 +921,13 @@ $(function() {
 					'width': v*100+'%'
 				});
 			}
+		}
+
+		/**
+		 * Update gauge frame status label
+		 */
+		ChallengeInterface.prototype.gaugeFrameStatus = function(text) {
+			this.gagueFrameTitle.text( text );
 		}
 
 		/**
@@ -1307,10 +1314,6 @@ $(function() {
 		 */
 		ChallengeInterface.prototype.accFrameInit = function() {
 
-			// Bind events
-			this.accBtnLogin.click(function() {
-				alert("This feature is not yet available, but it will be soon :)")
-			});
 
 			// Hide logout
 			this.accBtnLogut.hide();
@@ -1396,8 +1399,10 @@ $(function() {
 			avm.addListener('apiStateChanged', (function(state) {
 				if (state) {
 					// Online!
+					this.gaugeFrameStatus("Attempting connection with the instance");
 				} else {
 					// Offline
+					this.gaugeFrameStatus("Disconnected from the instance");
 				}
 			}).bind(this));
 
@@ -1413,6 +1418,7 @@ $(function() {
 					this.descFrameSetActive( this.FRAME_STARTING );
 
 					// If VM was already running, enable showing idle
+					this.gaugeFrameStatus("The Virtual Machine is running");
 					this.dontShowIdle = false;
 
 				} else if (state == STATE_STOPPED) {
@@ -1427,6 +1433,7 @@ $(function() {
 						this.descFrameSetActive( this.FRAME_IDLE );
 
 					// Any shutdown command is not any more active
+					this.gaugeFrameStatus("The Virtual Machine is closed");
 					this.shutdownCommandActive = false;
 
 				} else {

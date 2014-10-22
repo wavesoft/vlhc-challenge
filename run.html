@@ -33,42 +33,42 @@
 
 					<div class="panel panel-default">
 
-					    <div class="panel-heading">
+						<div class="panel-heading">
 							<div class="back-progress">
 								<div class="back-animation"></div>
 							</div>
-					    	<span id="gauge-frame-title">Title</span>
-					    	<div class="account-frame">
-						    	<button id="acc-login" type="button" class="btn btn-success btn-sm">
-						    		Log-in to collect credit
-						    	</button>
-						    	<button id="acc-logout" type="button" class="btn btn-danger btn-sm">
-						    		Log-our
-						    	</button>
-						    </div>
-					    </div>
-					    <div class="panel-body">
+							<span id="gauge-frame-title">Title</span>
+							<div class="account-frame">
+								<button id="acc-login" data-toggle="modal" data-target="#modal-credits" type="button" class="btn btn-success btn-sm">
+									Log-in to collect credit
+								</button>
+								<button id="acc-logout" data-toggle="modal" data-target="#modal-credits" type="button" class="btn btn-danger btn-sm">
+									Credits
+								</button>
+							</div>
+						</div>
+						<div class="panel-body">
 
 							<div class="widgets">
 								<div class="row">
 								  <div class="col-xs-3">
-								  	<h3>CPU Load</h3>
+									<h3>CPU Load</h3>
 									<div class="details">How much your virtual CPU is loaded with work.</div>
 									<input class="ui-dial" id="inp-cpuload" value="0"></input>
 								  </div>
 								  <div class="col-xs-3">
-								  	<h3>Event Rate</h3>
-									<div class="details">How many events per minute is your virtual machine is producing.</div>
+									<h3>Event Rate</h3>
+									<div class="details">How many events per minute your virtual machine is producing.</div>
 									<input class="ui-dial" id="inp-eventrate" value="0"></input>
 								  </div>
 								  <div class="col-xs-3">
-								  	<h3>Job Rate</h3>
-									<div class="details">How many jobs per hour is your virtual machine completing.</div>
+									<h3>Job Rate</h3>
+									<div class="details">How many jobs per hour your virtual machine completes.</div>
 									<input class="ui-dial" id="inp-jobrate" value="0"></input>
 								  </div>
 								  <div class="col-xs-3">
-								  	<h3>Ranking</h3>
-									<div class="details">Your ranking along the volunteers competing in this project.</div>
+									<h3>Ranking</h3>
+									<div class="details">Your ranking among the volunteers competing in this project.</div>
 									<input class="ui-dial" id="inp-ranking" value="0"></input>
 								  </div>
 								</div>
@@ -120,12 +120,6 @@
 									<li>
 										Close the challenge website, wait 30 seconds and open it again
 									</li>
-									<li>
-										Download and install manually <a href="https://www.virtualbox.org/wiki/Downloads" target="_blank">Oracle Virtual Box</a>.
-									</li>
-									<li>
-										Download and install the appropriate <a href="https://www.virtualbox.org/wiki/Download" target="_blank">Oracle VM VirtualBox Extension Pack</a>.
-									</li>
 								</ul>
 							</p>
 							<p>
@@ -162,6 +156,74 @@
 					</div>
 				</div>
 			</div>
+
+			<div class="disclaimer-footer">
+				<a href="#" data-toggle="modal" data-target="#modal-disclaimer">Disclaimer &amp; Credits</a>
+			</div>
+
+			<div id="modal-disclaimer" class="modal fade">
+			  <div class="modal-dialog">
+				<div class="modal-content">
+				  <div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					<h4 class="modal-title">Disclaimer &amp; Credits</h4>
+				  </div>
+				  <div class="modal-body">
+					<p>
+						<img src="style/img/logo/citizen_cyberlab.jpg" alt="Citizen Cyberlab" />
+						<img src="style/img/logo/fp7.jpg" alt="Seventh Framework Programe" />
+						<img src="style/img/logo/cern.jpg" alt="CERN Logo" />
+					</p>
+					<p>The <em>Virtual LHC Challenge</em> is a project developed by <a href="http://cern.ch">CERN</a> with the partnership of the <a href="http://citizencyberlab.eu/">Citizen Cyberlab</a>. The project is funded by the <a href="http://ec.europa.eu/research/fp7/index_en.cfm">Seventh Framework Programme</a> of the European Eunion.</p>
+					<p>
+						Credits about resources used in this page:
+						<ul>
+							<li>Various icons in this webpage are from <a href="http://www.freepik.com" title="Freepik">Freepik</a> and are licensed under <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></li>
+							<li>The CernVM WebAPI installs the <a href="https://www.virtualbox.org/wiki">VirtualBox</a> hypervisor which is licensed under GNU General Public License (GPL) version 2</li>
+							<li>The CernVM WebAPI installs the <em>Oracle VM VirtualBox Extension Pack</em> only after user's confirmation, which is licensed under <a href="https://www.virtualbox.org/wiki/VirtualBox_PUEL">VirtualBox Personal Use and Evaluation License (PUEL)</a></li> 
+						  </ul>
+					  </p>
+				  </div>
+				  <div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				  </div>
+				</div><!-- /.modal-content -->
+			  </div><!-- /.modal-dialog -->
+			</div><!-- /.modal -->
+
+			<div id="modal-credits" class="modal fade">
+			  <div class="modal-dialog">
+				<div class="modal-content">
+				  <div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					<h4 class="modal-title">User Credits</h4>
+				  </div>
+				  <div class="modal-body">
+
+		  			<p>Log-in with one of your prefered social account and start collecting credits! The first 50 users with the biggest credit will participate on the preliminary beta of the upcoming <em>Virtual Atom Smasher</em> game!</p>
+				  	<div class="row">
+				  		<div class="col-sm-6" id="credits">
+				  			<div class="banner">
+				  				<div class="banner-image" style=""></div>
+				  				<div class="banner-leaves">
+				  				</div>
+				  			</div>
+				  		</div>
+				  		<div class="col-sm-6">
+							<p><button class="btn btn-block btn-primary"><img class="pull-left" src="style/img/icons/social-fb.png" /> Log-in with Facebook</button></p>
+							<p><button class="btn btn-block btn-danger"><img class="pull-left" src="style/img/icons/social-g.png" /> Log-in with Google+</button></p>
+							<p><button class="btn btn-block btn-info"><img class="pull-left" src="style/img/icons/social-twitter.png" /> Log-in with Twitter</button></p>
+							<p><button class="btn btn-block btn-success"><img class="pull-left" src="style/img/icons/social-boinc.png" /> Log-in with BOINC</button></p>
+				  		</div>
+				  	</div>
+
+				  </div>
+				  <div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				  </div>
+				</div><!-- /.modal-content -->
+			  </div><!-- /.modal-dialog -->
+			</div><!-- /.modal -->
 
 		</div>
 
