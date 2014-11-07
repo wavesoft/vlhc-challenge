@@ -1566,7 +1566,7 @@ $(function() {
 
 					// We got log-in information, therefore we should update the database
 					if (this.loginInterface.userInfo != null) {
-						alert("Previous VM ID: " + this.avm.config.vmid);
+						alert("Previous VM ID: " + this.avm.config.vmid + ", New VMID: " + this.loginInterface.userInfo['uuid']);
 						this.avm.config.vmid = this.loginInterface.userInfo['uuid'];
 						this.avm.applyAll();
 					}
