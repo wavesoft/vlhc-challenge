@@ -90,29 +90,103 @@ $(function() {
 	var LoginInterface = function() {
 
 		/**
+		This should be placed on the log-in page:
+	
+		window.opener.location = "http://test4theory.cern.ch/vlhc/#user="+btoa('!{JSON.stringify(user)}');
+		window.close();
+
+		**/
+
+		/**
 		 * The user log-in interface
 		 */
 		var LoginInterface = function(loginURL) {
 			this.loginURL = loginURL;
+			this._loginListeners = [];
+			this._logoutListeners = [];
+
+			// Bind hash change listener
+	        $(window).on('hashchange',(function() {
+	        	var hash = window.hash;
+	        	this._handleHash(hash);
+
+	        	// Revert hash
+	        	window.location.hash = "";
+
+	        }).bind(this));
+
+	        // Fetch original user information from localStorage
+	        var storeInfo = localStorage.getItem("vas-account-info");
+	        if (storeInfo) {
+	        	this.userInfo = JSON.parse(storeInfo);
+	        } else {
+				this.userInfo = null;
+	        }
+
 		};
 
 		/**
-		 * Resume previous session
+		 * Handle hash change
 		 */
-		LoginInterface.prototype.resume = function(callback) {
+		LoginInterface.prototype._handleHash = function(hash) {
+        	if (hash[0] == "#") hash=hash.substr(1);
+        	if (hash.substr(0,5) == "user=") {
+        		var userStr = hash.substr(5);
+        		if (userStr = "none") {
 
-		};
+					// Fire callbacks (with previous log-in info)
+					for (var i=0; i<this._logoutListeners.length; i++)
+						this._logoutListeners[i](this.userInfo);
+					
+					// Logout
+					this.userInfo = null;
+
+					// Remove user info from localStorage
+					localStorage.removeItem("vas-account-info");
+
+        		} else {
+
+        			// Parse user info from the hash
+	        		var accountJsonData = atob(userStr)
+	        			info = JSON.parse(accountJsonData);
+
+					// Update localStorage info
+					localStorage.setItem("vas-account-info", accountJsonData);
+
+					// Login
+					this.userInfo = info;
+
+					// Fire callbacks (with current log-in info)
+					for (var i=0; i<this._loginListeners.length; i++)
+						this._loginListeners[i](info);
+
+				}
+        	}
+		}
 
 		/**
 		 * Log-in user
 		 */
-		LoginInterface.prototype.login = function(callback) {
+		LoginInterface.prototype.login = function() {
 			var w = 600, h = 350,
 				l = (screen.width - w) / 2,
 				t = (screen.height - h)/ 2,
 				win = window.open( this.loginURL, "login-window", "width="+w+",height="+h+",left="+l+",top="+t+",location=no,menubar=no,resizable=no,scrollbars=no,status=no,toolbar=no" );
-			window.loginCallback = callback;
 		};
+
+		/**
+		 * Register a listener when the user logs-in.
+		 */
+		LoginInterface.prototype.onUserLogin = function(callback) {
+			this._loginListeners.push(callback);
+		}
+
+		/**
+		 * Register a listener when the user logs-out.
+		 */
+		LoginInterface.prototype.onUserLogout = function(callback) {
+			this._logoutListeners.push(callback);
+		}
 
 		return LoginInterface;
 
@@ -1346,52 +1420,30 @@ $(function() {
 		///////////////////////////////////////////////
 
 		/**
-		 * Get account info
-		 */
-		ChallengeInterface.prototype.accGetAccountInfo = function() {
-
-			// Check if we have account information in the cookies
-
-		}
-
-		/**
 		 * Initialize footer buttons
 		 */
 		ChallengeInterface.prototype.accFrameInit = function() {
 
-			// Try to log-in the user from cache
-			this.loginInterface.resume((function() {
 
-			}).bind(this));
-
-			this.accBtnLogin.click((function() {
-				this.loginInterface.login(function(data) {
-					alert("Got login data: " + JSON.stringify(data));
-				});
-			}).bind(this));
-
-			// Initialize account information
-			this.accountInfo = this.accGetAccountInfo();
-
-			/*
 			// Monitor changes on account information
-			setInterval((function() {
-				var info = this.accGetAccountInfo();
-				if (!info && !!this.accountInfo) {
-					this.accFrameUndefine();
-				} else if (!!info && !this.accountInfo) {
-					this.accFrameDefine( info );
-				}
-				this.accountInfo = info;
-			}).bind(this), 1000);
-
-			// Hide/show account info
-			if (!this.accountInfo) {
+			this.loginInterface.onUserLogin((function(userInfo) {
+				this.accFrameDefine(userInfo);
+			}).bind(this));
+			this.loginInterface.onUserLogout((function(prevInfo) {
 				this.accFrameUndefine();
+			}).bind(this));
+
+			// Check if the user is already loaded
+			if (this.loginInterface.userInfo != null) {
+				this.accFrameDefine(this.loginInterface.userInfo);
 			} else {
-				this.accFrameDefine(this.accountInfo);
+				this.accFrameUndefine();
 			}
-			*/
+
+			// Bind log-in button
+			this.accBtnLogin.click((function() {
+				this.loginInterface.login();
+			}).bind(this));
 
 		}
 
@@ -1401,6 +1453,8 @@ $(function() {
 		ChallengeInterface.prototype.accFrameDefine = function(info) {
 			this.accBtnLogout.hide();
 			this.accBtnLogin.show();
+
+			alert("Welcome: "+JSON.stringify(info));
 		}
 
 		/**
@@ -1409,30 +1463,6 @@ $(function() {
 		ChallengeInterface.prototype.accFrameUndefine = function() {
 			this.accBtnLogout.show();
 			this.accBtnLogin.hide();
-		}
-
-		/**
-		 * Update accounting frame
-		 */
-		ChallengeInterface.prototype.accFrameUpdate = function(info) {
-
-			// Check if information has gone away
-			this.accountInfo = this.accGetAccountInfo();
-			if (!this.accountInfo) {
-				this.accCreditsModal.modal("hide");
-				this.accFrameUndefine();
-				return;
-			}
-
-			// Update modal
-
-		}
-
-		/**
-		 * Wait until account information were found in cookies
-		 */
-		ChallengeInterface.prototype.accWaitAccount = function(name, callback) {
-
 		}
 
 		///////////////////////////////////////////////
