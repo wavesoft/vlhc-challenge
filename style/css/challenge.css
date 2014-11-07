@@ -229,17 +229,19 @@ body.no-top-scroll .navbar .nav a:hover {
   float: left !important;
   text-align: left;
 }
-#challenge div.frame-status div.panel div.panel-heading div#login-info a {
+#challenge div.frame-status div.panel div.panel-heading a#acc-name {
   line-height: 30px;
   height: 30px;
 }
-#challenge div.frame-status div.panel div.panel-heading div#login-info div.image {
-  width: 32px;
-  height: 32px;
+#challenge div.frame-status div.panel div.panel-heading div#acc-picture {
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
   border: solid 1px #999;
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
+  display: inline-block;
 }
 #challenge div.frame-status div.panel div.panel-heading div.back-progress {
   visibility: hidden;

@@ -1008,9 +1008,8 @@ $(function() {
 			this.accBtnLogin = $("#btn-login");
 			this.accBtnLogout = $("#btn-logout");
 			this.accCreditsModal = $("#modal-credits");
-			this.accInfoPanel = $("#login-info");
-			this.accInfoPicture = this.accInfoPanel.find("div.image");
-			this.accInfoName = this.accInfoPanel.find("a.picture");
+			this.accInfoPicture = $("#acc-name");
+			this.accInfoName = $("#acc-picture");
 
 			// Initialize accounting frame
 			this.accFrameInit();
@@ -1499,7 +1498,8 @@ $(function() {
 		 * Account information defined
 		 */
 		ChallengeInterface.prototype.accFrameDefine = function(info) {
-			this.accInfoPanel.show();
+			this.accInfoPicture.show();
+			this.accInfoName.show();
 			this.accBtnLogout.show();
 			this.accBtnLogin.hide();
 
@@ -1520,7 +1520,8 @@ $(function() {
 		 * Account information undefined
 		 */
 		ChallengeInterface.prototype.accFrameUndefine = function() {
-			this.accInfoPanel.hide();
+			this.accInfoPicture.hide();
+			this.accInfoName.hide();
 			this.accBtnLogout.hide();
 			this.accBtnLogin.show();
 
