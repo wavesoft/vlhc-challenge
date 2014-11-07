@@ -1373,6 +1373,7 @@ $(function() {
 			// Initialize account information
 			this.accountInfo = this.accGetAccountInfo();
 
+			/*
 			// Monitor changes on account information
 			setInterval((function() {
 				var info = this.accGetAccountInfo();
@@ -1390,6 +1391,7 @@ $(function() {
 			} else {
 				this.accFrameDefine(this.accountInfo);
 			}
+			*/
 
 		}
 
