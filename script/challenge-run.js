@@ -85,6 +85,39 @@ $(function() {
 	}();
 
 	/**
+	 * Log-in interface
+	 */
+	var LoginInterface = function() {
+
+		/**
+		 * The user log-in interface
+		 */
+		var LoginInterface = function(loginURL) {
+			this.loginURL = loginURL;
+		};
+
+		/**
+		 * Resume previous session
+		 */
+		LoginInterface.prototype.resume = function(callback) {
+
+		};
+
+		/**
+		 * Log-in user
+		 */
+		LoginInterface.prototype.login = function(callback) {
+			var w = 600, h = 350,
+				l = (screen.width - w) / 2,
+				t = (screen.height - h)/ 2,
+				win = window.open( this.loginURL, "login-window", "width="+w+",height="+h+",left="+l+",top="+t+",location=no,menubar=no,resizable=no,scrollbars=no,status=no,toolbar=no" );
+		};		
+
+		return LoginInterface;
+
+	}();
+
+	/**
 	 * Development wrapper to isolate the autonomous VM code
 	 */
 	var AutonomousVM = function() {
@@ -814,10 +847,11 @@ $(function() {
 		 * Helper class that organizes all the UI operations in the challenge
 		 * dashboard interface.
 		 */
-		var ChallengeInterface = function( systemMessages ) {
+		var ChallengeInterface = function( systemMessages, loginInterface ) {
 
-			// System messages class
+			// Keep references of subsystems
 			this.systemMessages = systemMessages;
+			this.loginInterface = loginInterface;
 
 			// Gauge frame & subparts
 			this.gaugeFrame = $("#gauge-frame");
@@ -851,8 +885,9 @@ $(function() {
 			this.descFrameInit();
 
 			// accounting frame
-			this.accBtnLogin = $("#acc-login");
-			this.accBtnLogut = $("#acc-logout");
+			this.accBtnLogin = $("#btn-login");
+			this.accBtnLogout = $("#btn-logout");
+			this.accCreditsModal = $("#modal-credits");
 
 			// Initialize accounting frame
 			this.accFrameInit();
@@ -1310,13 +1345,84 @@ $(function() {
 		///////////////////////////////////////////////
 
 		/**
+		 * Get account info
+		 */
+		ChallengeInterface.prototype.accGetAccountInfo = function() {
+
+			// Check if we have account information in the cookies
+
+		}
+
+		/**
 		 * Initialize footer buttons
 		 */
 		ChallengeInterface.prototype.accFrameInit = function() {
 
+			// Try to log-in the user from cache
+			this.loginInterface.resume(function() {
+				
+			});
 
-			// Hide logout
-			this.accBtnLogut.hide();
+			// Initialize account information
+			this.accountInfo = this.accGetAccountInfo();
+
+			// Monitor changes on account information
+			setInterval((function() {
+				var info = this.accGetAccountInfo();
+				if (!info && !!this.accountInfo) {
+					this.accFrameUndefine();
+				} else if (!!info && !this.accountInfo) {
+					this.accFrameDefine( info );
+				}
+				this.accountInfo = info;
+			}).bind(this), 1000);
+
+			// Hide/show account info
+			if (!this.accountInfo) {
+				this.accFrameUndefine();
+			} else {
+				this.accFrameDefine(this.accountInfo);
+			}
+
+		}
+
+		/**
+		 * Account information defined
+		 */
+		ChallengeInterface.prototype.accFrameDefine = function(info) {
+			this.accBtnLogout.hide();
+			this.accBtnLogin.show();
+		}
+
+		/**
+		 * Account information undefined
+		 */
+		ChallengeInterface.prototype.accFrameUndefine = function() {
+			this.accBtnLogout.show();
+			this.accBtnLogin.hide();
+		}
+
+		/**
+		 * Update accounting frame
+		 */
+		ChallengeInterface.prototype.accFrameUpdate = function(info) {
+
+			// Check if information has gone away
+			this.accountInfo = this.accGetAccountInfo();
+			if (!this.accountInfo) {
+				this.accCreditsModal.modal("hide");
+				this.accFrameUndefine();
+				return;
+			}
+
+			// Update modal
+
+		}
+
+		/**
+		 * Wait until account information were found in cookies
+		 */
+		ChallengeInterface.prototype.accWaitAccount = function(name, callback) {
 
 		}
 
@@ -1464,11 +1570,14 @@ $(function() {
 	// Create a system messages helper class
 	var sysMessages = new SystemMessages( "messages" );
 
+	// Create a login interface
+	var loginInterface = new LoginInterface( "https://test4theory-challenge.cern.ch/acc.io" );
+
 	// Create an AVM for this session
 	var avm = new AutonomousVM('http://test4theory.cern.ch/vmcp?config='+context_id);
 
 	// Create the challenge interface
-	var challenge = new ChallengeInterface( sysMessages );
+	var challenge = new ChallengeInterface( sysMessages, loginInterface );
 	challenge.bindToAVM(avm);
 
 	// Resize description frame well in order to fit height

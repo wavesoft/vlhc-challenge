@@ -39,12 +39,12 @@
 							</div>
 							<span id="gauge-frame-title">Title</span>
 							<div class="account-frame">
-								<button id="acc-login" data-toggle="modal" data-target="#modal-credits" type="button" class="btn btn-success btn-sm">
+								<a id="btn-login" href="https://test4theory-challenge.cern.ch/login" target="_blank" class="btn btn-success btn-sm">
 									Log-in to collect credit
-								</button>
-								<button id="acc-logout" data-toggle="modal" data-target="#modal-credits" type="button" class="btn btn-danger btn-sm">
-									Credits
-								</button>
+								</a>
+								<button id="btn-logout" href="https://test4theory-challenge.cern.ch/login" class="btn btn-default btn-sm" data-toggle="modal" data-target="#modal-credits" >
+									Show Credits
+								</button>								
 							</div>
 						</div>
 						<div class="panel-body">
@@ -169,10 +169,11 @@
 					<h4 class="modal-title">Disclaimer &amp; Credits</h4>
 				  </div>
 				  <div class="modal-body">
-					<p>
-						<img src="style/img/logo/citizen_cyberlab.jpg" alt="Citizen Cyberlab" />
-						<img src="style/img/logo/fp7.jpg" alt="Seventh Framework Programe" />
-						<img src="style/img/logo/cern.jpg" alt="CERN Logo" />
+					<p class="text-center">
+						<img src="style/img/logo/cern.jpg" alt="CERN Logo" />&nbsp;
+						<img src="style/img/logo/citizen_cyberlab.jpg" alt="Citizen Cyberlab" />&nbsp;
+						<img src="style/img/logo/fp7.jpg" alt="Seventh Framework Programe" />&nbsp;
+						<img src="style/img/logo/eu.jpg" alt="European Union" />
 					</p>
 					<p>The <em>Virtual LHC Challenge</em> is a project developed by <a href="http://cern.ch">CERN</a> with the partnership of the <a href="http://citizencyberlab.eu/">Citizen Cyberlab</a>. The project is funded by the <a href="http://ec.europa.eu/research/fp7/index_en.cfm">Seventh Framework Programme</a> of the European Eunion.</p>
 					<p>
@@ -232,6 +233,7 @@
 		<script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
 		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 		<script src="//cernvm.cern.ch/releases/webapi/js/cvmwebapi-2.0.2.js"></script>
+		<script src="//cdn.rawgit.com/carhartl/jquery-cookie/master/src/jquery.cookie.js"></script>
 		<script src="script/lib/rundial.js"></script>
 		<!-- Challenge -->
 		<script src="script/challenge-common.js"></script>
