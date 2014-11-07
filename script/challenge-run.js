@@ -111,7 +111,8 @@ $(function() {
 				l = (screen.width - w) / 2,
 				t = (screen.height - h)/ 2,
 				win = window.open( this.loginURL, "login-window", "width="+w+",height="+h+",left="+l+",top="+t+",location=no,menubar=no,resizable=no,scrollbars=no,status=no,toolbar=no" );
-		};		
+			window.loginCallback = callback;
+		};
 
 		return LoginInterface;
 
@@ -1359,9 +1360,15 @@ $(function() {
 		ChallengeInterface.prototype.accFrameInit = function() {
 
 			// Try to log-in the user from cache
-			this.loginInterface.resume(function() {
-				
-			});
+			this.loginInterface.resume((function() {
+
+			}).bind(this));
+
+			this.accBtnLogin.click((function() {
+				this.loginInterface.login(function(data) {
+					alert("Got login data: " + JSON.stringify(data));
+				});
+			}).bind(this));
 
 			// Initialize account information
 			this.accountInfo = this.accGetAccountInfo();
@@ -1571,7 +1578,7 @@ $(function() {
 	var sysMessages = new SystemMessages( "messages" );
 
 	// Create a login interface
-	var loginInterface = new LoginInterface( "https://test4theory-challenge.cern.ch/acc.io" );
+	var loginInterface = new LoginInterface( "https://test4theory.cern.ch/acc.io" );
 
 	// Create an AVM for this session
 	var avm = new AutonomousVM('http://test4theory.cern.ch/vmcp?config='+context_id);
