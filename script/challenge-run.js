@@ -1572,7 +1572,7 @@ $(function() {
 
 
 	// Check what configuration to load based on the hash URL
-	var hash = window.location.hash, context_id = "test";
+	var hash = window.location.hash, context_id = "challenge-t4t";
 	if (hash[0] == "#") hash = hash.substr(1);
 	if (hash.length > 0) context_id=hash;
 
