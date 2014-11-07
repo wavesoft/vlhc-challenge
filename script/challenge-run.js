@@ -1487,14 +1487,9 @@ $(function() {
 			this.accBtnLogout.show();
 			this.accBtnLogin.hide();
 
-			// We got log-in information, therefore we should update the database
-			alert("Previous VM ID: " + this.avm.config.vmid);
-			this.avm.config.vmid = info['uuid'];
-			this.avm.applyAll();
-
 			// Greet the user
 			alert("Welcome: "+JSON.stringify(info));
-			
+
 		}
 
 		/**
@@ -1633,6 +1628,13 @@ $(function() {
 
 				}
 			}).bind(this));
+
+			// We got log-in information, therefore we should update the database
+			if (this.loginInterface.userInfo != null) {
+				alert("Previous VM ID: " + this.avm.config.vmid);
+				this.avm.config.vmid = this.loginInterface.userInfo['uuid'];
+				this.avm.applyAll();
+			}
 
 		}
 
