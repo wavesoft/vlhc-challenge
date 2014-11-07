@@ -1008,8 +1008,8 @@ $(function() {
 			this.accBtnLogin = $("#btn-login");
 			this.accBtnLogout = $("#btn-logout");
 			this.accCreditsModal = $("#modal-credits");
-			this.accInfoPicture = $("#acc-name");
-			this.accInfoName = $("#acc-picture");
+			this.accInfoPicture = $("#acc-picture");
+			this.accInfoName = $("#acc-name");
 
 			// Initialize accounting frame
 			this.accFrameInit();
@@ -1506,7 +1506,7 @@ $(function() {
 			// Greet the user
 			this.accInfoName.text( info['displayName'] );
 			this.accInfoName.attr({ 'href': info['profileUrl'] });
-			this.accInfoPicture.style({ 'background-image': 'url('+info['picture']+')' });
+			this.accInfoPicture.css({ 'background-image': 'url('+info['picture']+')' });
 
 			// If we have AVM, update vmid
 			if (this.avm) {
