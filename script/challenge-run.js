@@ -107,12 +107,8 @@ $(function() {
 
 			// Bind hash change listener
 	        $(window).on('hashchange',(function() {
-	        	var hash = window.hash;
-	        	this._handleHash(hash);
-
-	        	// Revert hash
-	        	window.location.hash = "";
-
+	        	var hash = String(window.location.hash);
+	        	this._handleHashChange(hash);
 	        }).bind(this));
 
 	        // Fetch original user information from localStorage
@@ -126,17 +122,49 @@ $(function() {
 		};
 
 		/**
+		 * Abstract the various user information to unified IDs
+		 */
+		LoginInterface.prototype._normalizeAccountInfo = function(data) {
+			if (data['provider'] == "facebook") {
+				return {
+					'displayName'	: data['displayName'],
+					'profileUrl'	: data['profileUrl'],
+					'picture'		: '//graph.facebook.com/'+data['id']+'/picture',
+					'uuid'			: "f-"+data['id']
+				};
+			} else if (data['provider'] == "google") {
+				return {
+					'displayName'	: data['displayName'],
+					'profileUrl'	: data['_json']['link'],
+					'picture'		: data['_json']['picture'],
+					'uuid'			: "g-"+data['id']
+				};
+			} else if (data['provider'] == "twitter") {
+				return {
+					'displayName'	: data['displayName'],
+					'profileUrl'	: data['_json']['url'],
+					'picture'		: data['photos'][0]['value'],
+					'uuid'			: "t-"+data['id']
+				};
+			} else if (data['provider'] == "boinc") {
+
+			}
+		};
+
+
+		/**
 		 * Handle hash change
 		 */
-		LoginInterface.prototype._handleHash = function(hash) {
+		LoginInterface.prototype._handleHashChange = function(hash) {
         	if (hash[0] == "#") hash=hash.substr(1);
         	if (hash.substr(0,5) == "user=") {
         		var userStr = hash.substr(5);
-        		if (userStr = "none") {
+        		if (userStr == "none") {
 
 					// Fire callbacks (with previous log-in info)
-					for (var i=0; i<this._logoutListeners.length; i++)
+					for (var i=0; i<this._logoutListeners.length; i++) {
 						this._logoutListeners[i](this.userInfo);
+					}
 					
 					// Logout
 					this.userInfo = null;
@@ -147,8 +175,8 @@ $(function() {
         		} else {
 
         			// Parse user info from the hash
-	        		var accountJsonData = atob(userStr)
-	        			info = JSON.parse(accountJsonData);
+	        		var accountJsonData = atob(userStr),
+	        			info = this._normalizeAccountInfo(JSON.parse(accountJsonData));
 
 					// Update localStorage info
 					localStorage.setItem("vas-account-info", accountJsonData);
@@ -157,10 +185,15 @@ $(function() {
 					this.userInfo = info;
 
 					// Fire callbacks (with current log-in info)
-					for (var i=0; i<this._loginListeners.length; i++)
+					for (var i=0; i<this._loginListeners.length; i++) {
 						this._loginListeners[i](info);
+					}
 
 				}
+
+	        	// Clear hash
+	        	window.location.hash = "";
+
         	}
 		}
 
@@ -1454,7 +1487,14 @@ $(function() {
 			this.accBtnLogout.show();
 			this.accBtnLogin.hide();
 
+			// We got log-in information, therefore we should update the database
+			alert("Previous VM ID: " + this.avm.config.vmid);
+			this.avm.config.vmid = info['uuid'];
+			this.avm.applyAll();
+
+			// Greet the user
 			alert("Welcome: "+JSON.stringify(info));
+			
 		}
 
 		/**
