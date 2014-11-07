@@ -395,6 +395,7 @@ $(function() {
 				this.config.memory = session.memory;
 				this.config.cpus = session.cpus;
 				this.config.cap = session.executionCap;
+				this.config.vmid = session.getProperty("vmid");
 
 				// Bind to progress messages
 				session.addEventListener('started', this.__notifyProgressStart.bind(this));
@@ -832,6 +833,7 @@ $(function() {
 				
 				// Start the VM
 				this.wa_session.executionCap = this.config.cap;
+				this.wa_session.setProperty("vmid", this.config.vmid);
 				this.wa_session.start(this.config);
 				this.__fireListener('genericStateChanged', STATE_PENDING);
 
@@ -889,6 +891,7 @@ $(function() {
 					// Start right away if the VM was started
 					if (this.__vmStarted) {
 						this.wa_session.executionCap = this.config.cap;
+						this.wa_session.setProperty("vmid", this.config.vmid);
 						this.wa_session.start(this.config);
 						this.__fireListener('genericStateChanged', STATE_PENDING);
 					}
@@ -1560,6 +1563,14 @@ $(function() {
 			avm.addListener('webapiStateChanged', (function(state) {
 				if (state) {
 					this.descFrameSetActive( this.FRAME_INTRO );
+
+					// We got log-in information, therefore we should update the database
+					if (this.loginInterface.userInfo != null) {
+						alert("Previous VM ID: " + this.avm.config.vmid);
+						this.avm.config.vmid = this.loginInterface.userInfo['uuid'];
+						this.avm.applyAll();
+					}
+
 				} else {
 					this.descFrameSetActive( this.FRAME_RECOVERY );
 					this.gaugeFrameAlert("Challenge Aborted", "Lost connection with the CernVM WebAPI.");
@@ -1628,13 +1639,6 @@ $(function() {
 
 				}
 			}).bind(this));
-
-			// We got log-in information, therefore we should update the database
-			if (this.loginInterface.userInfo != null) {
-				alert("Previous VM ID: " + this.avm.config.vmid);
-				this.avm.config.vmid = this.loginInterface.userInfo['uuid'];
-				this.avm.applyAll();
-			}
 
 		}
 
