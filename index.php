@@ -1,4 +1,9 @@
-<!DOCTYPE html>
+<?php
+if (stristr("https/1.1", $_SERVER['HTTP_VIA'])) {
+	header("Location: http://test4theory.cern.ch/vlhc");
+	die();
+}
+?><!DOCTYPE html>
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
@@ -39,8 +44,8 @@
 							</div>
 							<span id="gauge-frame-title">Title</span>
 							<div class="account-frame">
-								<a id="acc-name" target="_blank" href="#">Anonymous</a>
 								<div id="acc-picture"></div>
+								<a id="acc-name" target="_blank" href="#">Anonymous</a>
 								<a id="btn-login" class="btn btn-success btn-sm">
 									Log-in to collect credit
 								</a>
