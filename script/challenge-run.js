@@ -172,30 +172,32 @@ $(function() {
 				if (userStr == "none") {
 
 					// Fire callbacks (with previous log-in info)
-					for (var i=0; i<this._logoutListeners.length; i++) {
-						this._logoutListeners[i](this.userInfo);
+					if (this.userInfo != null) {
+						// Call logout listeners
+						for (var i=0; i<this._logoutListeners.length; i++) {
+							this._logoutListeners[i](this.userInfo);
+						}
+						// Update user info
+						this.userInfo = null;
+						// Remove user info from localStorage
+						localStorage.removeItem("vas-account-info");
 					}
-					
-					// Logout
-					this.userInfo = null;
-
-					// Remove user info from localStorage
-					localStorage.removeItem("vas-account-info");
 
 				} else {
 
 					// Parse user info from the hash
 					var info = this._normalizeAccountInfo(JSON.parse(atob(userStr)));
 
-					// Update localStorage info
-					localStorage.setItem("vas-account-info", JSON.stringify(info));
-
-					// Login
-					this.userInfo = info;
-
 					// Fire callbacks (with current log-in info)
-					for (var i=0; i<this._loginListeners.length; i++) {
-						this._loginListeners[i](info);
+					if (this.userInfo == null) {
+						// Call login listeners
+						for (var i=0; i<this._loginListeners.length; i++) {
+							this._loginListeners[i](info);
+						}
+						// Update user info
+						this.userInfo = info;
+						// Update localStorage info
+						localStorage.setItem("vas-account-info", JSON.stringify(info));
 					}
 
 				}
@@ -209,8 +211,8 @@ $(function() {
 		/**
 		 * Log-in user
 		 */
-		LoginInterface.prototype.login = function() {
-			var w = 600, h = 350,
+		LoginInterface.prototype.showAccountWindow = function() {
+			var w = 700, h = 600,
 				l = (screen.width - w) / 2,
 				t = (screen.height - h)/ 2,
 				win = window.open( this.loginURL, "login-window", "width="+w+",height="+h+",left="+l+",top="+t+",location=no,menubar=no,resizable=no,scrollbars=no,status=no,toolbar=no" );
@@ -1006,7 +1008,7 @@ $(function() {
 
 			// accounting frame
 			this.accBtnLogin = $("#btn-login");
-			this.accBtnLogout = $("#btn-logout");
+			this.accBtnCredits = $("#btn-credits");
 			this.accCreditsModal = $("#modal-credits");
 			this.accInfoPicture = $("#acc-picture");
 			this.accInfoName = $("#acc-name");
@@ -1489,7 +1491,10 @@ $(function() {
 
 			// Bind log-in button
 			this.accBtnLogin.click((function() {
-				this.loginInterface.login();
+				this.loginInterface.showAccountWindow();
+			}).bind(this));
+			this.accBtnCredits.click((function() {
+				this.loginInterface.showAccountWindow();
 			}).bind(this));
 
 		}
@@ -1500,7 +1505,7 @@ $(function() {
 		ChallengeInterface.prototype.accFrameDefine = function(info) {
 			this.accInfoPicture.show();
 			this.accInfoName.show();
-			this.accBtnLogout.show();
+			this.accBtnCredits.show();
 			this.accBtnLogin.hide();
 
 			// Greet the user
@@ -1522,7 +1527,7 @@ $(function() {
 		ChallengeInterface.prototype.accFrameUndefine = function() {
 			this.accInfoPicture.hide();
 			this.accInfoName.hide();
-			this.accBtnLogout.hide();
+			this.accBtnCredits.hide();
 			this.accBtnLogin.show();
 
 			// If we have AVM, update vmid
