@@ -1451,8 +1451,8 @@ $(function() {
 		 * Account information defined
 		 */
 		ChallengeInterface.prototype.accFrameDefine = function(info) {
-			this.accBtnLogout.hide();
-			this.accBtnLogin.show();
+			this.accBtnLogout.show();
+			this.accBtnLogin.hide();
 
 			alert("Welcome: "+JSON.stringify(info));
 		}
@@ -1461,8 +1461,8 @@ $(function() {
 		 * Account information undefined
 		 */
 		ChallengeInterface.prototype.accFrameUndefine = function() {
-			this.accBtnLogout.show();
-			this.accBtnLogin.hide();
+			this.accBtnLogout.hide();
+			this.accBtnLogin.show();
 		}
 
 		///////////////////////////////////////////////
