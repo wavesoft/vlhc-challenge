@@ -106,18 +106,28 @@ $(function() {
 			this._logoutListeners = [];
 
 			// Bind hash change listener
-	        $(window).on('hashchange',(function() {
-	        	var hash = String(window.location.hash);
-	        	this._handleHashChange(hash);
-	        }).bind(this));
+			$(window).on('hashchange',(function() {
+				var hash = String(window.location.hash);
+				this._handleHashChange(hash);
+			}).bind(this));
 
-	        // Fetch original user information from localStorage
-	        var storeInfo = localStorage.getItem("vas-account-info");
-	        if (storeInfo) {
-	        	this.userInfo = JSON.parse(storeInfo);
-	        } else {
+			// Fetch original user information from localStorage
+			var storeInfo = localStorage.getItem("vas-account-info");
+			if (storeInfo) {
+				this.userInfo = JSON.parse(storeInfo);
+			} else {
 				this.userInfo = null;
-	        }
+			}
+
+			// Fetch/generate a unique anonymous ID when logged off
+			this.anonymousID = localStorage.getItem("vas-anonymous-id");
+			if (!this.anonymousID) {
+				var charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz-0123456789";
+				this.anonymousID = "r-";
+				for (var i=0; i<32; i++)
+					this.anonymousID += charset[Math.floor(Math.random() * charset.length)];
+				localStorage.setItem("vas-anonymous-id", this.anonymousID);
+			}
 
 		};
 
@@ -156,10 +166,10 @@ $(function() {
 		 * Handle hash change
 		 */
 		LoginInterface.prototype._handleHashChange = function(hash) {
-        	if (hash[0] == "#") hash=hash.substr(1);
-        	if (hash.substr(0,5) == "user=") {
-        		var userStr = hash.substr(5);
-        		if (userStr == "none") {
+			if (hash[0] == "#") hash=hash.substr(1);
+			if (hash.substr(0,5) == "user=") {
+				var userStr = hash.substr(5);
+				if (userStr == "none") {
 
 					// Fire callbacks (with previous log-in info)
 					for (var i=0; i<this._logoutListeners.length; i++) {
@@ -172,14 +182,13 @@ $(function() {
 					// Remove user info from localStorage
 					localStorage.removeItem("vas-account-info");
 
-        		} else {
+				} else {
 
-        			// Parse user info from the hash
-	        		var accountJsonData = atob(userStr),
-	        			info = this._normalizeAccountInfo(JSON.parse(accountJsonData));
+					// Parse user info from the hash
+					var info = this._normalizeAccountInfo(JSON.parse(atob(userStr)));
 
 					// Update localStorage info
-					localStorage.setItem("vas-account-info", accountJsonData);
+					localStorage.setItem("vas-account-info", JSON.stringify(info));
 
 					// Login
 					this.userInfo = info;
@@ -191,10 +200,10 @@ $(function() {
 
 				}
 
-	        	// Clear hash
-	        	window.location.hash = "";
+				// Clear hash
+				window.location.hash = "";
 
-        	}
+			}
 		}
 
 		/**
@@ -999,6 +1008,9 @@ $(function() {
 			this.accBtnLogin = $("#btn-login");
 			this.accBtnLogout = $("#btn-logout");
 			this.accCreditsModal = $("#modal-credits");
+			this.accInfoPanel = $("#login-info");
+			this.accInfoPicture = this.accInfoPanel.find("div.image");
+			this.accInfoName = this.accInfoPanel.find("a.picture");
 
 			// Initialize accounting frame
 			this.accFrameInit();
@@ -1487,11 +1499,20 @@ $(function() {
 		 * Account information defined
 		 */
 		ChallengeInterface.prototype.accFrameDefine = function(info) {
+			this.accInfoPanel.show();
 			this.accBtnLogout.show();
 			this.accBtnLogin.hide();
 
 			// Greet the user
-			alert("Welcome: "+JSON.stringify(info));
+			this.accInfoName.text( info['displayName'] );
+			this.accInfoName.attr({ 'href': info['profileUrl'] });
+			this.accInfoPicture.style({ 'background-image': 'url('+info['picture']+')' });
+
+			// If we have AVM, update vmid
+			if (this.avm) {
+				this.avm.config.vmid = info['uuid'];
+				this.avm.applyAll();
+			}
 
 		}
 
@@ -1499,8 +1520,15 @@ $(function() {
 		 * Account information undefined
 		 */
 		ChallengeInterface.prototype.accFrameUndefine = function() {
+			this.accInfoPanel.hide();
 			this.accBtnLogout.hide();
 			this.accBtnLogin.show();
+
+			// If we have AVM, update vmid
+			if (this.avm) {
+				this.avm.config.vmid = this.loginInterface.anonymousID;
+				this.avm.applyAll();
+			}
 		}
 
 		///////////////////////////////////////////////
@@ -1564,11 +1592,11 @@ $(function() {
 				if (state) {
 					this.descFrameSetActive( this.FRAME_INTRO );
 
-					// We got log-in information, therefore we should update the database
+					// Update the VMID
 					if (this.loginInterface.userInfo != null) {
-						alert("Previous VM ID: " + this.avm.config.vmid + ", New VMID: " + this.loginInterface.userInfo['uuid']);
 						this.avm.config.vmid = this.loginInterface.userInfo['uuid'];
-						this.avm.applyAll();
+					} else {
+						this.avm.config.vmid = this.loginInterface.anonymousID;
 					}
 
 				} else {
