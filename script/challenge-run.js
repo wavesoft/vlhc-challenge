@@ -174,9 +174,8 @@ $(function() {
 					// Fire callbacks (with previous log-in info)
 					if (this.userInfo != null) {
 						// Call logout listeners
-						for (var i=0; i<this._logoutListeners.length; i++) {
+						for (var i=0; i<this._logoutListeners.length; i++)
 							this._logoutListeners[i](this.userInfo);
-						}
 						// Update user info
 						this.userInfo = null;
 						// Remove user info from localStorage
@@ -191,9 +190,8 @@ $(function() {
 					// Fire callbacks (with current log-in info)
 					if (this.userInfo == null) {
 						// Call login listeners
-						for (var i=0; i<this._loginListeners.length; i++) {
+						for (var i=0; i<this._loginListeners.length; i++)
 							this._loginListeners[i](info);
-						}
 						// Update user info
 						this.userInfo = info;
 						// Update localStorage info
@@ -212,7 +210,7 @@ $(function() {
 		 * Log-in user
 		 */
 		LoginInterface.prototype.showAccountWindow = function() {
-			var w = 700, h = 600,
+			var w = 650, h = 400,
 				l = (screen.width - w) / 2,
 				t = (screen.height - h)/ 2,
 				win = window.open( this.loginURL, "login-window", "width="+w+",height="+h+",left="+l+",top="+t+",location=no,menubar=no,resizable=no,scrollbars=no,status=no,toolbar=no" );
