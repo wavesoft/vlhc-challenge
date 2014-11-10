@@ -209,11 +209,15 @@ $(function() {
 		/**
 		 * Log-in user
 		 */
-		LoginInterface.prototype.showAccountWindow = function() {
+		LoginInterface.prototype.showAccountWindow = function(vmid) {
 			var w = 650, h = 400,
 				l = (screen.width - w) / 2,
 				t = (screen.height - h)/ 2,
-				win = window.open( this.loginURL, "login-window", "width="+w+",height="+h+",left="+l+",top="+t+",location=no,menubar=no,resizable=no,scrollbars=no,status=no,toolbar=no" );
+				win = window.open(
+					this.loginURL + (vmid ? "?vmid="+vmid : ""),
+					"login-window",
+					"width="+w+",height="+h+",left="+l+",top="+t+",location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no"
+				);
 		};
 
 		/**
@@ -1492,7 +1496,7 @@ $(function() {
 				this.loginInterface.showAccountWindow();
 			}).bind(this));
 			this.accBtnCredits.click((function() {
-				this.loginInterface.showAccountWindow();
+				this.loginInterface.showAccountWindow( this.loginInterface.info['uuid'] );
 			}).bind(this));
 
 		}
