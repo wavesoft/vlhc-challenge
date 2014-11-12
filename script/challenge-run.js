@@ -112,12 +112,7 @@ $(function() {
 			}).bind(this));
 
 			// Fetch original user information from localStorage
-			var storeInfo = localStorage.getItem("vas-account-info");
-			if (storeInfo) {
-				this.userInfo = JSON.parse(storeInfo);
-			} else {
-				this.userInfo = null;
-			}
+			this.userInfo = null;
 
 			// Fetch/generate a unique anonymous ID when logged off
 			this.anonymousID = localStorage.getItem("vas-anonymous-id");
@@ -226,8 +221,6 @@ $(function() {
 						// Call logout listeners
 						for (var i=0; i<this._logoutListeners.length; i++)
 							this._logoutListeners[i](this.userInfo);
-						// Remove user info from localStorage
-						localStorage.removeItem("vas-account-info");
 					}
 
 				} else {
@@ -242,8 +235,6 @@ $(function() {
 						// Call login listeners
 						for (var i=0; i<this._loginListeners.length; i++)
 							this._loginListeners[i](info);
-						// Update localStorage info
-						localStorage.setItem("vas-account-info", JSON.stringify(info));
 					}
 
 				}
