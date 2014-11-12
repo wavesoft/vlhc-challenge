@@ -159,6 +159,17 @@ $(function() {
 		}
 
 		/**
+		 * Return the VMID
+		 */
+		LoginInterface.prototype.vmid = function() {
+			if (this.userInfo != null) {
+				return this.userInfo['uuid'];
+			} else {
+				return this.anonymousID;
+			}
+		}
+
+		/**
 		 * Freeze data adn return the payload to store
 		 */
 		LoginInterface.prototype.freeze = function() {
@@ -210,11 +221,11 @@ $(function() {
 
 					// Fire callbacks (with previous log-in info)
 					if (this.userInfo != null) {
+						// Update user info
+						this.userInfo = null;
 						// Call logout listeners
 						for (var i=0; i<this._logoutListeners.length; i++)
 							this._logoutListeners[i](this.userInfo);
-						// Update user info
-						this.userInfo = null;
 						// Remove user info from localStorage
 						localStorage.removeItem("vas-account-info");
 					}
@@ -226,11 +237,11 @@ $(function() {
 
 					// Fire callbacks (with current log-in info)
 					if (this.userInfo == null) {
+						// Update user info
+						this.userInfo = info;
 						// Call login listeners
 						for (var i=0; i<this._loginListeners.length; i++)
 							this._loginListeners[i](info);
-						// Update user info
-						this.userInfo = info;
 						// Update localStorage info
 						localStorage.setItem("vas-account-info", JSON.stringify(info));
 					}
@@ -1584,7 +1595,7 @@ $(function() {
 				this.loginInterface.showAccountWindow();
 			}).bind(this));
 			this.accBtnCredits.click((function() {
-				this.loginInterface.showAccountWindow( this.loginInterface.info['uuid'] );
+				this.loginInterface.showAccountWindow( this.loginInterface.vmid() );
 			}).bind(this));
 
 		}
@@ -1697,11 +1708,7 @@ $(function() {
 					avm.setProperty("challenge-login", this.loginInterface.freeze());
 
 					// Update the VMID
-					if (this.loginInterface.userInfo != null) {
-						this.avm.config.vmid = this.loginInterface.userInfo['uuid'];
-					} else {
-						this.avm.config.vmid = this.loginInterface.anonymousID;
-					}
+					this.avm.config.vmid = this.loginInterface.vmid();
 
 				} else {
 					this.descFrameSetActive( this.FRAME_RECOVERY );
