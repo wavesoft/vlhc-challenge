@@ -132,6 +132,43 @@ $(function() {
 		};
 
 		/**
+		 * Thaw data previously created with freeze()
+		 */
+		LoginInterface.prototype.thaw = function( storeData ) {
+			if (!storeData) return;
+
+			// Keep a reference of the previous user
+			var prevUser = this.userInfo;
+
+			// Update all fields
+			var data = JSON.parse( atob(storeData) );
+			this.anonymousID = data['a'];
+			this.userInfo = data['u'];
+
+			// Check for user login state switched
+			if ((prevUser == null) && (this.userInfo != null)) {
+				// Call login listeners
+				for (var i=0; i<this._loginListeners.length; i++)
+					this._loginListeners[i](this.userInfo);
+			} else if ((prevUser != null) && (this.userInfo == null)) {
+				// Call logout listeners
+				for (var i=0; i<this._logoutListeners.length; i++)
+					this._logoutListeners[i](prevUser);
+			}
+
+		}
+
+		/**
+		 * Freeze data adn return the payload to store
+		 */
+		LoginInterface.prototype.freeze = function() {
+			return btoa( JSON.stringify({
+				'u': this.userInfo,
+				'a': this.anonymousID
+			}));
+		}
+
+		/**
 		 * Abstract the various user information to unified IDs
 		 */
 		LoginInterface.prototype._normalizeAccountInfo = function(data) {
@@ -279,6 +316,10 @@ $(function() {
 			this.__eventsRing = [];
 			this.eventRate = 0;
 
+			// Pending functions to be called
+			// when we have a session
+			this.__sessionReadyFn = [];
+
 			// For job description information
 			this.__lastJobKey = "";
 
@@ -408,7 +449,6 @@ $(function() {
 				this.config.memory = session.memory;
 				this.config.cpus = session.cpus;
 				this.config.cap = session.executionCap;
-				this.config.vmid = session.getProperty("vmid");
 
 				// Bind to progress messages
 				session.addEventListener('started', this.__notifyProgressStart.bind(this));
@@ -420,7 +460,11 @@ $(function() {
 				session.addEventListener('stateChanged', this.__handleStateChange.bind(this));
 				session.addEventListener('apiStateChanged', this.__handleApiStateChange.bind(this));
 
-				// Let us know that we have a CernVM WebAPI
+				// Fire all the session ready functions
+				for (var i=0; i<this.__sessionReadyFn.length; i++)
+					this.__sessionReadyFn[i]( session );
+
+				// Let listeners know that we have a CernVM WebAPI
 				this.__fireListener('webapiStateChanged', true);
 
 				// Update status flags
@@ -429,6 +473,7 @@ $(function() {
 				
 				// Satisfy any pending command
 				this.satisfyCommand();
+
 
 			}).bind(this));
 
@@ -793,6 +838,45 @@ $(function() {
 			clearInterval(this.__statusProbeTimer);
 		}
 
+		/**
+		 * Get a property from the VM (asynchronously)
+		 */
+		AutonomousVM.prototype.getProperty = function(name, callback) {
+
+			// Function to get property
+			var fn = function(session) {
+				// Fire callback with the value
+				callback(session.getProperty(name));
+			};
+
+			// If we don't have a session, schedule, otherwise run it right away
+			if (this.wa_session == null) {
+				this.__sessionReadyFn.push(fn);
+			} else {
+				fn(this.wa_session);
+			}
+		}
+
+		/**
+		 * Set a property from the VM (asynchronously)
+		 */
+		AutonomousVM.prototype.setProperty = function(name, value, callback) {
+
+			// Function to get property
+			var fn = function(session) {
+				// Set property
+				session.setProperty(name, value);
+				// Fire callback
+				if (callback) callback();
+			};
+
+			// If we don't have a session, schedule, otherwise run it right away
+			if (this.wa_session == null) {
+				this.__sessionReadyFn.push(fn);
+			} else {
+				fn(this.wa_session);
+			}
+		}
 
 		/**
 		 * Register an event listeners
@@ -846,7 +930,6 @@ $(function() {
 				
 				// Start the VM
 				this.wa_session.executionCap = this.config.cap;
-				this.wa_session.setProperty("vmid", this.config.vmid);
 				this.wa_session.start(this.config);
 				this.__fireListener('genericStateChanged', STATE_PENDING);
 
@@ -904,7 +987,6 @@ $(function() {
 					// Start right away if the VM was started
 					if (this.__vmStarted) {
 						this.wa_session.executionCap = this.config.cap;
-						this.wa_session.setProperty("vmid", this.config.vmid);
 						this.wa_session.start(this.config);
 						this.__fireListener('genericStateChanged', STATE_PENDING);
 					}
@@ -1478,10 +1560,16 @@ $(function() {
 
 			// Monitor changes on account information
 			this.loginInterface.onUserLogin((function(userInfo) {
+				// Update frame information
 				this.accFrameDefine(userInfo);
+				// Update VM information
+				avm.setProperty("challenge-login", this.loginInterface.freeze());
 			}).bind(this));
 			this.loginInterface.onUserLogout((function(prevInfo) {
+				// Update frame information
 				this.accFrameUndefine();
+				// Update VM information
+				avm.setProperty("challenge-login", this.loginInterface.freeze());
 			}).bind(this));
 
 			// Check if the user is already loaded
@@ -1554,6 +1642,11 @@ $(function() {
 			// Keep avm state
 			this.avmState = -1;
 
+			// Get login information from the VM session
+			avm.getProperty("challenge-login", (function(data){
+				this.loginInterface.thaw( data );
+			}).bind(this));
+
 			// Bind gauge listeners
 			avm.addListener('monitor.eventRate', (function(rate) {
 				this.gaugeFrameGauges.eventRate.rundial("value", rate);
@@ -1599,6 +1692,9 @@ $(function() {
 			avm.addListener('webapiStateChanged', (function(state) {
 				if (state) {
 					this.descFrameSetActive( this.FRAME_INTRO );
+
+					// Save login information
+					avm.setProperty("challenge-login", this.loginInterface.freeze());
 
 					// Update the VMID
 					if (this.loginInterface.userInfo != null) {

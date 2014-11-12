@@ -1,9 +1,4 @@
-<?php
-if (stristr("https/1.1", $_SERVER['HTTP_VIA'])) {
-	header("Location: http://test4theory.cern.ch/vlhc");
-	die();
-}
-?><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
@@ -28,6 +23,12 @@ if (stristr("https/1.1", $_SERVER['HTTP_VIA'])) {
 		  <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 		<![endif]-->
 
+		<!-- Redirect if we are on https (WebAPI does not work over HTTPS) -->
+		<script type="text/javascript">
+		if (window.location.protocol == "https:")
+			window.location = "http:" + window.location.toString().substr(6);
+		</script>
+
 	</head>
 	<body class="fixed-fullscreen">
 
@@ -42,7 +43,7 @@ if (stristr("https/1.1", $_SERVER['HTTP_VIA'])) {
 							<div class="back-progress">
 								<div class="back-animation"></div>
 							</div>
-							<span id="gauge-frame-title">Title</span>
+							<span id="gauge-frame-title">Contacting CernVM WebAPI</span>
 							<div class="account-frame">
 								<div id="acc-picture"></div>
 								<a id="acc-name" target="_blank" href="#">Anonymous</a>
