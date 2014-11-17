@@ -1244,6 +1244,7 @@ $(function() {
 		 * Update live frame
 		 */
 		ChallengeInterface.prototype.descFrameSetLiveConfig = function( cfg ) {
+			this.gaugeFrameStatus("You are now creating virtual collisions");
 			$("#live-debug").text(JSON.stringify(cfg));
 		}
 
