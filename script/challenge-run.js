@@ -1720,7 +1720,7 @@ $(function() {
 			avm.addListener('apiStateChanged', (function(state) {
 				if (state) {
 					// Online!
-					this.gaugeFrameStatus("Attempting connection with the instance");
+					this.gaugeFrameStatus("Downloading and configuring scientific software");
 				} else {
 					// Offline
 					this.gaugeFrameStatus("Disconnected from the instance");

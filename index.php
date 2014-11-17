@@ -61,7 +61,7 @@
 							<div class="widgets">
 								<div class="row">
 								  <div class="col-xs-3">
-									<h3>CPU Load</h3>
+									<h3>Workload</h3>
 									<div class="details">How much your virtual CPU is loaded with work.</div>
 									<input class="ui-dial" id="inp-cpuload" value="0"></input>
 								  </div>
@@ -71,8 +71,8 @@
 									<input class="ui-dial" id="inp-eventrate" value="0"></input>
 								  </div>
 								  <div class="col-xs-3">
-									<h3>Job Rate</h3>
-									<div class="details">How many jobs per hour your virtual machine completes.</div>
+									<h3>Task Rate</h3>
+									<div class="details">How many tasks per hour your virtual machine completes.</div>
 									<input class="ui-dial" id="inp-jobrate" value="0"></input>
 								  </div>
 								  <div class="col-xs-3">
@@ -104,7 +104,9 @@
 
 						<div class="desc-intro">
 							<br />
-							<p><em>(Here will be an introcution to the Virtual Atom Smasher challenge and what you are going to do)</em></p>
+							<p>
+								
+							</p>
 							<div class="dynamic-content">
 							</div>
 						</div>
@@ -143,7 +145,7 @@
 
 						<div class="desc-waitjob">
 							<br />
-							<p><em>(We are waiting for a job. Here will be a more proper interface.)</em></p>
+							<p><em>(We are waiting for a task. Here will be a more proper interface.)</em></p>
 						</div>
 						<div class="desc-live">
 							<br />
