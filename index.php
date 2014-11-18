@@ -71,13 +71,13 @@
 									<input class="ui-dial" id="inp-eventrate" value="0"></input>
 								  </div>
 								  <div class="col-xs-3">
-									<h3>Task Rate</h3>
-									<div class="details">How many tasks per hour your virtual machine completes.</div>
-									<input class="ui-dial" id="inp-jobrate" value="0"></input>
+									<h3>Progress</h3>
+									<div class="details">What fraction of the current job is completed.</div>
+									<input class="ui-dial" id="inp-progress" value="0"></input>
 								  </div>
 								  <div class="col-xs-3">
 									<h3>Ranking</h3>
-									<div class="details">Your ranking among the volunteers competing in this project.</div>
+									<div class="details">Your ranking among the volunteers competing in this challenge.</div>
 									<input class="ui-dial" id="inp-ranking" value="0"></input>
 								  </div>
 								</div>
@@ -243,7 +243,7 @@
 		<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 		<script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
 		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-		<script src="//cernvm.cern.ch/releases/webapi/js/cvmwebapi-latest.js"></script>
+		<script src="//cernvm.cern.ch/releases/webapi/js/cvmwebapi-2.0.9.js"></script>
 		<script src="//cdn.rawgit.com/carhartl/jquery-cookie/master/src/jquery.cookie.js"></script>
 		<script src="script/lib/rundial.js"></script>
 		<!-- Challenge -->

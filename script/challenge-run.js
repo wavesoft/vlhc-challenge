@@ -324,6 +324,7 @@ $(function() {
 
 			// For job description information
 			this.__lastJobKey = "";
+			this.__jobConfig = {};
 
 			// Status flags
 			this.statusFlags = {
@@ -416,10 +417,12 @@ $(function() {
 
 			// For job description information
 			this.__lastJobKey = "";
+			this.__jobConfig = {};
 
 			// Fire reseted monitor events
 			this.__fireListener("monitor.cpuLoad", 0,0,0);
 			this.__fireListener("monitor.eventRate", 0);
+			this.__fireListener("monitor.progress", 0.0);
 			this.__fireListener("monitor.jobInfo", null);
 
 		}
@@ -673,11 +676,39 @@ $(function() {
 		 */
 		AutonomousVM.prototype.__startStatusProbe = function(apiURL) {
 			if (this.__statusProbeTimer) clearInterval(this.__statusProbeTimer);
+			this.__messages = null;
+			this.__bootTime = null;
+			this.__jobConfig = {};
 			this.__statusProbeTimer = setInterval((function() {
 
 				// Allow only one probe to run
 				if (this.__probeBusy) return;
 				this.__probeBusy = true;
+
+				// Get messages
+				if (!this.__messages) {
+
+					// Try to get copilot-agent.log
+					$.ajax({
+						'url': apiURL+'/logs/messages',
+						'success': (function(data,status,xhr) {
+
+							// Process log lines and find the last one
+							var lines = data.split("\n");
+							this.__messages = lines;
+
+							// Find boot time, from the last entry in the logfile
+							var date = lines[0].split(" ");
+							this.__bootTime = Date.parse(date[0]+" "+date[1]+" "+date[2]);
+
+
+						}).bind(this),
+						'error': (function(data,status,xhr) {
+							// Could not get messages. Do nothing
+						}).bind(this)
+					});
+
+				}
 
 				// Try to get copilot-agent.log
 				$.ajax({
@@ -727,27 +758,44 @@ $(function() {
 				});
 
 				// If we are ready, include additional information
-				if (this.statusFlags.job = FLAG_READY) {
+				if ((this.statusFlags.job == FLAG_READY) && (this.__messages)) {  
 
 					// Process job output
 					$.ajax({
 						'url': apiURL+'/logs/job.out',
 						'success': (function(data,status,xhr) {
+							var currEvents = 0,
+								lines = data.split("\n"),
+								is_valid = false;
+
+							// Find the runRunvet header in the first few lines
+							for (var i=0; i<10; i++) {
+								if (lines[i].substr(0,15) == "===> [runRivet]") {
+									// Get the time started
+									var parts = lines[i].split(" "),
+										date = Date.parse(parts[3]+" "+parts[4]+" "+parts[5]);
+									// Check if that date is newer than the boot time
+									is_valid = (date > this.__bootTime);
+									break;
+								}
+							}
 
 							// Get the last line that matches 'Events processed'
-							var lines = data.split("\n");
 							for (var i=lines.length-1; i>=0; i--) {
-								if (lines[i].match("Events processed")) {
-									var currEvents = parseInt(lines[i].split(" ")[0]),
-										currTimestamp = Date.now();
-
+								if (lines[i].match("Events processed") && is_valid) {
+									var currTimestamp = Date.now();
+									currEvents = parseInt(lines[i].split(" ")[0]);
+									
 									// Skip idle states
 									if ((this.__lastEvents == currEvents) && (currTimestamp - this.__lastEventTimestamp < 10000))
 										break;
 
 									// Calculate event rate
 									if (currEvents < this.__lastEvents) {
+										this.statusFlags.job = FLAG_PENDING;
 										this.__fireListener("monitor.eventRate", 0);
+										this.__notifyFlagChange();
+
 									} else {
 										var rate = (currEvents - this.__lastEvents) / (currTimestamp - this.__lastEventTimestamp) * 60000;
 
@@ -771,6 +819,9 @@ $(function() {
 									break;
 								}
 							}
+
+							// Quit if we didn't have a valid record
+							if (!is_valid) return;
 
 							// Find the first line which contains the configuration info
 							var jobKey = "", jobCfg = {};
@@ -797,11 +848,23 @@ $(function() {
 							if (jobKey != this.__lastJobKey) {
 								this.__fireListener('monitor.jobInfo', jobCfg);
 								this.__lastJobKey = jobKey;
+								this.__jobConfig = jobCfg;
+							}
+
+							// Update progress if we have a job
+							if (this.__jobConfig) {
+								var progress = currEvents / parseInt(this.__jobConfig['nevts']);
+								this.__fireListener("monitor.progress", progress);
 							}
 
 						}).bind(this),
 						'error': (function(data,status,xhr) {
 							this.__fireListener("monitor.eventRate", 0);
+							this.__fireListener("monitor.progress", 0);
+							if (this.statusFlags.job != FLAG_PENDING) {
+								this.statusFlags.job = FLAG_PENDING;
+								this.__notifyFlagChange();
+							}
 						}).bind(this)
 					});
 
@@ -1071,7 +1134,7 @@ $(function() {
 			this.gaugeFrameGauges = {
 				cpuLoad 	: $("#inp-cpuload"),
 				eventRate 	: $("#inp-eventrate"),
-				jobRate 	: $("#inp-jobrate"),
+				progress 	: $("#inp-progress"),
 				ranking 	: $("#inp-ranking"),
 			};
 
@@ -1129,9 +1192,9 @@ $(function() {
 				min: 0, max: 1000000, step: 500,
 				format: function(x) { return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); }
 			});
-			this.gaugeFrameGauges.jobRate.rundial({
-				min: 0, max: 1000, step: 1,
-				format: function(x) { return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); }
+			this.gaugeFrameGauges.progress.rundial({
+				min: 0, max: 100, step: 1,
+				format: function(x) { return parseInt(x).toString() + " %"; }
 			});
 			this.gaugeFrameGauges.ranking.rundial({
 				min: 0, max: 100000, step: 10,
@@ -1181,6 +1244,7 @@ $(function() {
 		ChallengeInterface.prototype.gaugeFrameResetGauges = function() {
 			this.gaugeFrameGauges.eventRate.rundial("value", 0);
 			this.gaugeFrameGauges.cpuLoad.rundial("value", 0);
+			this.gaugeFrameGauges.progress.rundial("value", 0);
 		}
 
 		///////////////////////////////////////////////
@@ -1657,7 +1721,12 @@ $(function() {
 			avm.addListener('monitor.cpuLoad', (function(one, five, fifteen) {
 				this.gaugeFrameGauges.cpuLoad.rundial("value", five*100);
 			}).bind(this));
-
+			avm.addListener('monitor.progress', (function(overall) {
+				this.gaugeFrameGauges.progress.rundial("value", overall*100);
+				if (overall >= 0.95) {
+					this.gaugeFrameStatus("Completing analysis and sending results");
+				}
+			}).bind(this));
 
 			// Bind progress events
 			avm.addListener('progress', (function(message, value) {
@@ -1740,7 +1809,7 @@ $(function() {
 					this.descFrameSetActive( this.FRAME_STARTING );
 
 					// If VM was already running, enable showing idle
-					this.gaugeFrameStatus("The Virtual Machine is running");
+					this.gaugeFrameStatus("The Virtual Machine is booting");
 					this.dontShowIdle = false;
 
 				} else if (state == STATE_STOPPED) {

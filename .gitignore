@@ -219,3 +219,5 @@ pip-log.txt
 # a bad idea to put on github
 src*
 
+
+script/cvmwebapi-2.0.9.js
