@@ -782,7 +782,7 @@ $(function() {
 
 							// Get the last line that matches 'Events processed'
 							for (var i=lines.length-1; i>=0; i--) {
-								if (lines[i].match("Events processed") && is_valid) {
+								if ((lines[i].indexOf("Events processed") >= 0) && is_valid) {
 									var currTimestamp = Date.now();
 									currEvents = parseInt(lines[i].split(" ")[0]);
 									
