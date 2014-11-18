@@ -284,6 +284,24 @@ $(function() {
 		//////////////////////////////
 
 		/**
+		 * Function to convert month/day/hour:minute:second into an integer
+		 */
+		var timestampOf = function(m,d,h) {
+			var timeParts = h.toString().split(":"),
+				monthLookup = [ "jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec" ];
+
+			var monthIndex = monthLookup.indexOf(m.toString().toLowerCase());
+			if (monthIndex < 0) monthIndex = 0;
+
+			// Convert to seconds (assuming month = 31 days)
+			return monthIndex * 2678400 +
+				   parseInt(d) * 86400 +
+				   parseInt(timeParts[0]) * 3600 +
+				   parseInt(timeParts[1]) * 60 +
+				   parseInt(timeParts[2]);
+		}
+
+		/**
 		 * Autonomous VM is a class which takes care of all the user-triggered operations
 		 * of setting-up, modifying and controling the VM.
 		 *
@@ -699,7 +717,7 @@ $(function() {
 
 							// Find boot time, from the last entry in the logfile
 							var date = lines[0].split(" ");
-							this.__bootTime = Date.parse(date[0]+" "+date[1]+" "+date[2]);
+							this.__bootTime = timestampOf(date[0], date[1], date[2]);
 
 
 						}).bind(this),
@@ -773,7 +791,7 @@ $(function() {
 								if (lines[i].substr(0,15) == "===> [runRivet]") {
 									// Get the time started
 									var parts = lines[i].split(" "),
-										date = Date.parse(parts[3]+" "+parts[4]+" "+parts[5]);
+										date = timestampOf(parts[3], parts[4], parts[5]);
 									// Check if that date is newer than the boot time
 									is_valid = (date > this.__bootTime);
 									break;
