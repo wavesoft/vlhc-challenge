@@ -859,6 +859,7 @@ $(function() {
 
 						}).bind(this),
 						'error': (function(data,status,xhr) {
+							this.__fireListener('monitor.jobInfo', null);
 							this.__fireListener("monitor.eventRate", 0);
 							this.__fireListener("monitor.progress", 0);
 							if (this.statusFlags.job != FLAG_PENDING) {
@@ -1308,7 +1309,7 @@ $(function() {
 		 * Update live frame
 		 */
 		ChallengeInterface.prototype.descFrameSetLiveConfig = function( cfg ) {
-			this.gaugeFrameStatus("You are now creating virtual collisions");
+			this.gaugeFrameStatus("Starting virtual event generator");
 			$("#live-debug").text(JSON.stringify(cfg));
 		}
 
@@ -1716,6 +1717,9 @@ $(function() {
 
 			// Bind gauge listeners
 			avm.addListener('monitor.eventRate', (function(rate) {
+				if (rate > 0) {
+					this.gaugeFrameStatus("You are now creating virtual collisions");
+				}
 				this.gaugeFrameGauges.eventRate.rundial("value", rate);
 			}).bind(this));
 			avm.addListener('monitor.cpuLoad', (function(one, five, fifteen) {
@@ -1723,7 +1727,7 @@ $(function() {
 			}).bind(this));
 			avm.addListener('monitor.progress', (function(overall) {
 				this.gaugeFrameGauges.progress.rundial("value", overall*100);
-				if (overall >= 0.95) {
+				if (overall >= 0.99) {
 					this.gaugeFrameStatus("Completing analysis and sending results");
 				}
 			}).bind(this));
