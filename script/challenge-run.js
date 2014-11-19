@@ -200,7 +200,12 @@ $(function() {
 					'uuid'			: "t-"+data['id']
 				};
 			} else if (data['provider'] == "boinc") {
-
+				return {
+					'displayName'	: data['name'],
+					'profileUrl'	: 'http://lhcathome2.cern.ch/vLHCathome/view_profile.php?userid='+data['id'],
+					'picture'		: 'http://lhcathome2.cern.ch/vLHCathome/user_profile/images/'+data['id']+'.jpg',
+					'uuid'			: "b-"+data['id']
+				};
 			}
 		};
 
@@ -692,8 +697,10 @@ $(function() {
 		 * Start a probe which is going to contact the VM endpoint and check
 		 * periodically for the status of the software INSIDE the VM
 		 */
-		AutonomousVM.prototype.__startStatusProbe = function(apiURL) {
+		AutonomousVM.prototype.__startStatusProbe = function(refApiURL) {
 			if (this.__statusProbeTimer) clearInterval(this.__statusProbeTimer);
+			var apiURL = refApiURL;
+
 			this.__messages = null;
 			this.__bootTime = null;
 			this.__jobConfig = {};
