@@ -99,7 +99,7 @@
 					<div class="well">
 
 						<div class="desc-install">
-							<h1>Welcome to the Virtual LHC Challenge</h1>
+							<h1>Welcome to the CERN 60 Public Computing Challenge</h1>
 						</div>
 
 						<div class="desc-intro">
@@ -120,7 +120,7 @@
 						<div class="desc-recovery">
 							<h1>Chill... bad things happen</h1>
 							<p>
-								It looks that something went wrong while trying to prepare your computer for the <em>Virtual LHC Challenge</em>.
+								It looks that something went wrong while trying to prepare your computer for the <em>CERN 60 Public Computing Challenge</em>.
 							</p>
 							<p>
 								Try the following solutions:
@@ -169,7 +169,7 @@
 			</div>
 
 			<div class="disclaimer-footer">
-				<a href="#" data-toggle="modal" data-target="#modal-disclaimer">Disclaimer &amp; Credits</a>
+				<a href="#" data-toggle="modal" data-target="#modal-disclaimer">Credits</a>
 			</div>
 
 			<div id="modal-disclaimer" class="modal fade">
@@ -186,9 +186,9 @@
 						<img src="style/img/logo/fp7.jpg" alt="Seventh Framework Programe" />&nbsp;
 						<img src="style/img/logo/eu.jpg" alt="European Union" />
 					</p>
-					<p>The <em>Virtual LHC Challenge</em> is a project developed by <a href="http://cern.ch">CERN</a> with the partnership of the <a href="http://citizencyberlab.eu/">Citizen Cyberlab</a>. The project is funded by the <a href="http://ec.europa.eu/research/fp7/index_en.cfm">Seventh Framework Programme</a> of the European Eunion.</p>
+					<p>The <em>CERN 60 Public Computing Challenge</em> is a project developed by <a href="http://cern.ch">CERN</a> with the partnership of the <a href="http://citizencyberlab.eu/">Citizen Cyberlab</a>. The project is funded by the <a href="http://ec.europa.eu/research/fp7/index_en.cfm">Seventh Framework Programme</a> of the European Eunion.</p>
 					<p>
-						Credits about resources used in this page:
+						Information about resources used in this page:
 						<ul>
 							<li>Various icons in this webpage are from <a href="http://www.freepik.com" title="Freepik">Freepik</a> and are licensed under <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></li>
 							<li>The CernVM WebAPI installs the <a href="https://www.virtualbox.org/wiki">VirtualBox</a> hypervisor which is licensed under GNU General Public License (GPL) version 2</li>

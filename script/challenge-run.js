@@ -140,6 +140,11 @@ $(function() {
 			this.anonymousID = data['a'];
 			this.userInfo = data['u'];
 
+			// Update new version fields
+			if (!this.userInfo['boinc_username']) this.userInfo['boinc_username']='';
+			if (!this.userInfo['boinc_authenticator']) this.userInfo['boinc_authenticator']='';
+			if (!this.userInfo['boinc_userid']) this.userInfo['boinc_userid']='';
+
 			// Check for user login state switched
 			if ((prevUser == null) && (this.userInfo != null)) {
 				// Call login listeners
@@ -204,6 +209,11 @@ $(function() {
 					'displayName'	: data['name'],
 					'profileUrl'	: 'http://lhcathome2.cern.ch/vLHCathome/view_profile.php?userid='+data['id'],
 					'picture'		: 'http://lhcathome2.cern.ch/vLHCathome/user_profile/images/'+data['id']+'.jpg',
+					'boinc'			: {
+						'userid'		: data['id'],
+						'name'			: data['name'],
+						'authenticator'	: data['authenticator']
+					},
 					'uuid'			: "b-"+data['id']
 				};
 			}
@@ -319,7 +329,11 @@ $(function() {
 				'memory': 128,
 				'cpus'  : 1,
 				'cap'   : 80,
-				'vmid'  : 'anonymous'
+				'vmid'  : 'anonymous',
+				// For concurrency with BOINC
+				'boinc_username' : '',
+				'boinc_authenticator': '',
+				'boinc_userid': ''
 			};
 
 			// Setup state parameters
@@ -1699,6 +1713,15 @@ $(function() {
 			// If we have AVM, update vmid
 			if (this.avm) {
 				this.avm.config.vmid = info['uuid'];
+				if (info['boinc'] !== undefined) {
+					this.avm.config.boinc_username = info['boinc']['name'];
+					this.avm.config.boinc_authenticator = info['boinc']['authenticator'];
+					this.avm.config.boinc_userid = info['boinc']['id'];
+				} else {
+					this.avm.config.boinc_username = "";
+					this.avm.config.boinc_authenticator =  "";
+					this.avm.config.boinc_userid = "";
+				}
 				this.avm.applyAll();
 			}
 
@@ -1716,6 +1739,9 @@ $(function() {
 			// If we have AVM, update vmid
 			if (this.avm) {
 				this.avm.config.vmid = this.loginInterface.anonymousID;
+				this.avm.config.boinc_username = "";
+				this.avm.config.boinc_authenticator =  "";
+				this.avm.config.boinc_userid = "";
 				this.avm.applyAll();
 			}
 		}
@@ -1800,6 +1826,18 @@ $(function() {
 					// Update the VMID
 					this.avm.config.vmid = this.loginInterface.vmid();
 
+					// Update BOINC profile
+					var info = this.loginInterface.userInfo;
+					if (info['boinc'] !== undefined) {
+						this.avm.config.boinc_username = info['boinc']['name'];
+						this.avm.config.boinc_authenticator = info['boinc']['authenticator'];
+						this.avm.config.boinc_userid = info['boinc']['id'];
+					} else {
+						this.avm.config.boinc_username = "";
+						this.avm.config.boinc_authenticator =  "";
+						this.avm.config.boinc_userid = "";
+					}
+
 				} else {
 					this.descFrameSetActive( this.FRAME_RECOVERY );
 					this.gaugeFrameAlert("Challenge Aborted", "Lost connection with the CernVM WebAPI.");
@@ -1853,7 +1891,7 @@ $(function() {
 						this.descFrameSetActive( this.FRAME_IDLE );
 
 					// Any shutdown command is not any more active
-					this.gaugeFrameStatus("The Virtual Machine is closed");
+					this.gaugeFrameStatus("The Virtual Machine is ready");
 					this.shutdownCommandActive = false;
 
 				} else {
