@@ -141,9 +141,11 @@ $(function() {
 			this.userInfo = data['u'];
 
 			// Update new version fields
-			if (!this.userInfo['boinc_username']) this.userInfo['boinc_username']='';
-			if (!this.userInfo['boinc_authenticator']) this.userInfo['boinc_authenticator']='';
-			if (!this.userInfo['boinc_userid']) this.userInfo['boinc_userid']='';
+			if (this.userInfo) {
+				if (!this.userInfo['boinc_username']) this.userInfo['boinc_username']='';
+				if (!this.userInfo['boinc_authenticator']) this.userInfo['boinc_authenticator']='';
+				if (!this.userInfo['boinc_userid']) this.userInfo['boinc_userid']='';
+			}
 
 			// Check for user login state switched
 			if ((prevUser == null) && (this.userInfo != null)) {
@@ -1713,7 +1715,7 @@ $(function() {
 			// If we have AVM, update vmid
 			if (this.avm) {
 				this.avm.config.vmid = info['uuid'];
-				if (info['boinc'] !== undefined) {
+				if (info && (info['boinc'] !== undefined)) {
 					this.avm.config.boinc_username = info['boinc']['name'];
 					this.avm.config.boinc_authenticator = info['boinc']['authenticator'];
 					this.avm.config.boinc_userid = info['boinc']['id'];
@@ -1828,7 +1830,7 @@ $(function() {
 
 					// Update BOINC profile
 					var info = this.loginInterface.userInfo;
-					if (info['boinc'] !== undefined) {
+					if (info && (info['boinc'] !== undefined)) {
 						this.avm.config.boinc_username = info['boinc']['name'];
 						this.avm.config.boinc_authenticator = info['boinc']['authenticator'];
 						this.avm.config.boinc_userid = info['boinc']['id'];
