@@ -1718,7 +1718,7 @@ $(function() {
 				if (info && (info['boinc'] !== undefined)) {
 					this.avm.config.boinc_username = info['boinc']['name'];
 					this.avm.config.boinc_authenticator = info['boinc']['authenticator'];
-					this.avm.config.boinc_userid = info['boinc']['id'];
+					this.avm.config.boinc_userid = info['boinc']['userid'];
 				} else {
 					this.avm.config.boinc_username = "";
 					this.avm.config.boinc_authenticator =  "";
@@ -1833,7 +1833,7 @@ $(function() {
 					if (info && (info['boinc'] !== undefined)) {
 						this.avm.config.boinc_username = info['boinc']['name'];
 						this.avm.config.boinc_authenticator = info['boinc']['authenticator'];
-						this.avm.config.boinc_userid = info['boinc']['id'];
+						this.avm.config.boinc_userid = info['boinc']['userid'];
 					} else {
 						this.avm.config.boinc_username = "";
 						this.avm.config.boinc_authenticator =  "";
