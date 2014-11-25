@@ -361,6 +361,9 @@ $(function() {
 			// when we have a session
 			this.__sessionReadyFn = [];
 
+			// Cache invalidation counter
+			this.__nid = 0;
+
 			// For job description information
 			this.__lastJobKey = "";
 			this.__jobConfig = {};
@@ -716,6 +719,7 @@ $(function() {
 		AutonomousVM.prototype.__startStatusProbe = function(refApiURL) {
 			if (this.__statusProbeTimer) clearInterval(this.__statusProbeTimer);
 			var apiURL = refApiURL;
+			var nid = ++this.__nid;
 
 			this.__messages = null;
 			this.__bootTime = null;
@@ -731,7 +735,7 @@ $(function() {
 
 					// Try to get copilot-agent.log
 					$.ajax({
-						'url': apiURL+'/logs/messages',
+						'url': apiURL+'/logs/messages?i='+nid,
 						'success': (function(data,status,xhr) {
 
 							// Process log lines and find the last one
@@ -753,7 +757,7 @@ $(function() {
 
 				// Try to get copilot-agent.log
 				$.ajax({
-					'url': apiURL+'/logs/copilot-agent.log',
+					'url': apiURL+'/logs/copilot-agent.log?i='+nid,
 					'success': (function(data,status,xhr) {
 
 						// Process log lines and find the last one
@@ -779,7 +783,7 @@ $(function() {
 
 				// Try to get job.err
 				$.ajax({
-					'url': apiURL+'/logs/job.err',
+					'url': apiURL+'/logs/job.err?i='+nid,
 					'success': (function(data,status,xhr) {
 
 						// If it's empty, that's good news
@@ -803,7 +807,7 @@ $(function() {
 
 					// Process job output
 					$.ajax({
-						'url': apiURL+'/logs/job.out',
+						'url': apiURL+'/logs/job.out?i='+nid,
 						'success': (function(data,status,xhr) {
 							var currEvents = 0,
 								lines = data.split("\n"),
@@ -912,7 +916,7 @@ $(function() {
 
 					// Process top command
 					$.ajax({
-						'url': apiURL+'/logs/top',
+						'url': apiURL+'/logs/top?i='+nid,
 						'success': (function(data,status,xhr) {
 
 							// If it's empty, that's good news
