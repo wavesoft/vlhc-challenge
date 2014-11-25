@@ -228,6 +228,7 @@ body.no-top-scroll .navbar .nav a:hover {
   height: 30px;
   float: left !important;
   text-align: left;
+  font-weight: bold;
 }
 #challenge div.frame-status div.panel div.panel-heading a#acc-name {
   line-height: 30px;
