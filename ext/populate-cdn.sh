@@ -1,12 +1,17 @@
 #!/bin/bash
 
+# Make directories
+[ ! -d js ] && mkdir js
+[ ! -d css ] && mkdir css
+[ ! -d css/img ] && mkdir css/img
+[ ! -d fonts ] && mkdir fonts
+
 # Bootstrap
 wget -O css/bootstrap.min.css http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css
 wget -O js/bootstrap.min.js http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js
-wget -O fonts/glyphicons-halflings-regular.eot http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/glyphicons-halflings-regular.eot
-wget -O fonts/glyphicons-halflings-regular.svg http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/glyphicons-halflings-regular.svg
-wget -O fonts/glyphicons-halflings-regular.ttf http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/glyphicons-halflings-regular.ttf
-wget -O fonts/glyphicons-halflings-regular.woff http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/glyphicons-halflings-regular.woff
+wget -O css/images/ui-bg_flat_75_ffffff_40x100.png http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/images/ui-bg_flat_75_ffffff_40x100.png
+wget -O css/images/ui-bg_glass_75_e6e6e6_1x400.png http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/images/ui-bg_glass_75_e6e6e6_1x400.png
+wget -O css/images/ui-bg_glass_75_dadada_1x400.png http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/images/ui-bg_glass_75_dadada_1x400.png
 
 # jQuery
 wget -O js/jquery-1.11.0.min.js http://code.jquery.com/jquery-1.11.0.min.js
