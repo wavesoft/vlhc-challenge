@@ -7,9 +7,9 @@
 		<title>CernVM WebAPI</title>
 
 		<!-- Bootstrap -->
-		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="ext/css/bootstrap.min.css">
 		<!-- jQuery UI -->
-		<link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+		<link rel="stylesheet" href="ext/jquery-ui.css">
 		<!-- Stylesheets -->
 		<link rel="stylesheet" href="style/css/challenge.css">
 
@@ -19,8 +19,8 @@
 		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 		<!--[if lt IE 9]>
-		  <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-		  <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+		  <script src="ext/js/html5shiv.min.js"></script>
+		  <script src="ext/js/respond.min.js"></script>
 		<![endif]-->
 
 		<!-- Redirect if we are on https (WebAPI does not work over HTTPS) -->
@@ -250,12 +250,13 @@
 		</div>
 
 		<!-- Libraries -->
-		<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-		<script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
-		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+		<script src="ext/js/jquery-1.11.0.min.js"></script>
+		<script src="ext/js/jquery-ui.js"></script>
+		<script src="ext/js/bootstrap.min.js"></script>
+		<script src="ext/js/jquery.cookie.js"></script>
 		<script src="//cernvm.cern.ch/releases/webapi/js/cvmwebapi-latest.js"></script>
-		<script src="//cdn.rawgit.com/carhartl/jquery-cookie/master/src/jquery.cookie.js"></script>
 		<script src="script/lib/rundial.js"></script>
+
 		<!-- Challenge -->
 		<script src="script/challenge-common.js"></script>
 		<script src="script/challenge-run.js"></script>
