@@ -9,7 +9,7 @@
 		<!-- Bootstrap -->
 		<link rel="stylesheet" href="ext/css/bootstrap.min.css">
 		<!-- jQuery UI -->
-		<link rel="stylesheet" href="ext/jquery-ui.css">
+		<link rel="stylesheet" href="ext/css/jquery-ui.css">
 		<!-- Stylesheets -->
 		<link rel="stylesheet" href="style/css/challenge.css">
 
