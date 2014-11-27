@@ -118,10 +118,6 @@
 						</div>
 
 						<div class="desc-intro">
-							<br />
-							<p>
-								
-							</p>
 							<div class="dynamic-content">
 							</div>
 						</div>

@@ -361,15 +361,15 @@ body.no-top-scroll .navbar .nav a:hover {
 #challenge div.frame-description .well div.desc-intro div.arrow-center {
   position: absolute;
   display: block;
-  width: 119px;
-  height: 154px;
+  width: 83px;
+  height: 109px;
   left: 50%;
   bottom: 4px;
   background: url(../img/arrow-down.png) no-repeat center center;
-  -webkit-transform: translate(-60px 0px);
-  -moz-transform: translate(-60px 0px);
-  -o-transform: translate(-60px 0px);
-  transform: translate(-60px 0px);
+  -webkit-transform: translate(-42px, 0px);
+  -moz-transform: translate(-42px, 0px);
+  -o-transform: translate(-42px, 0px);
+  transform: translate(-42px, 0px);
 }
 #challenge div.frame-description div.valign-middle {
   padding-top: 80px;
