@@ -280,13 +280,13 @@ $(function() {
 			// If we are logged-in show credits
 			if (vmid) {
 				window.open(
-					this.loginURL,
+					this.creditsURL + "?vmid=" + vmid,
 					"login-window",
 					"width="+w+",height="+h+",left="+l+",top="+t+",location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no"
 				);
 			} else {
 				window.open(
-					this.creditsURL + "?vmid=" + vmid,
+					this.loginURL,
 					"login-window",
 					"width="+w+",height="+h+",left="+l+",top="+t+",location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no"
 				);
