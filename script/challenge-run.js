@@ -173,6 +173,17 @@ $(function() {
 		}
 
 		/**
+		 * Return the username
+		 */
+		LoginInterface.prototype.username = function() {
+			if (this.userInfo != null) {
+				return this.userInfo['displayName'];
+			} else {
+				return "anonymous";
+			}
+		}
+
+		/**
 		 * Freeze data adn return the payload to store
 		 */
 		LoginInterface.prototype.freeze = function() {
@@ -209,7 +220,7 @@ $(function() {
 				};
 			} else if (data['provider'] == "boinc") {
 				return {
-					'displayName'	: data['name'],
+					'displayName'	: data['displayName'],
 					'profileUrl'	: 'http://mcplots-dev.cern.ch/production.php?view=user&userid='+data['id'],
 					'picture'		: 'http://lhcathome2.cern.ch/vLHCathome/user_profile/images/'+data['id']+'.jpg',
 					'boinc'			: {
@@ -272,7 +283,7 @@ $(function() {
 		/**
 		 * Log-in user
 		 */
-		LoginInterface.prototype.showAccountWindow = function(vmid) {
+		LoginInterface.prototype.showAccountWindow = function(vmid, user) {
 			var w = 750, h = 450,
 				l = (screen.width - w) / 2,
 				t = (screen.height - h)/ 2;
@@ -280,7 +291,7 @@ $(function() {
 			// If we are logged-in show credits
 			if (vmid) {
 				window.open(
-					this.creditsURL + "?vmid=" + vmid,
+					this.creditsURL + "?vmid=" + escape(vmid) + "&user=" + escape(user),
 					"login-window",
 					"width="+w+",height="+h+",left="+l+",top="+t+",location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no"
 				);
@@ -1730,7 +1741,7 @@ $(function() {
 				this.loginInterface.showAccountWindow();
 			}).bind(this));
 			this.accBtnCredits.click((function() {
-				this.loginInterface.showAccountWindow( this.loginInterface.vmid() );
+				this.loginInterface.showAccountWindow( this.loginInterface.vmid(), this.loginInterface.username() );
 			}).bind(this));
 			this.accBtnLogout.click((function() {
 				this.loginInterface.logout();
