@@ -159,7 +159,14 @@
 							<p><em>(We are waiting for a task. Here will be a more proper interface.)</em></p>
 						</div>
 						<div class="desc-live">
-							<br />
+
+							<div class="collider">
+								<div class="label label-beam"><span class="name">Beam: </span><span id="live-beam"></span></div>
+								<div class="label label-generator"><span class="name">Beam: </span><span id="live-generator"></span></div>
+								<div class="label label-process"><span class="name">Beam: </span><span id="live-process"></span></div>
+								<div class="label label-energy"><span class="name">Beam: </span><span id="live-energy"></span></div>
+							</div>
+
 							<p><em>(We are now live. Here will be a proper description regarding the kind of the simulation you are currently working on. For now, some debug details are shown below)</em></p>
 							<pre id="live-debug">
 							</pre>

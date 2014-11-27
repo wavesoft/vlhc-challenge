@@ -459,6 +459,37 @@ body.no-top-scroll {
 
 			}
 
+			div.desc-live {
+
+				div.collider {
+					position: absolute;
+					left: 50%; top: 50%;
+					width: 705px; height: 230px;
+					background: url(../img/collider.png) no-repeat center center;
+
+					div.label {
+						color: #000;
+						background: #ecf0f1;
+						border: solid 1px #bdc3c7;
+						width: 128px; height: 30px;
+						text-align: center;
+						line-height: 25px;
+						position: absolute;
+
+						span.name {
+							color: #e74c3c;
+						}
+
+						&.label-beam { left: 72px; top: 211px; }
+						&.label-process { left: 316px; top: 211px; }
+						&.label-energy { left: 624px; top: 211px; }
+						&.label-generator { left: 316px; top: 23px; }
+
+					}
+				}
+
+			}
+
 		}
 
 		div.valign-middle {

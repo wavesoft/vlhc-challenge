@@ -1407,6 +1407,28 @@ $(function() {
 		ChallengeInterface.prototype.descFrameSetLiveConfig = function( cfg ) {
 			this.gaugeFrameStatus("Starting virtual event generator");
 			$("#live-debug").text(JSON.stringify(cfg));
+			if (cfg) {
+
+				// Apply energy units
+				var energy = parseInt(cfg['energy']);
+				if (energy >= 1000) {
+					energy = Number(energy/1000).toFixed(2) + " GeV";
+				} else {
+					energy = energy.toString() + " MeV";
+				}
+
+				// Apply configuration
+				$("#live-beam").text(cfg['beam'])
+				$("#live-process").text(cfg['process'])
+				$("#live-energy").text(energy)
+				$("#live-generator").text(cfg['generator'])
+
+			} else {
+				$("#live-beam").text("---");
+				$("#live-process").text("---");
+				$("#live-energy").text("---");
+				$("#live-generator").text("---");
+			}
 		}
 
 		///////////////////////////////////////////////
