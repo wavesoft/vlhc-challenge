@@ -230,16 +230,8 @@ $(function() {
 			if (hash.substr(0,5) == "user=") {
 				var userStr = hash.substr(5);
 				if (userStr == "none") {
-
-					// Fire callbacks (with previous log-in info)
-					if (this.userInfo != null) {
-						// Update user info
-						this.userInfo = null;
-						// Call logout listeners
-						for (var i=0; i<this._logoutListeners.length; i++)
-							this._logoutListeners[i](this.userInfo);
-					}
-
+					// Fire logout function
+					this.logout();
 				} else {
 
 					// Parse user info from the hash
@@ -259,6 +251,20 @@ $(function() {
 				// Clear hash
 				window.location.hash = "";
 
+			}
+		}
+
+		/**
+		 * Log-out
+		 */
+		LoginInterface.prototype.logout = function() {
+			// Fire callbacks (with previous log-in info)
+			if (this.userInfo != null) {
+				// Update user info
+				this.userInfo = null;
+				// Call logout listeners
+				for (var i=0; i<this._logoutListeners.length; i++)
+					this._logoutListeners[i](this.userInfo);
 			}
 		}
 
@@ -1715,10 +1721,7 @@ $(function() {
 				this.loginInterface.showAccountWindow( this.loginInterface.vmid() );
 			}).bind(this));
 			this.accBtnLogout.click((function() {
-				// Update frame information
-				this.accFrameUndefine();
-				// Update VM information
-				avm.setProperty("challenge-login", this.loginInterface.freeze());
+				this.loginInterface.logout();
 			}).bind(this));
 
 		}
