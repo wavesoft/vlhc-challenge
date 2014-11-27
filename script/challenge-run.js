@@ -1251,7 +1251,7 @@ $(function() {
 			this.footerBtnGear = $("#btn-status");
 
 			// Start frame shuffler
-			setInterval(self.descFrameSetShuffle.bind(this), 10000);
+			setInterval(this.descFrameSetShuffle.bind(this), 10000);
 
 			// Initialize footer 
 			this.footerInit();
