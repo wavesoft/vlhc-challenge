@@ -772,9 +772,12 @@ $(function() {
 							this.__messages = lines;
 
 							// Find boot time, from the last entry in the logfile
-							if (lines.length > 2) {
-								var date = lines[lines.length-2].split(" ");
-								this.__bootTime = timestampOf(date[0], date[1], date[2]);
+							for (var i=0; i<lines.length; i++) {
+								if ((lines.indexOf("syslogd")>0) && (lines.indexOf("restart")>0)) {
+									var date = lines[lines.length-2].split(" ");
+									this.__bootTime = timestampOf(date[0], date[1], date[2]);
+									// Keep iterating until we found the last entry
+								}
 							}
 
 						}).bind(this),
