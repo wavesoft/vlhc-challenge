@@ -12,5 +12,14 @@
 		],
 		"random": [
 		]
+	},
+	"live": {
+		"sequence": [
+		],
+		"random": [
+			"live-antimatter.html",
+			"live-clicker.html",
+			"live-recognize.html"
+		]
 	}
 }

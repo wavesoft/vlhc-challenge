@@ -172,11 +172,13 @@
 								</div>
 							</div>
 							<div class="analyses">
-								<p>Collisions are anlyized with the following analyses:</p>
+								<p>Collisions are analyzed with the following analyses:</p>
 								<div class="list-group" id="live-analyses">
 									<a href="#" class="list-group-item disabled">(No analyses)</a>
 								</div>
 							</div>
+							<div class="dynamic-content">
+							</div>							
 						</div>
 
 

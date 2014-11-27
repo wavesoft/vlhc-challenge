@@ -1250,6 +1250,9 @@ $(function() {
 			this.footerBtnPower = $("#btn-power");
 			this.footerBtnGear = $("#btn-status");
 
+			// Start frame shuffler
+			setInterval(self.descFrameSetShuffle.bind(this), 10000);
+
 			// Initialize footer 
 			this.footerInit();
 
@@ -1391,14 +1394,24 @@ $(function() {
 			this.descriptionActiveFrame = index;
 
 			// Try to load text according to the frame type
-			var dynamicDocElm = this.descriptionFrames[ index ].find(".dynamic-content");
+			var dynamicDocElm = this.descriptionDynamicDocElm = this.descriptionFrames[ index ].find(".dynamic-content");
 			if (index == this.FRAME_STARTING) {
 				this.systemMessages.fetchAndRender( "starting", dynamicDocElm );
 			} else if (index == this.FRAME_INTRO) {
 				this.systemMessages.fetchAndRender( "intro", dynamicDocElm );
-			} else if (index == this.FRAME_IDLE) {
+			} else if (index == this.FRAME_LIVE) {
+				this.systemMessages.fetchAndRender( "live", dynamicDocElm );
 			}
 
+		}
+
+		/**
+		 * Automatic shuffling of the description frame system messages
+		 */
+		ChallengeInterface.prototype.descFrameSetShuffle = function( index ) {
+			if (this.descriptionActiveFrame == this.FRAME_LIVE) {
+				this.systemMessages.fetchAndRender( "live", this.descriptionDynamicDocElm );
+			}
 		}
 
 		/**
@@ -1443,6 +1456,7 @@ $(function() {
 				$("#live-generator-link").attr("target", "");
 				if (gen_url[cfg['generator']] !== undefined) {
 					$("#live-generator-link").attr("href", gen_url[cfg['generator']]);
+					$("#live-generator-link").attr("target", "_blank");
 				}
 
 				// Apply configuration
@@ -1455,7 +1469,7 @@ $(function() {
 
 				// Reset analyses
 				$("#live-analyses").empty();
-				$('<a href="#" class="list-group-item disabled">(No analyses)</a>').appendTo($("#live-processes"));
+				$('<a href="#" class="list-group-item disabled">(No analyses)</a>').appendTo($("#live-analyses"));
 
 				$("#live-beam").text("---");
 				$("#live-process").text("---");

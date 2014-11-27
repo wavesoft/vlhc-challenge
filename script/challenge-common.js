@@ -27,6 +27,13 @@ $(function() {
 	$(window).scroll(update_top_scroll);
 
 	/**
+	 * Initialize tooltips
+	 */
+	$(function () {
+	  $('[data-toggle="tooltip"]').tooltip()
+	});
+
+	/**
 	 * Smooth scroll '#' targets
 	 */
 	$('a[href*=#]:not([href=#])').click(function() {

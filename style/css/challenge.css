@@ -407,7 +407,7 @@ body.no-top-scroll .navbar .nav a:hover {
 }
 #challenge div.frame-description .well div.desc-live div.collider div.label.label-process {
   left: 253px;
-  top: 197px;
+  top: 175px;
 }
 #challenge div.frame-description .well div.desc-live div.collider div.label.label-energy {
   left: 561px;
@@ -415,7 +415,7 @@ body.no-top-scroll .navbar .nav a:hover {
 }
 #challenge div.frame-description .well div.desc-live div.collider div.label.label-generator {
   left: 253px;
-  top: 23px;
+  top: 2px;
 }
 #challenge div.frame-description .well div.desc-live div.analyses {
   position: absolute;
