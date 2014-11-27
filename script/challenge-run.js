@@ -1204,7 +1204,7 @@ $(function() {
 
 			// accounting frame
 			this.accBtnLogin = $("#btn-login");
-			this.accBtnLogout = $("#btn-login");
+			this.accBtnLogout = $("#btn-logout");
 			this.accBtnCredits = $("#btn-credits");
 			this.accCreditsModal = $("#modal-credits");
 			this.accInfoPicture = $("#acc-picture");
