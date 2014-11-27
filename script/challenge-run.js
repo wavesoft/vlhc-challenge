@@ -1406,7 +1406,7 @@ $(function() {
 		 */
 		ChallengeInterface.prototype.descFrameSetLiveConfig = function( cfg ) {
 			this.gaugeFrameStatus("Starting virtual event generator");
-			$("#live-debug").text(JSON.stringify(cfg));
+			//$("#live-debug").text(JSON.stringify(cfg));
 			if (cfg) {
 
 				// Apply energy units
