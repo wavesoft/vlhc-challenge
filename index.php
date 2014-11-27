@@ -168,7 +168,7 @@
 							<div class="generator">
 								<p>Collisions generated with:</p>
 								<div class="list-group">
-									<a id="live-generator" target="_blank" href="#" class="list-group-item disabled">(No generator)</a>
+									<a id="live-generator-link" href="#" class="list-group-item disabled">(No generator)</a>
 								</div>
 							</div>
 							<div class="analyses">

@@ -1437,10 +1437,12 @@ $(function() {
 					'epos': 'http://arxiv.org/abs/1006.2967',
 					'phojet': '#',
 				};
-				$("#live-generator").text(cfg['generator']);
-				$("#live-generator").removeClass("disabled");
+				$("#live-generator-link").text(cfg['generator']);
+				$("#live-generator-link").removeClass("disabled");
+				$("#live-generator-link").attr("href", "#");
+				$("#live-generator-link").attr("target", "");
 				if (gen_url[cfg['generator']] !== undefined) {
-					$("#live-generator").attr("href", gen_url[cfg['generator']]);
+					$("#live-generator-link").attr("href", gen_url[cfg['generator']]);
 				}
 
 				// Apply configuration
@@ -1459,8 +1461,11 @@ $(function() {
 				$("#live-process").text("---");
 				$("#live-energy").text("---");
 				$("#live-generator").text("---");
-				$("#live-generator").text("(No generator)");
-				$("#live-generator").addClass("disabled");
+
+				$("#live-generator-link").text("(No generator)");
+				$("#live-generator-link").addClass("disabled");
+				$("#live-generator-link").attr("href", "#");
+				$("#live-generator-link").attr("target", "");
 
 			}
 		}
