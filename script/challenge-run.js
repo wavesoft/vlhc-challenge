@@ -101,8 +101,8 @@ $(function() {
 		 * The user log-in interface
 		 */
 		var LoginInterface = function(baseURL) {
-			this.loginURL = baseURL + "/vlhc/login";
-			this.creditsURL = baseURL + "/vlhc/credits";
+			this.loginURL = baseURL + "/vlhc_login";
+			this.creditsURL = baseURL + "/vlhc_credits";
 			this._loginListeners = [];
 			this._logoutListeners = [];
 
