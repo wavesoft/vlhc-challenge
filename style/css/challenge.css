@@ -358,6 +358,14 @@ body.no-top-scroll .navbar .nav a:hover {
 #challenge div.frame-description .well div.desc-recovery ul li {
   margin: 5px 5px;
 }
+#challenge div.frame-description .well div.desc-intro div.arrow-center {
+  position: absolute;
+  display: block;
+  width: 119px;
+  height: 154px;
+  left: 50%;
+  bottom: 4px;
+}
 #challenge div.frame-description div.valign-middle {
   padding-top: 80px;
 }

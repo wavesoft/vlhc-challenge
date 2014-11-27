@@ -5,5 +5,12 @@
 		],
 		"random": [
 		]
+	},
+	"intro": {
+		"sequence": [
+			"intro-first.html"
+		],
+		"random": [
+		]
 	}
 }
