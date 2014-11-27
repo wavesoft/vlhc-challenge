@@ -16,6 +16,12 @@ $(function() {
 		FLAG_PENDING = 3,
 		FLAG_ERROR = 4;
 
+	/**
+	 * Add comma thousand separator
+	 */
+	function numberWithCommas(x) {
+	    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}
 
 	/**
 	 */
@@ -1464,6 +1470,7 @@ $(function() {
 				$("#live-process").text(cfg['process'])
 				$("#live-energy").text(energy)
 				$("#live-generator").text(cfg['generator'])
+				$("#live-nevts").text(numberWithCommas(parseInt(cfg['nevts'])));
 
 			} else {
 
@@ -1475,6 +1482,7 @@ $(function() {
 				$("#live-process").text("---");
 				$("#live-energy").text("---");
 				$("#live-generator").text("---");
+				$("#live-nevts").text("---");
 
 				$("#live-generator-link").text("(No generator)");
 				$("#live-generator-link").addClass("disabled");

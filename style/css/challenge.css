@@ -405,10 +405,6 @@ body.no-top-scroll .navbar .nav a:hover {
   left: 10px;
   top: 197px;
 }
-#challenge div.frame-description .well div.desc-live div.collider div.label.label-process {
-  left: 253px;
-  top: 175px;
-}
 #challenge div.frame-description .well div.desc-live div.collider div.label.label-energy {
   left: 561px;
   top: 197px;
@@ -416,6 +412,15 @@ body.no-top-scroll .navbar .nav a:hover {
 #challenge div.frame-description .well div.desc-live div.collider div.label.label-generator {
   left: 253px;
   top: 2px;
+}
+#challenge div.frame-description .well div.desc-live div.collider div.label.label-process {
+  left: 253px;
+  top: 175px;
+}
+#challenge div.frame-description .well div.desc-live div.collider div.label.label-nevts {
+  left: 263px;
+  top: 212px;
+  width: 148px;
 }
 #challenge div.frame-description .well div.desc-live div.analyses {
   position: absolute;

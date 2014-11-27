@@ -164,6 +164,7 @@
 								<div class="label label-generator"><span class="name">Generator: </span><span id="live-generator"></span></div>
 								<div class="label label-process"><span class="name">Process: </span><span id="live-process"></span></div>
 								<div class="label label-energy"><span class="name">Energy: </span><span id="live-energy"></span></div>
+								<div class="label label-nevts"><span class="name">Producing: </span><span id="live-nevts"></span> events</div>
 							</div>
 							<div class="generator">
 								<p>Collisions generated with:</p>
