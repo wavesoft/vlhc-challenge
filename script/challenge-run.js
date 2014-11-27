@@ -100,8 +100,9 @@ $(function() {
 		/**
 		 * The user log-in interface
 		 */
-		var LoginInterface = function(loginURL) {
-			this.loginURL = loginURL;
+		var LoginInterface = function(baseURL) {
+			this.loginURL = baseURL + "/vlhc/login";
+			this.creditsURL = baseURL + "/vlhc/credits";
 			this._loginListeners = [];
 			this._logoutListeners = [];
 
@@ -272,14 +273,25 @@ $(function() {
 		 * Log-in user
 		 */
 		LoginInterface.prototype.showAccountWindow = function(vmid) {
-			var w = 650, h = 400,
+			var w = 750, h = 450,
 				l = (screen.width - w) / 2,
 				t = (screen.height - h)/ 2,
-				win = window.open(
-					this.loginURL + (vmid ? "?vmid="+vmid : ""),
+
+			// If we are logged-in show credits
+			if (vmid) {
+				window.open(
+					this.loginURL,
 					"login-window",
 					"width="+w+",height="+h+",left="+l+",top="+t+",location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no"
 				);
+			} else {
+				window.open(
+					this.creditsURL + "?vmid=" + vmid,
+					"login-window",
+					"width="+w+",height="+h+",left="+l+",top="+t+",location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no"
+				);
+			}
+
 		};
 
 		/**
@@ -1955,7 +1967,7 @@ $(function() {
 	var sysMessages = new SystemMessages( "messages" );
 
 	// Create a login interface
-	var loginInterface = new LoginInterface( "https://test4theory.cern.ch/challenge/acc.io" );
+	var loginInterface = new LoginInterface( "https://test4theory.cern.ch/challenge" );
 
 	// Create an AVM for this session
 	var avm = new AutonomousVM('http://test4theory.cern.ch/vmcp?config='+context_id);
