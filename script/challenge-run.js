@@ -1394,6 +1394,9 @@ $(function() {
 			var dynamicDocElm = this.descriptionFrames[ index ].find(".dynamic-content");
 			if (index == this.FRAME_STARTING) {
 				this.systemMessages.fetchAndRender( "starting", dynamicDocElm );
+			} else if (index == this.FRAME_INTRO) {
+				this.systemMessages.fetchAndRender( "intro", dynamicDocElm );
+			} else if (index == this.FRAME_IDLE) {
 			}
 
 		}
