@@ -294,13 +294,13 @@ $(function() {
 					this.creditsURL + "?vmid=" + escape(vmid) + "&user=" + escape(user),
 					"login-window",
 					"width="+w+",height="+h+",left="+l+",top="+t+",location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no"
-				);
+				).focus();
 			} else {
 				window.open(
 					this.loginURL,
 					"login-window",
 					"width="+w+",height="+h+",left="+l+",top="+t+",location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no"
-				);
+				).focus();
 			}
 
 		};

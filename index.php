@@ -62,7 +62,7 @@
 									Log-in to collect credit
 								</a>
 								<button id="btn-credits" class="btn btn-default btn-sm">
-									Show Credits
+									Account details
 								</button>								
 							</div>
 						</div>
