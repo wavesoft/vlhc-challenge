@@ -165,10 +165,16 @@
 								<div class="label label-process"><span class="name">Process: </span><span id="live-process"></span></div>
 								<div class="label label-energy"><span class="name">Energy: </span><span id="live-energy"></span></div>
 							</div>
-							<div class="processes">
-								<p>Analyses running:</p>
-								<div class="list-group" id="live-processes">
-									<a href="#" class="list-group-item disabled">(No processes)</a>
+							<div class="generator">
+								<p>Collisions generated with:</p>
+								<div class="list-group">
+									<a id="live-generator" target="_blank" href="#" class="list-group-item disabled">(No generator)</a>
+								</div>
+							</div>
+							<div class="analyses">
+								<p>Collisions are anlyized with the following analyses:</p>
+								<div class="list-group" id="live-analyses">
+									<a href="#" class="list-group-item disabled">(No analyses)</a>
 								</div>
 							</div>
 						</div>

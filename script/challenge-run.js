@@ -1418,11 +1418,29 @@ $(function() {
 				}
 
 				// Populate analyses
-				$("#live-processes").empty();
+				$("#live-analyses").empty();
 				var analyses = cfg['analysesNames'].split(" ");
 				for (var i=0; i<analyses.length; i++) {
 					var e = $('<a target="_blank" href="https://rivet.hepforge.org/analyses#'+analyses[i]+'" class="list-group-item">'+analyses[i]+'</a>');
-					e.appendTo($("#live-processes"));
+					e.appendTo($("#live-analyses"));
+				}
+
+				// Apply generator
+				var gen_url = {
+					'herwig++': 'https://herwig.hepforge.org/',
+					'pythia6': 'https://pythia6.hepforge.org/',
+					'pythia8': 'http://home.thep.lu.se/~torbjorn/Pythia.html',
+					'sherpa': 'https://sherpa.hepforge.org/trac/wiki',
+					'vincia': 'http://vincia.hepforge.org/',
+					'alpgenpythia6': 'http://mlm.web.cern.ch/mlm/alpgen/',
+					'alpgenherwigjimmy': 'http://mlm.web.cern.ch/mlm/alpgen/',
+					'epos': 'http://arxiv.org/abs/1006.2967',
+					'phojet': '#',
+				};
+				$("#live-generator").text(cfg['generator']);
+				$("#live-generator").removeClass("disabled");
+				if (gen_url[cfg['generator']] !== undefined) {
+					$("#live-generator").attr("href", gen_url[cfg['generator']]);
 				}
 
 				// Apply configuration
@@ -1434,13 +1452,16 @@ $(function() {
 			} else {
 
 				// Reset analyses
-				$("#live-processes").empty();
+				$("#live-analyses").empty();
 				$('<a href="#" class="list-group-item disabled">(No analyses)</a>').appendTo($("#live-processes"));
 
 				$("#live-beam").text("---");
 				$("#live-process").text("---");
 				$("#live-energy").text("---");
 				$("#live-generator").text("---");
+				$("#live-generator").text("(No generator)");
+				$("#live-generator").addClass("disabled");
+
 			}
 		}
 

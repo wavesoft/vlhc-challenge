@@ -417,11 +417,18 @@ body.no-top-scroll .navbar .nav a:hover {
   left: 253px;
   top: 23px;
 }
-#challenge div.frame-description .well div.desc-live div.processes {
+#challenge div.frame-description .well div.desc-live div.analyses {
   position: absolute;
-  left: 4px;
-  top: 4px;
-  bottom: 4px;
+  right: 2px;
+  top: 2px;
+  bottom: 2px;
+  width: 175px;
+}
+#challenge div.frame-description .well div.desc-live div.generator {
+  position: absolute;
+  left: 2px;
+  top: 2px;
+  bottom: 2px;
   width: 175px;
 }
 #challenge div.frame-description div.valign-middle {
