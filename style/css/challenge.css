@@ -365,6 +365,11 @@ body.no-top-scroll .navbar .nav a:hover {
   height: 154px;
   left: 50%;
   bottom: 4px;
+  background: url(../img/arrow-down.png) no-repeat center center;
+  -webkit-transform: translate(-60px 0px);
+  -moz-transform: translate(-60px 0px);
+  -o-transform: translate(-60px 0px);
+  transform: translate(-60px 0px);
 }
 #challenge div.frame-description div.valign-middle {
   padding-top: 80px;
