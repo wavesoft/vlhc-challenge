@@ -406,7 +406,7 @@ body.no-top-scroll .navbar .nav a:hover {
   top: 197px;
 }
 #challenge div.frame-description .well div.desc-live div.collider div.label.label-process {
-  left: 153px;
+  left: 253px;
   top: 197px;
 }
 #challenge div.frame-description .well div.desc-live div.collider div.label.label-energy {
@@ -414,8 +414,15 @@ body.no-top-scroll .navbar .nav a:hover {
   top: 197px;
 }
 #challenge div.frame-description .well div.desc-live div.collider div.label.label-generator {
-  left: 153px;
+  left: 253px;
   top: 23px;
+}
+#challenge div.frame-description .well div.desc-live div.processes {
+  position: absolute;
+  left: 4px;
+  top: 4px;
+  bottom: 4px;
+  width: 175px;
 }
 #challenge div.frame-description div.valign-middle {
   padding-top: 80px;

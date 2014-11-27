@@ -1421,7 +1421,7 @@ $(function() {
 				$("#live-processes").empty();
 				var analyses = cfg['analysesNames'].split(" ");
 				for (var i=0; i<analyses.length; i++) {
-					var e = $('<a href="https://rivet.hepforge.org/analyses#'+analyses[i]+'" class="list-group-item">'+analyses[i]+'</a>');
+					var e = $('<a target="_blank" href="https://rivet.hepforge.org/analyses#'+analyses[i]+'" class="list-group-item">'+analyses[i]+'</a>');
 					e.appendTo($("#live-processes"));
 				}
 
