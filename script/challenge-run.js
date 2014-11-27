@@ -275,7 +275,7 @@ $(function() {
 		LoginInterface.prototype.showAccountWindow = function(vmid) {
 			var w = 750, h = 450,
 				l = (screen.width - w) / 2,
-				t = (screen.height - h)/ 2,
+				t = (screen.height - h)/ 2;
 
 			// If we are logged-in show credits
 			if (vmid) {
