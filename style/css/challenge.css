@@ -433,10 +433,10 @@ body.no-top-scroll .navbar .nav a:hover {
 }
 #challenge div.frame-description .well div.desc-live div.dynamic-content {
   position: absolute;
-  background-color: white;
   left: 0;
   right: 0;
   bottom: 0;
+  text-align: right;
   padding: 4px;
 }
 #challenge div.frame-description .well div.desc-live div.dynamic-content a {
