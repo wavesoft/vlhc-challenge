@@ -431,6 +431,17 @@ body.no-top-scroll .navbar .nav a:hover {
   bottom: 2px;
   width: 175px;
 }
+#challenge div.frame-description .well div.desc-live div.dynamic-content {
+  position: absolute;
+  background-color: white;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 4px;
+}
+#challenge div.frame-description .well div.desc-live div.dynamic-content a {
+  color: #333333;
+}
 #challenge div.frame-description div.valign-middle {
   padding-top: 80px;
 }
