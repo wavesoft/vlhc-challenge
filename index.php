@@ -161,9 +161,9 @@
 						<div class="desc-live">
 							<div class="collider">
 								<div class="label label-beam"><span class="name">Beam: </span><span id="live-beam"></span></div>
-								<div class="label label-generator"><span class="name">Beam: </span><span id="live-generator"></span></div>
-								<div class="label label-process"><span class="name">Beam: </span><span id="live-process"></span></div>
-								<div class="label label-energy"><span class="name">Beam: </span><span id="live-energy"></span></div>
+								<div class="label label-generator"><span class="name">Generator: </span><span id="live-generator"></span></div>
+								<div class="label label-process"><span class="name">Process: </span><span id="live-process"></span></div>
+								<div class="label label-energy"><span class="name">Energy: </span><span id="live-energy"></span></div>
 							</div>
 						</div>
 

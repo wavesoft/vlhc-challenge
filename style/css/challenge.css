@@ -384,11 +384,16 @@ body.no-top-scroll .navbar .nav a:hover {
   transform: translate(-353px, -115px);
 }
 #challenge div.frame-description .well div.desc-live div.collider div.label {
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -o-border-radius: 6px;
+  border-radius: 6px;
   color: black;
   background: #ecf0f1;
   border: solid 1px #bdc3c7;
   width: 128px;
   height: 30px;
+  font-size: 12px;
   text-align: center;
   line-height: 25px;
   position: absolute;
@@ -397,19 +402,19 @@ body.no-top-scroll .navbar .nav a:hover {
   color: #e74c3c;
 }
 #challenge div.frame-description .well div.desc-live div.collider div.label.label-beam {
-  left: 72px;
-  top: 211px;
+  left: 10px;
+  top: 197px;
 }
 #challenge div.frame-description .well div.desc-live div.collider div.label.label-process {
-  left: 316px;
-  top: 211px;
+  left: 153px;
+  top: 197px;
 }
 #challenge div.frame-description .well div.desc-live div.collider div.label.label-energy {
-  left: 624px;
-  top: 211px;
+  left: 561px;
+  top: 197px;
 }
 #challenge div.frame-description .well div.desc-live div.collider div.label.label-generator {
-  left: 316px;
+  left: 153px;
   top: 23px;
 }
 #challenge div.frame-description div.valign-middle {
