@@ -209,7 +209,7 @@ $(function() {
 			} else if (data['provider'] == "boinc") {
 				return {
 					'displayName'	: data['name'],
-					'profileUrl'	: 'http://lhcathome2.cern.ch/vLHCathome/view_profile.php?userid='+data['id'],
+					'profileUrl'	: 'http://mcplots-dev.cern.ch/production.php?view=user&userid='+data['id'],
 					'picture'		: 'http://lhcathome2.cern.ch/vLHCathome/user_profile/images/'+data['id']+'.jpg',
 					'boinc'			: {
 						'userid'		: data['id'],
@@ -1174,6 +1174,7 @@ $(function() {
 			this.gaugeFrame = $("#gauge-frame");
 			this.gagueFrameTitle = $("#gauge-frame-title");
 			this.gaugeFrameAlertOverlay = $("#gauge-frame .panel-alert");
+			this.gaugeFrameWarnOverlay = $("#gauge-frame .panel-warn");
 			this.gaugeFrameProgressOverlay = $("#gauge-frame .back-progress");
 
 			// The gauges in the interface
@@ -1259,6 +1260,19 @@ $(function() {
 				this.gaugeFrame.addClass("progress-error");
 				this.gaugeFrameAlertOverlay.find("h1").text(header);
 				this.gaugeFrameAlertOverlay.find("p").text(body);
+			}
+		}
+
+		/**
+		 * Show/Hide the big gauge error frame
+		 */
+		ChallengeInterface.prototype.gaugeFrameWarn = function(header,body) {
+			if (!header) {
+				this.gaugeFrame.removeClass("progress-warn");
+			} else {
+				this.gaugeFrame.addClass("progress-warn");
+				this.gaugeFrameWarnOverlay.find("h1").text(header);
+				this.gaugeFrameWarnOverlay.find("p").text(body);
 			}
 		}
 
@@ -1846,7 +1860,7 @@ $(function() {
 
 				} else {
 					this.descFrameSetActive( this.FRAME_RECOVERY );
-					this.gaugeFrameAlert("Challenge Aborted", "Lost connection with the CernVM WebAPI.");
+					this.gaugeFrameWarn("Can you try refreshing?", "Lost connection with the CernVM WebAPI.");
 				}
 			}).bind(this));
 

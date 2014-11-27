@@ -98,6 +98,11 @@
 							<h1>Challenge Aborted</h1>
 							<p>Could not start session: User denied</p>
 						</div>
+						<div class="panel-warn">
+							<h1>Try reloading!</h1>
+							<p>Could not start session: User denied</p>
+						</div>
+
 
 					</div>
 					

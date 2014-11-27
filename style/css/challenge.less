@@ -247,7 +247,7 @@ body.no-top-scroll {
 		div.panel {
 			position: relative;
 
-			div.panel-alert {
+			div.panel-alert, div.panel-warn {
 				position: absolute;
 				left: -1px; top: -1px; 
 				right: -1px; bottom: -1px;
@@ -389,6 +389,28 @@ body.no-top-scroll {
 			}
 
 		}
+		&.progress-warn {
+			div.widgets {
+				display: none;
+			}
+
+			div.panel {
+				div.panel-warn {
+					background-color: #3498db;
+					border-color: #2980b9;
+					color: #fff;
+					display: block;
+					h1 {
+						&:before {
+							content: "\2a";
+							opacity: 0.5;
+						}
+					}
+				}
+			}
+
+		}
+
 
 	} // frame-status
 
