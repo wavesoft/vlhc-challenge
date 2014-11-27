@@ -1407,6 +1407,8 @@ $(function() {
 				this.systemMessages.fetchAndRender( "intro", dynamicDocElm );
 			} else if (index == this.FRAME_LIVE) {
 				this.systemMessages.fetchAndRender( "live", dynamicDocElm );
+			} else if (index == this.FRAME_IDLE) {
+				this.systemMessages.fetchAndRender( "idle", dynamicDocElm );
 			}
 
 		}

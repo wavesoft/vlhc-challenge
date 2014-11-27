@@ -150,8 +150,12 @@
 						</div>
 
 						<div class="desc-idle">
-							<br />
-							<p><em>(We are now Idle. Here will be a teaser showing various facts about CERN and LHC)</em></p>
+							<h1>The challenge is paused</h1>
+							<p>
+								Your virtual accelerator is stopped. The gauges are all to zero. Time to relax, have a coffee, fiddle around with the interface... when your science fever is back, click <em>Start</em> to start again!
+							</p>
+							<div class="dynamic-content">
+							</div>
 						</div>
 
 						<div class="desc-waitjob">

@@ -347,6 +347,11 @@ body.no-top-scroll .navbar .nav a:hover {
   padding-left: 270px;
   text-align: left;
 }
+#challenge div.frame-description .well div.desc-idle {
+  background: url(../img/wm-lounge.png) no-repeat left top;
+  padding-left: 270px;
+  text-align: left;
+}
 #challenge div.frame-description .well div.desc-recovery {
   background: url(../img/wm-chill.png) no-repeat left top;
   padding-left: 270px;
