@@ -1204,6 +1204,7 @@ $(function() {
 
 			// accounting frame
 			this.accBtnLogin = $("#btn-login");
+			this.accBtnLogout = $("#btn-login");
 			this.accBtnCredits = $("#btn-credits");
 			this.accCreditsModal = $("#modal-credits");
 			this.accInfoPicture = $("#acc-picture");
@@ -1713,6 +1714,12 @@ $(function() {
 			this.accBtnCredits.click((function() {
 				this.loginInterface.showAccountWindow( this.loginInterface.vmid() );
 			}).bind(this));
+			this.accBtnLogout.click((function() {
+				// Update frame information
+				this.accFrameUndefine();
+				// Update VM information
+				avm.setProperty("challenge-login", this.loginInterface.freeze());
+			}).bind(this));
 
 		}
 
@@ -1723,6 +1730,7 @@ $(function() {
 			this.accInfoPicture.show();
 			this.accInfoName.show();
 			this.accBtnCredits.show();
+			this.accBtnLogout.show();
 			this.accBtnLogin.hide();
 
 			// Greet the user
@@ -1754,6 +1762,7 @@ $(function() {
 			this.accInfoPicture.hide();
 			this.accInfoName.hide();
 			this.accBtnCredits.hide();
+			this.accBtnLogout.hide();
 			this.accBtnLogin.show();
 
 			// If we have AVM, update vmid

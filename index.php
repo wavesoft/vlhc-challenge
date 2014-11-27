@@ -64,6 +64,9 @@
 								<button id="btn-credits" class="btn btn-default btn-sm">
 									Show Credits
 								</button>								
+								<button id="btn-logout" class="btn btn-primary btn-sm">
+									Logout
+								</button>								
 							</div>
 						</div>
 						<div class="panel-body">
