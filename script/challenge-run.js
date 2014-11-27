@@ -1417,6 +1417,14 @@ $(function() {
 					energy = energy.toString() + " MeV";
 				}
 
+				// Populate analyses
+				$("#live-processes").empty();
+				var analyses = cfg['analysesNames'].split(" ");
+				for (var i=0; i<analyses.length; i++) {
+					var e = $('<a href="https://rivet.hepforge.org/analyses#'+analyses[i]+'" class="list-group-item">'+analyses[i]+'</a>');
+					e.appendTo($("#live-processes"));
+				}
+
 				// Apply configuration
 				$("#live-beam").text(cfg['beam'])
 				$("#live-process").text(cfg['process'])
@@ -1424,6 +1432,11 @@ $(function() {
 				$("#live-generator").text(cfg['generator'])
 
 			} else {
+
+				// Reset analyses
+				$("#live-processes").empty();
+				$('<a href="#" class="list-group-item disabled">(No analyses)</a>').appendTo($("#live-processes"));
+
 				$("#live-beam").text("---");
 				$("#live-process").text("---");
 				$("#live-energy").text("---");
