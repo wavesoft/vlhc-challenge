@@ -773,7 +773,7 @@ $(function() {
 
 							// Find boot time, from the last entry in the logfile
 							for (var i=0; i<lines.length; i++) {
-								if ((lines.indexOf("syslogd")>0) && (lines.indexOf("restart")>0)) {
+								if ((lines[i].indexOf("syslogd")>0) && (lines[i].indexOf("restart")>0)) {
 									var date = lines[i].split(" ");
 									this.__bootTime = timestampOf(date[0], date[1], date[2]);
 									// Keep iterating until we found the last entry
