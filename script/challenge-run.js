@@ -772,9 +772,10 @@ $(function() {
 							this.__messages = lines;
 
 							// Find boot time, from the last entry in the logfile
-							var date = lines[0].split(" ");
-							this.__bootTime = timestampOf(date[0], date[1], date[2]);
-
+							if (lines.length > 2) {
+								var date = lines[lines.length-2].split(" ");
+								this.__bootTime = timestampOf(date[0], date[1], date[2]);
+							}
 
 						}).bind(this),
 						'error': (function(data,status,xhr) {
@@ -1628,7 +1629,8 @@ $(function() {
 			});
 			$(btnScreen).click(function() {
 				if (!avmInstance.wa_session) return;
-				avmInstance.wa_session.openRDPWindow();
+				avmInstance.wa_session.openRDPWindow()
+				avmInstance.wa_session.__lastRDPWindow.focus();
 			});
 			$(btnLogs).mousedown(function() {
 				if (!avmInstance.wa_session) return;
