@@ -5,5 +5,30 @@
 		],
 		"random": [
 		]
+	},
+	"intro": {
+		"sequence": [
+			"intro-first.html"
+		],
+		"random": [
+		]
+	},
+	"idle": {
+		"sequence": [
+		],
+		"random": [
+			"live-antimatter.html",
+			"live-clicker.html",
+			"live-recognize.html"
+		]
+	},
+	"live": {
+		"sequence": [
+		],
+		"random": [
+			"live-antimatter.html",
+			"live-clicker.html",
+			"live-recognize.html"
+		]
 	}
 }

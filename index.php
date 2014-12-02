@@ -7,9 +7,9 @@
 		<title>CernVM WebAPI</title>
 
 		<!-- Bootstrap -->
-		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="ext/css/bootstrap.min.css">
 		<!-- jQuery UI -->
-		<link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+		<link rel="stylesheet" href="ext/css/jquery-ui.css">
 		<!-- Stylesheets -->
 		<link rel="stylesheet" href="style/css/challenge.css">
 
@@ -19,8 +19,8 @@
 		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 		<!--[if lt IE 9]>
-		  <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-		  <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+		  <script src="ext/js/html5shiv.min.js"></script>
+		  <script src="ext/js/respond.min.js"></script>
 		<![endif]-->
 
 		<!-- Redirect if we are on https (WebAPI does not work over HTTPS) -->
@@ -62,7 +62,7 @@
 									Log-in to collect credit
 								</a>
 								<button id="btn-credits" class="btn btn-default btn-sm">
-									Show Credits
+									Account details
 								</button>								
 							</div>
 						</div>
@@ -98,6 +98,11 @@
 							<h1>Challenge Aborted</h1>
 							<p>Could not start session: User denied</p>
 						</div>
+						<div class="panel-warn">
+							<h1>Try reloading!</h1>
+							<p>Could not start session: User denied</p>
+						</div>
+
 
 					</div>
 					
@@ -113,10 +118,6 @@
 						</div>
 
 						<div class="desc-intro">
-							<br />
-							<p>
-								
-							</p>
 							<div class="dynamic-content">
 							</div>
 						</div>
@@ -149,8 +150,12 @@
 						</div>
 
 						<div class="desc-idle">
-							<br />
-							<p><em>(We are now Idle. Here will be a teaser showing various facts about CERN and LHC)</em></p>
+							<h1>The challenge is paused</h1>
+							<p>
+								Your virtual accelerator is stopped. The gauges are all to zero. Time to relax, have a coffee, fiddle around with the interface... when your science fever is back, click <em>Start</em> to start again!
+							</p>
+							<div class="dynamic-content">
+							</div>
 						</div>
 
 						<div class="desc-waitjob">
@@ -158,10 +163,27 @@
 							<p><em>(We are waiting for a task. Here will be a more proper interface.)</em></p>
 						</div>
 						<div class="desc-live">
-							<br />
-							<p><em>(We are now live. Here will be a proper description regarding the kind of the simulation you are currently working on. For now, some debug details are shown below)</em></p>
-							<pre id="live-debug">
-							</pre>
+							<div class="collider">
+								<div class="label label-beam"><span class="name">Beam: </span><span id="live-beam"></span></div>
+								<div class="label label-generator"><span class="name">Generator: </span><span id="live-generator"></span></div>
+								<div class="label label-process"><span class="name">Process: </span><span id="live-process"></span></div>
+								<div class="label label-energy"><span class="name">Energy: </span><span id="live-energy"></span></div>
+								<div class="label label-nevts"><span class="name">Producing: </span><span id="live-nevts"></span> events</div>
+							</div>
+							<div class="generator">
+								<p>Collisions generated with:</p>
+								<div class="list-group">
+									<a id="live-generator-link" href="#" class="list-group-item disabled">(No generator)</a>
+								</div>
+							</div>
+							<div class="analyses">
+								<p>Collisions are analyzed with the following analyses:</p>
+								<div class="list-group" id="live-analyses">
+									<a href="#" class="list-group-item disabled">(No analyses)</a>
+								</div>
+							</div>
+							<div class="dynamic-content">
+							</div>							
 						</div>
 
 
@@ -250,12 +272,13 @@
 		</div>
 
 		<!-- Libraries -->
-		<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-		<script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
-		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+		<script src="ext/js/jquery-1.11.0.min.js"></script>
+		<script src="ext/js/jquery-ui.js"></script>
+		<script src="ext/js/bootstrap.min.js"></script>
+		<script src="ext/js/jquery.cookie.js"></script>
 		<script src="//cernvm.cern.ch/releases/webapi/js/cvmwebapi-latest.js"></script>
-		<script src="//cdn.rawgit.com/carhartl/jquery-cookie/master/src/jquery.cookie.js"></script>
 		<script src="script/lib/rundial.js"></script>
+
 		<!-- Challenge -->
 		<script src="script/challenge-common.js"></script>
 		<script src="script/challenge-run.js"></script>

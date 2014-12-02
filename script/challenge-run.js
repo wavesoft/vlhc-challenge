@@ -16,6 +16,12 @@ $(function() {
 		FLAG_PENDING = 3,
 		FLAG_ERROR = 4;
 
+	/**
+	 * Add comma thousand separator
+	 */
+	function numberWithCommas(x) {
+	    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}
 
 	/**
 	 */
@@ -100,8 +106,9 @@ $(function() {
 		/**
 		 * The user log-in interface
 		 */
-		var LoginInterface = function(loginURL) {
-			this.loginURL = loginURL;
+		var LoginInterface = function(baseURL) {
+			this.loginURL = baseURL + "/vlhc_login";
+			this.creditsURL = baseURL + "/vlhc_credits";
 			this._loginListeners = [];
 			this._logoutListeners = [];
 
@@ -172,6 +179,17 @@ $(function() {
 		}
 
 		/**
+		 * Return the username
+		 */
+		LoginInterface.prototype.username = function() {
+			if (this.userInfo != null) {
+				return this.userInfo['displayName'];
+			} else {
+				return "anonymous";
+			}
+		}
+
+		/**
 		 * Freeze data adn return the payload to store
 		 */
 		LoginInterface.prototype.freeze = function() {
@@ -208,8 +226,8 @@ $(function() {
 				};
 			} else if (data['provider'] == "boinc") {
 				return {
-					'displayName'	: data['name'],
-					'profileUrl'	: 'http://lhcathome2.cern.ch/vLHCathome/view_profile.php?userid='+data['id'],
+					'displayName'	: data['displayName'],
+					'profileUrl'	: 'http://mcplots-dev.cern.ch/production.php?view=user&userid='+data['id'],
 					'picture'		: 'http://lhcathome2.cern.ch/vLHCathome/user_profile/images/'+data['id']+'.jpg',
 					'boinc'			: {
 						'userid'		: data['id'],
@@ -230,16 +248,8 @@ $(function() {
 			if (hash.substr(0,5) == "user=") {
 				var userStr = hash.substr(5);
 				if (userStr == "none") {
-
-					// Fire callbacks (with previous log-in info)
-					if (this.userInfo != null) {
-						// Update user info
-						this.userInfo = null;
-						// Call logout listeners
-						for (var i=0; i<this._logoutListeners.length; i++)
-							this._logoutListeners[i](this.userInfo);
-					}
-
+					// Fire logout function
+					this.logout();
 				} else {
 
 					// Parse user info from the hash
@@ -263,17 +273,42 @@ $(function() {
 		}
 
 		/**
+		 * Log-out
+		 */
+		LoginInterface.prototype.logout = function() {
+			// Fire callbacks (with previous log-in info)
+			if (this.userInfo != null) {
+				// Update user info
+				this.userInfo = null;
+				// Call logout listeners
+				for (var i=0; i<this._logoutListeners.length; i++)
+					this._logoutListeners[i](this.userInfo);
+			}
+		}
+
+		/**
 		 * Log-in user
 		 */
-		LoginInterface.prototype.showAccountWindow = function(vmid) {
-			var w = 650, h = 400,
+		LoginInterface.prototype.showAccountWindow = function(vmid, user) {
+			var w = 750, h = 450,
 				l = (screen.width - w) / 2,
-				t = (screen.height - h)/ 2,
-				win = window.open(
-					this.loginURL + (vmid ? "?vmid="+vmid : ""),
+				t = (screen.height - h)/ 2;
+
+			// If we are logged-in show credits
+			if (vmid) {
+				window.open(
+					this.creditsURL + "?vmid=" + escape(vmid) + "&user=" + escape(user),
 					"login-window",
 					"width="+w+",height="+h+",left="+l+",top="+t+",location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no"
-				);
+				).focus();
+			} else {
+				window.open(
+					this.loginURL,
+					"login-window",
+					"width="+w+",height="+h+",left="+l+",top="+t+",location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no"
+				).focus();
+			}
+
 		};
 
 		/**
@@ -743,9 +778,13 @@ $(function() {
 							this.__messages = lines;
 
 							// Find boot time, from the last entry in the logfile
-							var date = lines[0].split(/[ \t]+/);
-							this.__bootTime = timestampOf(date[0], date[1], date[2]);
-
+							for (var i=0; i<lines.length; i++) {
+								if ((lines[i].indexOf("syslogd")>0) && (lines[i].indexOf("restart")>0)) {
+									var date = lines[0].split(/[ \t]+/);
+									this.__bootTime = timestampOf(date[0], date[1], date[2]);
+									// Keep iterating until we found the last entry
+								}
+							}
 
 						}).bind(this),
 						'error': (function(data,status,xhr) {
@@ -1174,6 +1213,7 @@ $(function() {
 			this.gaugeFrame = $("#gauge-frame");
 			this.gagueFrameTitle = $("#gauge-frame-title");
 			this.gaugeFrameAlertOverlay = $("#gauge-frame .panel-alert");
+			this.gaugeFrameWarnOverlay = $("#gauge-frame .panel-warn");
 			this.gaugeFrameProgressOverlay = $("#gauge-frame .back-progress");
 
 			// The gauges in the interface
@@ -1203,6 +1243,7 @@ $(function() {
 
 			// accounting frame
 			this.accBtnLogin = $("#btn-login");
+			this.accBtnLogout = $("#btn-logout");
 			this.accBtnCredits = $("#btn-credits");
 			this.accCreditsModal = $("#modal-credits");
 			this.accInfoPicture = $("#acc-picture");
@@ -1214,6 +1255,9 @@ $(function() {
 			// Footer buttons
 			this.footerBtnPower = $("#btn-power");
 			this.footerBtnGear = $("#btn-status");
+
+			// Start frame shuffler
+			setInterval(this.descFrameSetShuffle.bind(this), 30000);
 
 			// Initialize footer 
 			this.footerInit();
@@ -1259,6 +1303,19 @@ $(function() {
 				this.gaugeFrame.addClass("progress-error");
 				this.gaugeFrameAlertOverlay.find("h1").text(header);
 				this.gaugeFrameAlertOverlay.find("p").text(body);
+			}
+		}
+
+		/**
+		 * Show/Hide the big gauge error frame
+		 */
+		ChallengeInterface.prototype.gaugeFrameWarn = function(header,body) {
+			if (!header) {
+				this.gaugeFrame.removeClass("progress-warn");
+			} else {
+				this.gaugeFrame.addClass("progress-warn");
+				this.gaugeFrameWarnOverlay.find("h1").text(header);
+				this.gaugeFrameWarnOverlay.find("p").text(body);
 			}
 		}
 
@@ -1343,11 +1400,26 @@ $(function() {
 			this.descriptionActiveFrame = index;
 
 			// Try to load text according to the frame type
-			var dynamicDocElm = this.descriptionFrames[ index ].find(".dynamic-content");
+			var dynamicDocElm = this.descriptionDynamicDocElm = this.descriptionFrames[ index ].find(".dynamic-content");
 			if (index == this.FRAME_STARTING) {
 				this.systemMessages.fetchAndRender( "starting", dynamicDocElm );
+			} else if (index == this.FRAME_INTRO) {
+				this.systemMessages.fetchAndRender( "intro", dynamicDocElm );
+			} else if (index == this.FRAME_LIVE) {
+				this.systemMessages.fetchAndRender( "live", dynamicDocElm );
+			} else if (index == this.FRAME_IDLE) {
+				this.systemMessages.fetchAndRender( "idle", dynamicDocElm );
 			}
 
+		}
+
+		/**
+		 * Automatic shuffling of the description frame system messages
+		 */
+		ChallengeInterface.prototype.descFrameSetShuffle = function( index ) {
+			if (this.descriptionActiveFrame == this.FRAME_LIVE) {
+				this.systemMessages.fetchAndRender( "live", this.descriptionDynamicDocElm );
+			}
 		}
 
 		/**
@@ -1355,7 +1427,71 @@ $(function() {
 		 */
 		ChallengeInterface.prototype.descFrameSetLiveConfig = function( cfg ) {
 			this.gaugeFrameStatus("Starting virtual event generator");
-			$("#live-debug").text(JSON.stringify(cfg));
+			//$("#live-debug").text(JSON.stringify(cfg));
+			if (cfg) {
+
+				// Apply energy units
+				var energy = parseInt(cfg['energy']);
+				if (energy >= 1000) {
+					energy = Number(energy/1000).toFixed(2) + " GeV";
+				} else {
+					energy = energy.toString() + " MeV";
+				}
+
+				// Populate analyses
+				$("#live-analyses").empty();
+				var analyses = cfg['analysesNames'].split(" ");
+				for (var i=0; i<analyses.length; i++) {
+					var e = $('<a target="_blank" href="https://rivet.hepforge.org/analyses#'+analyses[i]+'" class="list-group-item">'+analyses[i]+'</a>');
+					e.appendTo($("#live-analyses"));
+				}
+
+				// Apply generator
+				var gen_url = {
+					'herwig++': 'https://herwig.hepforge.org/',
+					'pythia6': 'https://pythia6.hepforge.org/',
+					'pythia8': 'http://home.thep.lu.se/~torbjorn/Pythia.html',
+					'sherpa': 'https://sherpa.hepforge.org/trac/wiki',
+					'vincia': 'http://vincia.hepforge.org/',
+					'alpgenpythia6': 'http://mlm.web.cern.ch/mlm/alpgen/',
+					'alpgenherwigjimmy': 'http://mlm.web.cern.ch/mlm/alpgen/',
+					'epos': 'http://arxiv.org/abs/1006.2967',
+					'phojet': '#',
+				};
+				$("#live-generator-link").text(cfg['generator']);
+				$("#live-generator-link").removeClass("disabled");
+				$("#live-generator-link").attr("href", "#");
+				$("#live-generator-link").attr("target", "");
+				if (gen_url[cfg['generator']] !== undefined) {
+					$("#live-generator-link").attr("href", gen_url[cfg['generator']]);
+					$("#live-generator-link").attr("target", "_blank");
+				}
+
+				// Apply configuration
+				$("#live-beam").text(cfg['beam'])
+				$("#live-process").text(cfg['process'])
+				$("#live-energy").text(energy)
+				$("#live-generator").text(cfg['generator'])
+				$("#live-nevts").text(numberWithCommas(parseInt(cfg['nevts'])));
+
+			} else {
+
+				// Reset analyses
+				$("#live-analyses").empty();
+				$('<a href="#" class="list-group-item disabled">(No analyses)</a>').appendTo($("#live-analyses"));
+
+				$("#live-beam").text("---");
+				$("#live-process").text("---");
+				$("#live-energy").text("---");
+				$("#live-generator").text("---");
+				$("#live-nevts").text("---");
+
+				$("#live-generator-link").text("(No generator)");
+				$("#live-generator-link").addClass("disabled");
+				$("#live-generator-link").attr("href", "#");
+				$("#live-generator-link").attr("target", "");
+
+			}
 		}
 
 		///////////////////////////////////////////////
@@ -1584,7 +1720,8 @@ $(function() {
 			});
 			$(btnScreen).click(function() {
 				if (!avmInstance.wa_session) return;
-				avmInstance.wa_session.openRDPWindow();
+				avmInstance.wa_session.openRDPWindow()
+				avmInstance.wa_session.__lastRDPWindow.focus();
 			});
 			$(btnLogs).mousedown(function() {
 				if (!avmInstance.wa_session) return;
@@ -1697,7 +1834,10 @@ $(function() {
 				this.loginInterface.showAccountWindow();
 			}).bind(this));
 			this.accBtnCredits.click((function() {
-				this.loginInterface.showAccountWindow( this.loginInterface.vmid() );
+				this.loginInterface.showAccountWindow( this.loginInterface.vmid(), this.loginInterface.username() );
+			}).bind(this));
+			this.accBtnLogout.click((function() {
+				this.loginInterface.logout();
 			}).bind(this));
 
 		}
@@ -1709,6 +1849,7 @@ $(function() {
 			this.accInfoPicture.show();
 			this.accInfoName.show();
 			this.accBtnCredits.show();
+			this.accBtnLogout.show();
 			this.accBtnLogin.hide();
 
 			// Greet the user
@@ -1740,6 +1881,7 @@ $(function() {
 			this.accInfoPicture.hide();
 			this.accInfoName.hide();
 			this.accBtnCredits.hide();
+			this.accBtnLogout.hide();
 			this.accBtnLogin.show();
 
 			// If we have AVM, update vmid
@@ -1846,7 +1988,7 @@ $(function() {
 
 				} else {
 					this.descFrameSetActive( this.FRAME_RECOVERY );
-					this.gaugeFrameAlert("Challenge Aborted", "Lost connection with the CernVM WebAPI.");
+					this.gaugeFrameWarn("Can you try refreshing?", "Lost connection with the CernVM WebAPI.");
 				}
 			}).bind(this));
 
@@ -1929,7 +2071,7 @@ $(function() {
 	var sysMessages = new SystemMessages( "messages" );
 
 	// Create a login interface
-	var loginInterface = new LoginInterface( "https://test4theory.cern.ch/challenge/acc.io" );
+	var loginInterface = new LoginInterface( "https://test4theory.cern.ch/challenge" );
 
 	// Create an AVM for this session
 	var avm = new AutonomousVM('http://test4theory.cern.ch/vmcp?config='+context_id);

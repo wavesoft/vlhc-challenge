@@ -247,7 +247,7 @@ body.no-top-scroll {
 		div.panel {
 			position: relative;
 
-			div.panel-alert {
+			div.panel-alert, div.panel-warn {
 				position: absolute;
 				left: -1px; top: -1px; 
 				right: -1px; bottom: -1px;
@@ -389,6 +389,28 @@ body.no-top-scroll {
 			}
 
 		}
+		&.progress-warn {
+			div.widgets {
+				display: none;
+			}
+
+			div.panel {
+				div.panel-warn {
+					background-color: #3498db;
+					border-color: #2980b9;
+					color: #fff;
+					display: block;
+					h1 {
+						&:before {
+							content: "\2a";
+							opacity: 0.5;
+						}
+					}
+				}
+			}
+
+		}
+
 
 	} // frame-status
 
@@ -411,6 +433,12 @@ body.no-top-scroll {
 				text-align: left;
 			}
 
+			div.desc-idle {
+				background: url(../img/wm-lounge.png) no-repeat left top;
+				padding-left: 270px;
+				text-align: left;
+			}
+
 			div.desc-recovery {
 				background: url(../img/wm-chill.png) no-repeat left top;
 				padding-left: 270px;
@@ -422,6 +450,80 @@ body.no-top-scroll {
 						margin: 5px 5px;
 					}
 				}
+			}
+
+			div.desc-intro {
+
+				div.arrow-center {
+					position: absolute;
+					display: block;
+					width: 83px; height: 109px;
+					left: 50%; bottom: 4px;
+					background: url(../img/arrow-down.png) no-repeat center center;
+					.transform(translate(-42px, 0px));
+				}
+
+			}
+
+			div.desc-live {
+
+				div.collider {
+					position: absolute;
+					left: 50%; top: 50%;
+					width: 705px; height: 230px;
+					background: url(../img/collider.png) no-repeat center center;
+					.transform(translate(-353px, -115px));
+
+					div.label {
+						.border-radius(6px);
+						color: #000;
+						background: #ecf0f1;
+						border: solid 1px #bdc3c7;
+						width: 128px; height: 30px;
+						font-size: 12px;
+						text-align: center;
+						line-height: 25px;
+						position: absolute;
+
+						span.name {
+							color: #e74c3c;
+						}
+
+						&.label-beam { left: 10px; top: 197px; }
+						&.label-energy { left: 561px; top: 197px; }
+						&.label-generator { left: 253px; top: 2px; }
+						&.label-process { left: 253px; top: 175px; }
+						&.label-nevts { 
+							left: 234px;
+							top: 209px;
+							width: 168px;
+						}
+
+					}
+				}
+
+				div.analyses {
+					position: absolute;
+					right: 2px; top: 2px; bottom: 2px;
+					width: 175px;
+				}
+
+				div.generator {
+					position: absolute;
+					left: 2px; top: 2px; bottom: 2px;
+					width: 175px;
+				}
+
+				div.dynamic-content {
+					position: absolute;
+					left: 0; right: 0; bottom: -8px;
+					text-align: right;
+
+					a {
+						color: #333;
+					}
+				}
+
 			}
 
 		}
