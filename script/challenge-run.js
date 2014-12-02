@@ -743,7 +743,7 @@ $(function() {
 							this.__messages = lines;
 
 							// Find boot time, from the last entry in the logfile
-							var date = lines[0].split(" ");
+							var date = lines[0].split(/[ \t]+/);
 							this.__bootTime = timestampOf(date[0], date[1], date[2]);
 
 
@@ -817,7 +817,7 @@ $(function() {
 							for (var i=0; i<10; i++) {
 								if (lines[i].substr(0,15) == "===> [runRivet]") {
 									// Get the time started
-									var parts = lines[i].split(" "),
+									var parts = lines[i].split(/[ \t]+/),
 										date = timestampOf(parts[3], parts[4], parts[5]);
 									// Check if that date is newer than the boot time
 									is_valid = (date > this.__bootTime);
@@ -829,7 +829,7 @@ $(function() {
 							for (var i=lines.length-1; i>=0; i--) {
 								if ((lines[i].indexOf("Events processed") >= 0) && is_valid) {
 									var currTimestamp = Date.now();
-									currEvents = parseInt(lines[i].split(" ")[0]);
+									currEvents = parseInt(lines[i].split(/[ \t]+/)[0]);
 									
 									// Skip idle states
 									if ((this.__lastEvents == currEvents) && (currTimestamp - this.__lastEventTimestamp < 10000))
@@ -921,7 +921,7 @@ $(function() {
 
 							// If it's empty, that's good news
 							var lines = data.split("\n"),
-								loadParts = lines[0].split("load average: ")[1].split(" ");
+								loadParts = lines[0].split("load average: ")[1].split(/[ \t]+/);
 
 							// Get machine load
 							this.__fireListener("monitor.cpuLoad", parseFloat(loadParts[0]), parseFloat(loadParts[1]), parseFloat(loadParts[2]));
