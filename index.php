@@ -220,7 +220,7 @@
 						<img src="style/img/logo/ccc.png" height="64" alt="Citizen Cyberscience Center" />
 					</p>
 					<p>
-						The <em>CERN 60 Public Computing Challenge</em> is a project developed by <a target="_blank" href="http://cern.ch">CERN</a>with the partnership support of the EC project <a target="_blank" href="http://citizencyberlab.eu/">Citizen Cyberlab</a>, and the Citizen <a target="_blank" href="http://www.citizencyberscience.net">Cyberscience Centre</a>. The project is funded by the <a target="_blank" href="http://ec.europa.eu/research/fp7/index_en.cfm">Seventh Framework Programme</a> of the European Eunion.
+						The <em>CERN 60 Public Computing Challenge</em> is a project developed by <a target="_blank" href="http://cern.ch">CERN</a>with the support of the EC project <a target="_blank" href="http://citizencyberlab.eu/">Citizen Cyberlab</a>, and the Citizen <a target="_blank" href="http://www.citizencyberscience.net">Cyberscience Centre</a>.
 					</p>
 					<p>
 						Information about resources used in this page:
