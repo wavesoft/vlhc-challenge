@@ -131,6 +131,9 @@ $(function() {
 				localStorage.setItem("vas-anonymous-id", this.anonymousID);
 			}
 
+			// Initial trigger with anonymous ID
+			$(window).trigger("analytics.userid", [this.anonymousID] );
+
 		};
 
 		/**
@@ -159,10 +162,13 @@ $(function() {
 				// Call login listeners
 				for (var i=0; i<this._loginListeners.length; i++)
 					this._loginListeners[i](this.userInfo);
+				// Analytics trigger with the real uuid
+				$(window).trigger("analytics.userid", [this.userInfo['uuid']] );
 			} else if ((prevUser != null) && (this.userInfo == null)) {
 				// Call logout listeners
 				for (var i=0; i<this._logoutListeners.length; i++)
 					this._logoutListeners[i](prevUser);
+				$(window).trigger("analytics.userid", [this.anonymousID] );
 			}
 
 		}
@@ -266,6 +272,8 @@ $(function() {
 						// Call login listeners
 						for (var i=0; i<this._loginListeners.length; i++)
 							this._loginListeners[i](info);
+						// Change the analytics userid
+						$(window).trigger("analytics.userid", [this.userInfo['uuid']] );
 					}
 
 				}
@@ -287,6 +295,8 @@ $(function() {
 				// Call logout listeners
 				for (var i=0; i<this._logoutListeners.length; i++)
 					this._logoutListeners[i](this.userInfo);
+				// Change the analytics userid
+				$(window).trigger("analytics.userid", [this.anonymousID] );
 			}
 		}
 
@@ -1929,7 +1939,6 @@ $(function() {
 			}
 
 			// Fire analytics info
-			$(window).trigger("analytics.userid", [info['uuid']] );
 			$(window).trigger("analytics.actions.login", [info['provider']] );
 
 		}
@@ -1954,7 +1963,6 @@ $(function() {
 			}
 
 			// Fire analytics info
-			$(window).trigger("analytics.userid", [this.loginInterface.anonymousID] );
 			$(window).trigger("analytics.actions.logout");
 
 		}
