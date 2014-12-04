@@ -455,6 +455,9 @@ $(function() {
 						return;
 					}
 
+					// Forward analytics event
+					$(window).trigger("analytics.webapi.available");
+
 					// Store webapi instance
 					this.wa_plugin = plugin;
 
@@ -519,8 +522,15 @@ $(function() {
 				if (!session) {
 					this.webapi_session.webapi = FLAG_ERROR;
 					this.__notifyFlagChange();
+
+					// Forward analytics event
+					$(window).trigger("analytics.webapi.error");
+
 					return;
 				}
+
+				// Forward analytics event
+				$(window).trigger("analytics.webapi.started");
 
 				// Store session instance
 				window.s = session;
@@ -713,6 +723,27 @@ $(function() {
 				this.statusFlags.vm = FLAG_READY;
 				this.__fireListener('genericStateChanged', STATE_RUNNING);
 				this.__notifyFlagChange();
+			}
+
+			// Handle states for analytics
+			if (state == 0) { /* SS_MISSING */
+				// Forward event to the window
+				$(window).trigger("analytics.vm.missing")
+			} else if (state == 1) { /* SS_AVAILBLE */
+				// Forward event to the window
+				$(window).trigger("analytics.vm.available")
+			} else if (state == 2) { /* SS_POWEROFF */
+				// Forward event to the window
+				$(window).trigger("analytics.vm.poweroff")
+			} else if (state == 3) { /* SS_SAVED */
+				// Forward event to the window
+				$(window).trigger("analytics.vm.saved")
+			} else if (state == 4) { /* SS_PAUSED */
+				// Forward event to the window
+				$(window).trigger("analytics.vm.paused")
+			} else if (state == 5) { /* SS_RUNNING */
+				// Forward event to the window
+				$(window).trigger("analytics.vm.running")
 			}
 
 			// Try to satisfy a pending command
@@ -1531,12 +1562,19 @@ $(function() {
 					// After we clicked 'start' we can show
 					// the idle screen.
 					this.dontShowIdle = false;
+
+					// Forward analytics event
+					$(window).trigger("analytics.actions.start");
+
 				} else {
 					// Stop VM
 					this.avm.stop();
 					this.shutdownCommandActive = true;
 					this.gaugeFrameResetGauges();
 					this.descFrameSetActive( this.FRAME_IDLE );
+
+					// Forward analytics event
+					$(window).trigger("analytics.actions.stop");
 				}
 			}).bind(this));
 
@@ -1715,6 +1753,9 @@ $(function() {
 			$(btnDestroy).click(function() {
 				if (!avmInstance.wa_session) return;
 				if (window.confirm("This action will remove completely the Virtual Machine from your computer.")) {
+					// Forward analytics event
+					$(window).trigger("analytics.actions.remove");
+					// Close session
 					avmInstance.wa_session.close();
 				}
 			});
@@ -1722,12 +1763,16 @@ $(function() {
 				if (!avmInstance.wa_session) return;
 				avmInstance.wa_session.openRDPWindow()
 				avmInstance.wa_session.__lastRDPWindow.focus();
+				// Forward analytics event
+				$(window).trigger("analytics.actions.open_rdp");
 			});
 			$(btnLogs).mousedown(function() {
 				if (!avmInstance.wa_session) return;
 				if (!avmInstance.apiAvailable) return;
 				btnLogs.attr("href", avmInstance.wa_session.apiURL);
 				btnLogs.attr("target", "_blank");
+				// Forward analytics event
+				$(window).trigger("analytics.actions.open_web");
 			});
 
 
