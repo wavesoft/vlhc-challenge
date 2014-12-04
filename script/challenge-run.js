@@ -472,7 +472,9 @@ $(function() {
 					}
 
 					// Forward analytics event
-					$(window).trigger("analytics.webapi.available");
+					setTimeout(function() { // Delay it a bit
+						$(window).trigger("analytics.webapi.available");
+					}, 100);
 
 					// Store webapi instance
 					this.wa_plugin = plugin;
