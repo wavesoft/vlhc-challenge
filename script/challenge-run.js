@@ -452,6 +452,8 @@ $(function() {
 					if (!plugin) {
 						this.statusFlags.webapi = FLAG_ERROR;
 						this.__notifyFlagChange();
+						// Forward analytics event
+						$(window).trigger("analytics.webapi.error", "Cannot start WebAPI");
 						return;
 					}
 
@@ -524,7 +526,7 @@ $(function() {
 					this.__notifyFlagChange();
 
 					// Forward analytics event
-					$(window).trigger("analytics.webapi.error");
+					$(window).trigger("analytics.webapi.error", "Cannot request session");
 
 					return;
 				}
@@ -679,6 +681,9 @@ $(function() {
 			this.__fireListener('progressActive', false);
 			this.__fireListener('error', message);
 			this.__notifyFlagChange();
+
+			// Forward analytics event
+			$(window).trigger("analytics.webapi.error", message);
 
 		}
 
@@ -1748,6 +1753,8 @@ $(function() {
 				} else {
 					avmInstance.applyAll();
 					onlyCap = true;
+					// Forward analytics event
+					$(window).trigger("analytics.actions.apply");
 				}
 			});
 			$(btnDestroy).click(function() {
@@ -1963,6 +1970,8 @@ $(function() {
 			avm.addListener('monitor.eventRate', (function(rate) {
 				if (rate > 0) {
 					this.gaugeFrameStatus("You are now creating virtual collisions");
+					// Forward analytics
+					$(window).trigger("analytics.vm.collisions");
 				}
 				this.gaugeFrameGauges.eventRate.rundial("value", rate);
 			}).bind(this));
@@ -2050,7 +2059,9 @@ $(function() {
 			avm.addListener('apiStateChanged', (function(state) {
 				if (state) {
 					// Online!
-					this.gaugeFrameStatus("Downloading and configuring scientific software");
+					this.gaugeFrameStatus("Downloading and configuring scientific software");				
+					// Forward analytics
+					$(window).trigger("analytics.vm.booted")
 				} else {
 					// Offline
 					this.gaugeFrameStatus("Disconnected from the instance");
