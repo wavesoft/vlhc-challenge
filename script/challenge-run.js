@@ -457,7 +457,7 @@ $(function() {
 						this.statusFlags.webapi = FLAG_ERROR;
 						this.__notifyFlagChange();
 						// Forward analytics event
-						$(window).trigger("analytics.webapi.error", "Cannot start WebAPI");
+						$(window).trigger("analytics.webapi.error", ["Cannot start WebAPI"] );
 						return;
 					}
 
@@ -530,7 +530,7 @@ $(function() {
 					this.__notifyFlagChange();
 
 					// Forward analytics event
-					$(window).trigger("analytics.webapi.error", "Cannot request session");
+					$(window).trigger("analytics.webapi.error", ["Cannot request session"] );
 
 					return;
 				}
@@ -687,7 +687,7 @@ $(function() {
 			this.__notifyFlagChange();
 
 			// Forward analytics event
-			$(window).trigger("analytics.webapi.error", message);
+			$(window).trigger("analytics.webapi.error", [message]);
 
 		}
 
@@ -1929,8 +1929,8 @@ $(function() {
 			}
 
 			// Fire analytics info
-			$(window).trigger("analytics.userid", info['uuid']);
-			$(window).trigger("analytics.actions.login", info['provider']);
+			$(window).trigger("analytics.userid", [info['uuid']] );
+			$(window).trigger("analytics.actions.login", [info['provider']] );
 
 		}
 
@@ -1954,7 +1954,7 @@ $(function() {
 			}
 
 			// Fire analytics info
-			$(window).trigger("analytics.userid", this.loginInterface.anonymousID);
+			$(window).trigger("analytics.userid", [this.loginInterface.anonymousID] );
 			$(window).trigger("analytics.actions.logout");
 
 		}
