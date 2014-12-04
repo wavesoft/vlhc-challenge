@@ -205,6 +205,7 @@ $(function() {
 		LoginInterface.prototype._normalizeAccountInfo = function(data) {
 			if (data['provider'] == "facebook") {
 				return {
+					'provider'		: 'facebook',
 					'displayName'	: data['displayName'],
 					'profileUrl'	: data['profileUrl'],
 					'picture'		: '//graph.facebook.com/'+data['id']+'/picture',
@@ -212,6 +213,7 @@ $(function() {
 				};
 			} else if (data['provider'] == "google") {
 				return {
+					'provider'		: 'google',
 					'displayName'	: data['displayName'],
 					'profileUrl'	: data['_json']['link'],
 					'picture'		: data['_json']['picture'],
@@ -219,6 +221,7 @@ $(function() {
 				};
 			} else if (data['provider'] == "twitter") {
 				return {
+					'provider'		: 'twitter',
 					'displayName'	: data['displayName'],
 					'profileUrl'	: data['_json']['url'],
 					'picture'		: data['photos'][0]['value'],
@@ -226,6 +229,7 @@ $(function() {
 				};
 			} else if (data['provider'] == "boinc") {
 				return {
+					'provider'		: 'boinc',
 					'displayName'	: data['displayName'],
 					'profileUrl'	: 'http://mcplots-dev.cern.ch/production.php?view=user&userid='+data['id'],
 					'picture'		: 'http://lhcathome2.cern.ch/vLHCathome/user_profile/images/'+data['id']+'.jpg',
@@ -1924,6 +1928,10 @@ $(function() {
 				this.avm.applyAll();
 			}
 
+			// Fire analytics info
+			$(window).trigger("analytics.userid", info['uuid']);
+			$(window).trigger("analytics.actions.login", info['provider']);
+
 		}
 
 		/**
@@ -1944,6 +1952,11 @@ $(function() {
 				this.avm.config.boinc_userid = "";
 				this.avm.applyAll();
 			}
+
+			// Fire analytics info
+			$(window).trigger("analytics.userid", this.loginInterface.anonymousID);
+			$(window).trigger("analytics.actions.logout");
+
 		}
 
 		///////////////////////////////////////////////

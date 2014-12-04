@@ -59,10 +59,10 @@
 								<a id="acc-name" target="_blank" href="#">Anonymous</a>
 								&nbsp;
 								<a id="btn-login" class="btn btn-success btn-sm">
-									Log-in to collect credit
+									Log-in and keep track of your progress
 								</a>
 								<button id="btn-credits" class="btn btn-default btn-sm">
-									Account details
+									Progress details
 								</button>								
 							</div>
 						</div>
