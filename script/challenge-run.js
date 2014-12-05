@@ -40,7 +40,7 @@ $(function() {
 			// Start by being not expired
 			this.expired = false;
 			// Timestamp when the analytics class was initialized
-			this.initializedAt = Date.now() / 1000;
+			this.initializedAt = Date.now();
 			// Wait 10 seconds until an analytics listener appears
 			this.timeoutTime = this.initializedAt + 10000;
 			// The analytics listener
@@ -59,7 +59,7 @@ $(function() {
 			if (this.enabled || this.expired) return;
 
 			// Check if we expired
-			if ((Date.now() / 1000) > this.timeoutTime) {
+			if (Date.now() > this.timeoutTime) {
 				clearInterval(this.probeTimer);
 				this.expired = true;
 				this.stack = [];
