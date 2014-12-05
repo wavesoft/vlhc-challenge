@@ -16,13 +16,13 @@ h2 {
 }
 .invert {
   background-color: #003366;
-  color: white;
+  color: #fff;
 }
 .full-width {
   width: 100%;
 }
 .col-border-left {
-  border-left: solid 1px #eeeeee;
+  border-left: solid 1px #EEE;
 }
 body.fixed-fullscreen {
   overflow: hidden;
@@ -33,11 +33,11 @@ body.fixed-fullscreen div.fullscreen {
   right: 0;
   top: 0;
   bottom: 0;
-  background-color: #eeeeee;
+  background-color: #EEE;
 }
 .btn.btn-ghost {
   background: none;
-  border: solid 1px white;
+  border: solid 1px #fff;
 }
 .btn.btn-ghost:hover {
   color: inherit;
@@ -54,15 +54,15 @@ body.fixed-fullscreen div.fullscreen {
 }
 .btn-arrow:after {
   content: " ";
-  border: 1px white;
+  border: 1px #fff;
   border-style: none solid solid none;
-  width: 35.360678925px;
-  height: 35.360678925px;
+  width: 35.36067893px;
+  height: 35.36067893px;
   display: block;
-  -webkit-transform: rotate(45deg) translateX(7.319660537px);
-  -moz-transform: rotate(45deg) translateX(7.319660537px);
-  -o-transform: rotate(45deg) translateX(7.319660537px);
-  transform: rotate(45deg) translateX(7.319660537px);
+  -webkit-transform: rotate(45deg) translateX(7.31966054px);
+  -moz-transform: rotate(45deg) translateX(7.31966054px);
+  -o-transform: rotate(45deg) translateX(7.31966054px);
+  transform: rotate(45deg) translateX(7.31966054px);
 }
 .next-arrow {
   position: absolute;
@@ -88,7 +88,7 @@ body.no-top-scroll .next-arrow {
   transition: background-color 0.5s;
 }
 .navbar a {
-  color: white;
+  color: #fff;
 }
 .navbar .nav a:hover {
   background-color: rgba(0, 0, 0, 0.4);
@@ -114,7 +114,7 @@ body.no-top-scroll .navbar .nav a:hover {
   height: 128px;
   left: 36px;
   top: 0;
-  background-color: #eeeeee;
+  background-color: #eee;
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -166,7 +166,7 @@ body.no-top-scroll .navbar .nav a:hover {
 }
 #challenge-popup-status div.slider-host > input .ui-slider-handle,
 #challenge-popup-status div.slider-host > div.slider .ui-slider-handle {
-  border: solid 1px #888888 !important;
+  border: solid 1px #888 !important;
 }
 #challenge-popup-status div.slider-host > div.text {
   float: right;
@@ -285,7 +285,7 @@ body.no-top-scroll .navbar .nav a:hover {
   margin: 5px 0;
 }
 #challenge div.frame-status div.panel div.panel-body div.widgets div.row div.details {
-  color: #666666;
+  color: #666;
   font-size: 11px;
   margin: 5px 0 10px;
   height: 42px;
@@ -308,7 +308,7 @@ body.no-top-scroll .navbar .nav a:hover {
 #challenge div.frame-status.progress-error div.panel div.panel-alert {
   background-color: #e74c3c;
   border-color: #e74c3c;
-  color: white;
+  color: #fff;
   display: block;
 }
 #challenge div.frame-status.progress-error div.panel div.panel-alert h1:before {
@@ -321,7 +321,7 @@ body.no-top-scroll .navbar .nav a:hover {
 #challenge div.frame-status.progress-warn div.panel div.panel-warn {
   background-color: #3498db;
   border-color: #2980b9;
-  color: white;
+  color: #fff;
   display: block;
 }
 #challenge div.frame-status.progress-warn div.panel div.panel-warn h1:before {
@@ -393,7 +393,7 @@ body.no-top-scroll .navbar .nav a:hover {
   -moz-border-radius: 6px;
   -o-border-radius: 6px;
   border-radius: 6px;
-  color: black;
+  color: #000;
   background: #ecf0f1;
   border: solid 1px #bdc3c7;
   width: 128px;
@@ -408,11 +408,11 @@ body.no-top-scroll .navbar .nav a:hover {
 }
 #challenge div.frame-description .well div.desc-live div.collider div.label.label-beam {
   left: 10px;
-  top: 197px;
+  top: 100px;
 }
 #challenge div.frame-description .well div.desc-live div.collider div.label.label-energy {
   left: 561px;
-  top: 197px;
+  top: 100px;
 }
 #challenge div.frame-description .well div.desc-live div.collider div.label.label-generator {
   left: 253px;
@@ -420,11 +420,11 @@ body.no-top-scroll .navbar .nav a:hover {
 }
 #challenge div.frame-description .well div.desc-live div.collider div.label.label-process {
   left: 253px;
-  top: 175px;
+  top: 80px;
 }
 #challenge div.frame-description .well div.desc-live div.collider div.label.label-nevts {
   left: 234px;
-  top: 209px;
+  top: 118px;
   width: 168px;
 }
 #challenge div.frame-description .well div.desc-live div.analyses {
@@ -446,10 +446,10 @@ body.no-top-scroll .navbar .nav a:hover {
   left: 0;
   right: 0;
   bottom: -8px;
-  text-align: right;
+  text-align: center;
 }
 #challenge div.frame-description .well div.desc-live div.dynamic-content a {
-  color: #333333;
+  color: #333;
 }
 #challenge div.frame-description div.valign-middle {
   padding-top: 80px;
@@ -471,11 +471,11 @@ body.no-top-scroll .navbar .nav a:hover {
 }
 #challenge div.disclaimer-footer a {
   font-size: 12px;
-  color: #333333;
+  color: #333;
 }
 #home {
   position: relative;
-  color: white;
+  color: #fff;
   background: no-repeat center center url(../img/lhc-2.jpg);
   background-size: cover;
 }
@@ -504,5 +504,5 @@ body.no-top-scroll .navbar .nav a:hover {
   font-size: 18px;
 }
 #home .content .hero .users-active {
-  color: #ffcc00;
+  color: #FFCC00;
 }

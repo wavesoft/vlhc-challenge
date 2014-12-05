@@ -1523,7 +1523,6 @@ $(function() {
 				$("#live-beam").text(cfg['beam'])
 				$("#live-process").text(cfg['process'])
 				$("#live-energy").text(energy)
-				$("#live-generator").text(cfg['generator'])
 				$("#live-nevts").text(numberWithCommas(parseInt(cfg['nevts'])));
 
 			} else {
@@ -1535,7 +1534,6 @@ $(function() {
 				$("#live-beam").text("---");
 				$("#live-process").text("---");
 				$("#live-energy").text("---");
-				$("#live-generator").text("---");
 				$("#live-nevts").text("---");
 
 				$("#live-generator-link").text("(No generator)");
