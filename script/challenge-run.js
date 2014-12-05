@@ -83,9 +83,9 @@ $(function() {
 		}
 
 		/**
-		 * Trigger the analytics event right away
+		 * Trigger the analytics event
 		 */
-		Analytics.prototype.action = function( eventName, data ) {
+		Analytics.prototype.action = function( eventName, data, replace ) {
 			// Check for listener
 			this.probeListener();
 
@@ -97,13 +97,23 @@ $(function() {
 			if (this.enabled) {
 				this.send(eventName, data);
 			} else {
+				// If action is already on stack, change it's data
+				if (replace) {
+					for (var i=0; i<this.stack.length; i++) {
+						if (this.stack[i][0] == eventName) {
+							this.stack[i] = [eventName, data];
+							return;
+						}
+					}
+				}
+				// Otherwise, push on stack
 				this.stack.push([eventName, data]);
 			}
 
 		}
 
 		/**
-		 * Trigger an analytics action
+		 * Send the analytics event without the stack
 		 */
 		Analytics.prototype.send = function( eventName, data ) {
 			// Fire the event listener
@@ -231,7 +241,7 @@ $(function() {
 			}
 
 			// Initial trigger with anonymous ID
-			analytics.action("userid", [this.anonymousID] );
+			analytics.action("userid", [this.anonymousID], true);
 
 		};
 
@@ -262,12 +272,12 @@ $(function() {
 				for (var i=0; i<this._loginListeners.length; i++)
 					this._loginListeners[i](this.userInfo);
 				// Analytics trigger with the real uuid
-				analytics.action("userid", [this.userInfo['uuid']] );
+				analytics.action("userid", [this.userInfo['uuid']], true );
 			} else if ((prevUser != null) && (this.userInfo == null)) {
 				// Call logout listeners
 				for (var i=0; i<this._logoutListeners.length; i++)
 					this._logoutListeners[i](prevUser);
-				analytics.action("userid", [this.anonymousID] );
+				analytics.action("userid", [this.anonymousID], true );
 			}
 
 			// Fire analytics userID when
@@ -374,7 +384,7 @@ $(function() {
 						for (var i=0; i<this._loginListeners.length; i++)
 							this._loginListeners[i](info);
 						// Change the analytics userid
-						analytics.action("userid", [this.userInfo['uuid']] );
+						analytics.action("userid", [this.userInfo['uuid']], true );
 					}
 
 				}
@@ -397,7 +407,7 @@ $(function() {
 				for (var i=0; i<this._logoutListeners.length; i++)
 					this._logoutListeners[i](this.userInfo);
 				// Change the analytics userid
-				analytics.action("userid", [this.anonymousID] );
+				analytics.action("userid", [this.anonymousID], true );
 			}
 		}
 
