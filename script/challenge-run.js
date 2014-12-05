@@ -23,6 +23,105 @@ $(function() {
 	    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	}
 
+	/** 
+	 * Analytics piping
+	 */
+	var Analytics = function() {
+
+		/**
+		 * Analytics are initialized only on demand
+		 */
+		var Analytics = function() {
+
+			// Prepare analytics stack
+			this.stack = [];
+			// Start by disabled
+			this.enabled = false;
+			// Start by being not expired
+			this.expired = false;
+			// Timestamp when the analytics class was initialized
+			this.initializedAt = Date.now() / 1000;
+			// Wait 10 seconds until an analytics listener appears
+			this.timeoutTime = this.initializedAt + 10000;
+			// The analytics listener
+			this.listener = null;
+
+			// Start probe timer
+			this.probeTimer = setInterval(this.probeListener.bind(this), 100);
+
+		}
+
+		/**
+		 * Trigger an analytics action
+		 */
+		Analytics.prototype.probeListener = function() {
+			// Check if we are enabled or expired
+			if (this.enabled || this.expired) return;
+
+			// Check if we expired
+			if ((Date.now() / 1000) > this.timeoutTime) {
+				clearInterval(this.probeTimer);
+				this.expired = true;
+				this.stack = [];
+				return;
+			}
+
+			// Don't continue if there is no analytics listener
+			if (!window.analyticsListener) return;
+
+			// Stop probe timer
+			clearInterval(this.probeTimer);
+			// Keep reference of analytics listener
+			this.listener = window.analyticsListener;
+			// We are now enabled
+			this.enabled = true;
+			// Flush stack
+			for (var i=0; i<this.stack.length; i++)
+				this.send(this.stack[i][0], this.stack[i][1]);
+			this.stack = [];
+
+		}
+
+		/**
+		 * Trigger the analytics event right away
+		 */
+		Analytics.prototype.action = function( eventName, data ) {
+			// Check for listener
+			this.probeListener();
+
+			// If we are expired, exit
+			if (this.expired) return;
+
+			// Forward or stack it
+			if (!data) data=[];
+			if (this.enabled) {
+				this.send(eventName, data);
+			} else {
+				this.stack.push([eventName, data]);
+			}
+
+		}
+
+		/**
+		 * Trigger an analytics action
+		 */
+		Analytics.prototype.send = function( eventName, data ) {
+			// Fire the event listener
+			if (this.listener) {
+				try {
+					this.listener(eventName, data);
+				} catch (e) { };
+			}
+		}
+
+		// Return analytics class
+		return Analytics;
+
+	}();
+
+	// Create analytics instance
+	var analytics = new Analytics();
+
 	/**
 	 */
 	var SystemMessages = function() {
@@ -132,7 +231,7 @@ $(function() {
 			}
 
 			// Initial trigger with anonymous ID
-			$(window).trigger("analytics.userid", [this.anonymousID] );
+			analytics.action("userid", [this.anonymousID] );
 
 		};
 
@@ -163,13 +262,15 @@ $(function() {
 				for (var i=0; i<this._loginListeners.length; i++)
 					this._loginListeners[i](this.userInfo);
 				// Analytics trigger with the real uuid
-				$(window).trigger("analytics.userid", [this.userInfo['uuid']] );
+				analytics.action("userid", [this.userInfo['uuid']] );
 			} else if ((prevUser != null) && (this.userInfo == null)) {
 				// Call logout listeners
 				for (var i=0; i<this._logoutListeners.length; i++)
 					this._logoutListeners[i](prevUser);
-				$(window).trigger("analytics.userid", [this.anonymousID] );
+				analytics.action("userid", [this.anonymousID] );
 			}
+
+			// Fire analytics userID when
 
 		}
 
@@ -273,7 +374,7 @@ $(function() {
 						for (var i=0; i<this._loginListeners.length; i++)
 							this._loginListeners[i](info);
 						// Change the analytics userid
-						$(window).trigger("analytics.userid", [this.userInfo['uuid']] );
+						analytics.action("userid", [this.userInfo['uuid']] );
 					}
 
 				}
@@ -296,7 +397,7 @@ $(function() {
 				for (var i=0; i<this._logoutListeners.length; i++)
 					this._logoutListeners[i](this.userInfo);
 				// Change the analytics userid
-				$(window).trigger("analytics.userid", [this.anonymousID] );
+				analytics.action("userid", [this.anonymousID] );
 			}
 		}
 
@@ -467,13 +568,13 @@ $(function() {
 						this.statusFlags.webapi = FLAG_ERROR;
 						this.__notifyFlagChange();
 						// Forward analytics event
-						$(window).trigger("analytics.webapi.error", ["Cannot start WebAPI"] );
+						analytics.action("webapi.error", ["Cannot start WebAPI"] );
 						return;
 					}
 
 					// Forward analytics event
 					setTimeout(function() { // Delay it a bit
-						$(window).trigger("analytics.webapi.available");
+						analytics.action("webapi.available");
 					}, 100);
 
 					// Store webapi instance
@@ -542,13 +643,13 @@ $(function() {
 					this.__notifyFlagChange();
 
 					// Forward analytics event
-					$(window).trigger("analytics.webapi.error", ["Cannot request session"] );
+					analytics.action("webapi.error", ["Cannot request session"] );
 
 					return;
 				}
 
 				// Forward analytics event
-				$(window).trigger("analytics.webapi.started");
+				analytics.action("webapi.started");
 
 				// Store session instance
 				window.s = session;
@@ -699,7 +800,7 @@ $(function() {
 			this.__notifyFlagChange();
 
 			// Forward analytics event
-			$(window).trigger("analytics.webapi.error", [message]);
+			analytics.action("webapi.error", [message]);
 
 		}
 
@@ -749,22 +850,22 @@ $(function() {
 			// Handle states for analytics
 			if (state == 0) { /* SS_MISSING */
 				// Forward event to the window
-				$(window).trigger("analytics.vm.missing")
+				analytics.action("vm.missing")
 			} else if (state == 1) { /* SS_AVAILBLE */
 				// Forward event to the window
-				$(window).trigger("analytics.vm.available")
+				analytics.action("vm.available")
 			} else if (state == 2) { /* SS_POWEROFF */
 				// Forward event to the window
-				$(window).trigger("analytics.vm.poweroff")
+				analytics.action("vm.poweroff")
 			} else if (state == 3) { /* SS_SAVED */
 				// Forward event to the window
-				$(window).trigger("analytics.vm.saved")
+				analytics.action("vm.saved")
 			} else if (state == 4) { /* SS_PAUSED */
 				// Forward event to the window
-				$(window).trigger("analytics.vm.paused")
+				analytics.action("vm.paused")
 			} else if (state == 5) { /* SS_RUNNING */
 				// Forward event to the window
-				$(window).trigger("analytics.vm.running")
+				analytics.action("vm.running")
 			}
 
 			// Try to satisfy a pending command
@@ -1583,7 +1684,7 @@ $(function() {
 					this.dontShowIdle = false;
 
 					// Forward analytics event
-					$(window).trigger("analytics.actions.start");
+					analytics.action("actions.start");
 
 				} else {
 					// Stop VM
@@ -1593,7 +1694,7 @@ $(function() {
 					this.descFrameSetActive( this.FRAME_IDLE );
 
 					// Forward analytics event
-					$(window).trigger("analytics.actions.stop");
+					analytics.action("actions.stop");
 				}
 			}).bind(this));
 
@@ -1768,14 +1869,14 @@ $(function() {
 					avmInstance.applyAll();
 					onlyCap = true;
 					// Forward analytics event
-					$(window).trigger("analytics.actions.apply");
+					analytics.action("actions.apply");
 				}
 			});
 			$(btnDestroy).click(function() {
 				if (!avmInstance.wa_session) return;
 				if (window.confirm("This action will remove completely the Virtual Machine from your computer.")) {
 					// Forward analytics event
-					$(window).trigger("analytics.actions.remove");
+					analytics.action("actions.remove");
 					// Close session
 					avmInstance.wa_session.close();
 				}
@@ -1785,7 +1886,7 @@ $(function() {
 				avmInstance.wa_session.openRDPWindow()
 				avmInstance.wa_session.__lastRDPWindow.focus();
 				// Forward analytics event
-				$(window).trigger("analytics.actions.open_rdp");
+				analytics.action("actions.open_rdp");
 			});
 			$(btnLogs).mousedown(function() {
 				if (!avmInstance.wa_session) return;
@@ -1793,7 +1894,7 @@ $(function() {
 				btnLogs.attr("href", avmInstance.wa_session.apiURL);
 				btnLogs.attr("target", "_blank");
 				// Forward analytics event
-				$(window).trigger("analytics.actions.open_web");
+				analytics.action("actions.open_web");
 			});
 
 
@@ -1939,7 +2040,7 @@ $(function() {
 			}
 
 			// Fire analytics info
-			$(window).trigger("analytics.actions.login", [info['provider']] );
+			analytics.action("actions.login", [info['provider']] );
 
 		}
 
@@ -1963,7 +2064,7 @@ $(function() {
 			}
 
 			// Fire analytics info
-			$(window).trigger("analytics.actions.logout");
+			analytics.action("actions.logout");
 
 		}
 
@@ -1992,7 +2093,7 @@ $(function() {
 				if (rate > 0) {
 					this.gaugeFrameStatus("You are now creating virtual collisions");
 					// Forward analytics
-					$(window).trigger("analytics.vm.collisions");
+					analytics.action("vm.collisions");
 				}
 				this.gaugeFrameGauges.eventRate.rundial("value", rate);
 			}).bind(this));
@@ -2082,7 +2183,7 @@ $(function() {
 					// Online!
 					this.gaugeFrameStatus("Downloading and configuring scientific software");				
 					// Forward analytics
-					$(window).trigger("analytics.vm.booted")
+					analytics.action("vm.booted")
 				} else {
 					// Offline
 					this.gaugeFrameStatus("Disconnected from the instance");

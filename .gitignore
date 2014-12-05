@@ -219,7 +219,8 @@ pip-log.txt
 # a bad idea to put on github
 src*
 
-
-script/cvmwebapi-2.0.9.js
-
-script/cvmwebapi-2.0.9-src.js
+# Skip debugging files
+ext/js*
+ext/css*
+ext/fonts*
+script/cvmwebapi-*
