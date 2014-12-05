@@ -119,7 +119,13 @@ $(function() {
 			// Fire the event listener
 			if (this.listener) {
 				try {
-					this.listener(eventName, data);
+					// Backwards compatibility
+					if (this.listener === true) {
+						$(window).trigger('analytics.'+eventName, data);
+					} else {
+						// New version just calls the listener
+						this.listener(eventName, data);
+					}
 				} catch (e) { };
 			}
 		}
