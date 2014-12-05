@@ -407,11 +407,11 @@ body.no-top-scroll .navbar .nav a:hover {
   color: #e74c3c;
 }
 #challenge div.frame-description .well div.desc-live div.collider div.label.label-beam {
-  left: 10px;
+  left: 80px;
   top: 100px;
 }
 #challenge div.frame-description .well div.desc-live div.collider div.label.label-energy {
-  left: 561px;
+  left: 490px;
   top: 100px;
 }
 #challenge div.frame-description .well div.desc-live div.collider div.label.label-generator {
