@@ -1461,7 +1461,7 @@ $(function() {
 				format: function(x) { return parseInt(x).toString() + " %"; }
 			});
 			this.gaugeFrameGauges.ranking.rundial({
-				min: 0, max: 100000, step: 10,
+				min: 0, max: 1000000, step: 1,
 				format: function(x) { return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); }
 			});
 
