@@ -923,12 +923,12 @@ $(function() {
 		AutonomousVM.prototype.__startStatusProbe = function(refApiURL) {
 			if (this.__statusProbeTimer) clearInterval(this.__statusProbeTimer);
 			var apiURL = refApiURL;
-			var nid = ++this.__nid;
 
 			this.__messages = null;
 			this.__bootTime = null;
 			this.__jobConfig = {};
 			this.__statusProbeTimer = setInterval((function() {
+				var nid = ++this.__nid;
 
 				// Allow only one probe to run
 				if (this.__probeBusy) return;
