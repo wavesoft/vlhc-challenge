@@ -2024,12 +2024,16 @@ $(function() {
 				this.accFrameDefine(userInfo);
 				// Update VM information
 				avm.setProperty("challenge-login", this.loginInterface.freeze());
+				// Update account details
+				this.gaugeFrameUpdateAccountDetails();
 			}).bind(this));
 			this.loginInterface.onUserLogout((function(prevInfo) {
 				// Update frame information
 				this.accFrameUndefine();
 				// Update VM information
 				avm.setProperty("challenge-login", this.loginInterface.freeze());
+				// Update account details
+				this.gaugeFrameUpdateAccountDetails();
 			}).bind(this));
 
 			// Check if the user is already loaded
