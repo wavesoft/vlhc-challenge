@@ -1428,8 +1428,13 @@ $(function() {
 			// Start frame shuffler
 			setInterval(this.descFrameSetShuffle.bind(this), 30000);
 
+			// Start account information probing
+			setInterval(this.gaugeFrameUpdateAccountDetails.bind(this), 30000);
+			this.gaugeFrameUpdateAccountDetails();
+
 			// Initialize footer 
 			this.footerInit();
+
 
 		}
 
@@ -1501,6 +1506,28 @@ $(function() {
 					'width': v*100+'%'
 				});
 			}
+		}
+
+		/**
+		 * Update gauge frame using the current information
+		 */
+		ChallengeInterface.prototype.gaugeFrameUpdateAccountDetails = function() {
+
+			// Get account details
+			$.ajax({
+				'url': 'https://test4theory.cern.ch/challenge/user_status?vmid=' + this.loginInterface.vmid(),
+				'dataType': 'json',
+				'success': (function(data,status,xhr) {
+					if ((data['rank'] != undefined) && (data['rank'] >= 0)) {
+						this.gaugeFrameGauges.ranking.rundial("value", (data['rank']+1));
+					} else {
+						this.gaugeFrameGauges.ranking.rundial("value", 0);
+					}
+				}).bind(this),
+				'error': (function(data,status,xhr) {
+					this.gaugeFrameGauges.ranking.rundial("value", 0);
+				}).bind(this)
+			});
 		}
 
 		/**
