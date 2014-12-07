@@ -1128,8 +1128,9 @@ $(function() {
 						'success': (function(data,status,xhr) {
 
 							// If it's empty, that's good news
-							var lines = data.split("\n"),
-								loadParts = lines[0].split("load average: ")[1].split(/[ \t]+/);
+							var lines = data.split("\n");
+							if (lines.length <= 0) return;
+							var loadParts = lines[0].split("load average: ")[1].split(/[ \t]+/);
 
 							// Get machine load
 							this.__fireListener("monitor.cpuLoad", parseFloat(loadParts[0]), parseFloat(loadParts[1]), parseFloat(loadParts[2]));
@@ -1614,9 +1615,11 @@ $(function() {
 		 * Show a status message on the collider screen of the descFrame
 		 */
 		ChallengeInterface.prototype.descFrameShowPopup = function( message ) {
-			$("#live-popup-message")
-				.html(message)
-				.fadeIn();
+			var msg = $("#live-popup-message");
+			msg.html(message);
+			if (!msg.is(":visible")) {
+				msg.fadeIn();
+			}
 		}
 
 		/**
@@ -1646,7 +1649,25 @@ $(function() {
 			if (cfg) {
 
 				// Apply energy units
-				var energy = parseInt(cfg['energy']);
+				var energy = parseFloat(cfg['energy']);
+
+				// Scale them according to generator configuration
+				var gen_scale = {
+					'herwig++': 1,
+					'pythia6':  1000,
+					'pythia8':  1000,
+					'sherpa':   1,
+					'vincia':   1,
+					'alpgenpythia6': 1,
+					'alpgenherwigjimmy': 1,
+					'epos': 1,
+					'phojet': 1,
+				};
+				if (gen_scale[cfg['generator']] !== undefined) {
+					energy *= gen_scale[cfg['generator']];
+				}
+
+				// Apply units
 				if (energy >= 1000) {
 					energy = Number(energy/1000).toFixed(2) + " GeV";
 				} else {
