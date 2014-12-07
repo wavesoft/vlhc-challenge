@@ -1440,7 +1440,7 @@ $(function() {
 			this.alertOnUnload = false;
 			$(window).bind('beforeunload', (function() {
 				if (this.alertOnUnload) {
-					return "You have a Virtual Machine running. Note that it will keep running in the background even if you close this window.";
+					return "You have a Virtual Machine running. Note that it will keep running in the background even if you close this window. \nIf you want to stop the Virtual Machine, click on Stop at the bottom of this page";
 				}
 			}).bind(this));
 
