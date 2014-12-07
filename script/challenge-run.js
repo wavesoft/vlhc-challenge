@@ -1388,7 +1388,7 @@ $(function() {
 
 			// The gauges in the interface
 			this.gaugeFrameGauges = {
-				cpuLoad 	: $("#inp-cpuload"),
+				jobsCompl 	: $("#inp-jobs"),
 				eventRate 	: $("#inp-eventrate"),
 				progress 	: $("#inp-progress"),
 				ranking 	: $("#inp-ranking"),
@@ -1457,9 +1457,9 @@ $(function() {
 		ChallengeInterface.prototype.gaugeFrameInit = function() {
 
 			// Create the four gauges
-			this.gaugeFrameGauges.cpuLoad.rundial({
-				min: 0, max: 400, step: 10,
-				format: function(x) { return x + " %"; }
+			this.gaugeFrameGauges.jobsCompl.rundial({
+				min: 0, max: 1000000, step: 1,
+				format: function(x) { return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); }
 			});
 			this.gaugeFrameGauges.eventRate.rundial({
 				min: 0, max: 1000000, step: 500,
@@ -1529,12 +1529,15 @@ $(function() {
 				'success': (function(data,status,xhr) {
 					if ((data['rank'] != undefined) && (data['rank'] >= 0)) {
 						this.gaugeFrameGauges.ranking.rundial("value", (data['rank']+1));
+						this.gaugeFrameGauges.jobsCompl.rundial("value", data['completed']);
 					} else {
 						this.gaugeFrameGauges.ranking.rundial("value", 0);
+						this.gaugeFrameGauges.jobsCompl.rundial("value", 0);
 					}
 				}).bind(this),
 				'error': (function(data,status,xhr) {
 					this.gaugeFrameGauges.ranking.rundial("value", 0);
+					this.gaugeFrameGauges.jobsCompl.rundial("value", 0);
 				}).bind(this)
 			});
 		}
@@ -1551,7 +1554,6 @@ $(function() {
 		 */
 		ChallengeInterface.prototype.gaugeFrameResetGauges = function() {
 			this.gaugeFrameGauges.eventRate.rundial("value", 0);
-			this.gaugeFrameGauges.cpuLoad.rundial("value", 0);
 			this.gaugeFrameGauges.progress.rundial("value", 0);
 		}
 
@@ -2196,7 +2198,7 @@ $(function() {
 				this.gaugeFrameGauges.eventRate.rundial("value", rate);
 			}).bind(this));
 			avm.addListener('monitor.cpuLoad', (function(one, five, fifteen) {
-				this.gaugeFrameGauges.cpuLoad.rundial("value", five*100);
+				//this.gaugeFrameGauges.cpuLoad.rundial("value", five*100);
 			}).bind(this));
 			avm.addListener('monitor.progress', (function(overall) {
 				this.gaugeFrameGauges.progress.rundial("value", overall*100);

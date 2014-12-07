@@ -61,9 +61,9 @@
 							<div class="widgets">
 								<div class="row">
 								  <div class="col-xs-3">
-									<h3>Workload</h3>
-									<div class="details">How much your virtual CPU is loaded with work.</div>
-									<input class="ui-dial" id="inp-cpuload" value="0"></input>
+									<h3>Jobs Completed</h3>
+									<div class="details">How many simulation jobs your virtual machine has processed.</div>
+									<input class="ui-dial" id="inp-jobs" value="0"></input>
 								  </div>
 								  <div class="col-xs-3">
 									<h3>Event Rate</h3>
