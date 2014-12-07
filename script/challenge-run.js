@@ -1735,7 +1735,8 @@ $(function() {
 				$("#live-generator-link").attr("href", "#");
 				$("#live-generator-link").attr("target", "");
 
-				this.descFrameShowPopup("Waiting for (next) job to start");
+				this.descFrameShowPopup("Waiting for a job to arrive");
+				this.gaugeFrameStatus("Waiting for a job to arrive");
 
 			}
 		}
