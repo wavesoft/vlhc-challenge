@@ -1440,7 +1440,7 @@ $(function() {
 			this.alertOnUnload = false;
 			$(window).bind('beforeunload', (function() {
 				if (this.alertOnUnload) {
-					return "You have a Virtual Machine running. Note that it will keep running in the background even if you close this window. \nIf you want to stop the Virtual Machine, click on Stop at the bottom of this page";
+					return "You have a Virtual Machine running. Note that it will keep running in the background even if you close this window. \n\nIf you want to stop the Virtual Machine, click on Stop at the bottom of this page";
 				}
 			}).bind(this));
 
@@ -2271,6 +2271,7 @@ $(function() {
 				} else {
 					this.descFrameSetActive( this.FRAME_RECOVERY );
 					this.gaugeFrameWarn("Can you try refreshing?", "Lost connection with the CernVM WebAPI.");
+					this.alertOnUnload = false;
 				}
 			}).bind(this));
 
