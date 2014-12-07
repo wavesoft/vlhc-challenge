@@ -172,7 +172,9 @@
 								</div>
 							</div>
 							<div class="dynamic-content">
-							</div>							
+							</div>
+							<div class="popup-message" id="live-popup-message">
+							</div>
 						</div>
 
 
@@ -262,6 +264,9 @@
 			</div><!-- /.modal -->
 
 		</div>
+
+		<!-- CERN Experiment -->
+		<div class="experiment"></div>
 
 		<!-- Libraries -->
 		<script src="ext/js/jquery-1.11.0.min.js"></script>

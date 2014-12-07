@@ -1578,6 +1578,7 @@ $(function() {
 			// Prohibition flag for showing the intro screen
 			this.dontShowIdle = true;
 
+
 		}
 
 		/**
@@ -1610,6 +1611,23 @@ $(function() {
 		}
 
 		/**
+		 * Show a status message on the collider screen of the descFrame
+		 */
+		ChallengeInterface.prototype.descFrameShowPopup = function( message ) {
+			$("#live-popup-message")
+				.html(message)
+				.fadeIn();
+		}
+
+		/**
+		 * Hide a status message from the collider screen
+		 */
+		ChallengeInterface.prototype.descFrameHidePopup = function() {
+			$("#live-popup-message")
+				.fadeOut();
+		}
+
+		/**
 		 * Automatic shuffling of the description frame system messages
 		 */
 		ChallengeInterface.prototype.descFrameSetShuffle = function( index ) {
@@ -1623,6 +1641,7 @@ $(function() {
 		 */
 		ChallengeInterface.prototype.descFrameSetLiveConfig = function( cfg ) {
 			this.gaugeFrameStatus("Starting virtual event generator");
+			this.descFrameShowPopup("Starting virtual event generator");
 			//$("#live-debug").text(JSON.stringify(cfg));
 			if (cfg) {
 
@@ -1684,6 +1703,8 @@ $(function() {
 				$("#live-generator-link").addClass("disabled");
 				$("#live-generator-link").attr("href", "#");
 				$("#live-generator-link").attr("target", "");
+
+				this.descFrameShowPopup("Waiting for (next) job to start");
 
 			}
 		}
@@ -2139,6 +2160,7 @@ $(function() {
 			avm.addListener('monitor.eventRate', (function(rate) {
 				if (rate > 0) {
 					this.gaugeFrameStatus("You are now creating virtual collisions");
+					this.descFrameHidePopup();
 					// Forward analytics
 					analytics.action("vm.collisions");
 				}
@@ -2151,6 +2173,7 @@ $(function() {
 				this.gaugeFrameGauges.progress.rundial("value", overall*100);
 				if (overall >= 0.99) {
 					this.gaugeFrameStatus("Completing analysis and sending results");
+					this.descFrameShowPopup("Completing analysis and sending results");
 				}
 			}).bind(this));
 
