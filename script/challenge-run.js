@@ -2188,24 +2188,28 @@ $(function() {
 			}).bind(this));
 
 			// Bind gauge listeners
-			avm.addListener('monitor.eventRate', (function(rate) {
-				if (rate > 0) {
-					this.gaugeFrameStatus("You are now creating virtual collisions");
-					this.descFrameHidePopup();
-					// Forward analytics
-					analytics.action("vm.collisions");
-				}
-				this.gaugeFrameGauges.eventRate.rundial("value", rate);
-			}).bind(this));
+			var lastProgress = 0;
 			avm.addListener('monitor.cpuLoad', (function(one, five, fifteen) {
 				//this.gaugeFrameGauges.cpuLoad.rundial("value", five*100);
 			}).bind(this));
 			avm.addListener('monitor.progress', (function(overall) {
 				this.gaugeFrameGauges.progress.rundial("value", overall*100);
+				lastProgress = overall;
 				if (overall >= 0.99) {
 					this.gaugeFrameStatus("Completing analysis and sending results");
 					this.descFrameShowPopup("Completing analysis and sending results");
 				}
+			}).bind(this));
+			avm.addListener('monitor.eventRate', (function(rate) {
+				if (rate > 0) {
+					if (lastProgress < 0.99) {
+						this.gaugeFrameStatus("You are now creating virtual collisions");
+						this.descFrameHidePopup();
+					}
+					// Forward analytics
+					analytics.action("vm.collisions");
+				}
+				this.gaugeFrameGauges.eventRate.rundial("value", rate);
 			}).bind(this));
 
 			// Bind progress events
