@@ -1436,6 +1436,14 @@ $(function() {
 			// Initialize footer 
 			this.footerInit();
 
+			// We are initialized, register an away alerter
+			this.alertOnUnload = false;
+			$(window).bind('beforeunload', (function() {
+				if (this.alertOnUnload) {
+					return "You have a Virtual Machine running. Note that it will keep running in the background even if you close this window.";
+				}
+			}).bind(this));
+
 
 		}
 
@@ -2286,6 +2294,7 @@ $(function() {
 				this.avmState = state;
 				if (state == STATE_RUNNING) {
 					// [VM Entered Running state]
+					this.alertOnUnload = true;
 
 					// Enable 'stop' button
 					this.footerPowerBtnMode( false, false );
@@ -2298,6 +2307,7 @@ $(function() {
 
 				} else if (state == STATE_STOPPED) {
 					// [VM Entered Stopped state]
+					this.alertOnUnload = false;
 
 					// Enable 'play' button
 					this.footerPowerBtnMode( false, true );
@@ -2313,6 +2323,7 @@ $(function() {
 
 				} else {
 					// [VM is in any state other than above]
+					this.alertOnUnload = false;
 
 					// Disable power button
 					this.footerPowerBtnMode( true );
