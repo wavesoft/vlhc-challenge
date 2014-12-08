@@ -420,13 +420,13 @@ $(function() {
 		/**
 		 * Log-in user
 		 */
-		LoginInterface.prototype.showAccountWindow = function(vmid, user) {
+		LoginInterface.prototype.showAccountWindow = function(loggedIn, vmid, user) {
 			var w = 750, h = 450,
 				l = (screen.width - w) / 2,
 				t = (screen.height - h)/ 2;
 
 			// If we are logged-in show credits
-			if (vmid) {
+			if (loggedIn) {
 				window.open(
 					this.creditsURL + "?vmid=" + escape(vmid) + "&user=" + escape(user),
 					"login-window",
@@ -2098,10 +2098,10 @@ $(function() {
 
 			// Bind log-in button
 			this.accBtnLogin.click((function() {
-				this.loginInterface.showAccountWindow( this.loginInterface.anonymousID );
+				this.loginInterface.showAccountWindow( false, this.loginInterface.anonymousID );
 			}).bind(this));
 			this.accBtnCredits.click((function() {
-				this.loginInterface.showAccountWindow( this.loginInterface.vmid(), this.loginInterface.username() );
+				this.loginInterface.showAccountWindow( true, this.loginInterface.vmid(), this.loginInterface.username() );
 			}).bind(this));
 			this.accBtnLogout.click((function() {
 				this.loginInterface.logout();
