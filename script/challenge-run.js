@@ -434,7 +434,7 @@ $(function() {
 				).focus();
 			} else {
 				window.open(
-					this.loginURL,
+					this.loginURL + "?anonvmid=" + escape(vmid),
 					"login-window",
 					"width="+w+",height="+h+",left="+l+",top="+t+",location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no"
 				).focus();
@@ -2098,7 +2098,7 @@ $(function() {
 
 			// Bind log-in button
 			this.accBtnLogin.click((function() {
-				this.loginInterface.showAccountWindow();
+				this.loginInterface.showAccountWindow( this.loginInterface.anonymousID );
 			}).bind(this));
 			this.accBtnCredits.click((function() {
 				this.loginInterface.showAccountWindow( this.loginInterface.vmid(), this.loginInterface.username() );
