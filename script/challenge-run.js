@@ -1764,7 +1764,15 @@ $(function() {
 				'container': 'body',
 				'content': (function() {
 					setTimeout((function() { 
+						// Create controls
 						this.footerCreateAVMControls($("#challenge-popup-status"));
+						// Create close button
+						var titleDOM = $("#challenge-popup-status").parent().siblings(".popover-title"),
+							btnClose = $('<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>').appendTo(titleDOM);
+						btnClose.click((function() {
+							this.footerBtnGear.popover('hide');
+						}).bind(this));
+
 					}).bind(this), 10);
 					return '<div id="challenge-popup-status"></div>';
 				}).bind(this),
