@@ -1884,9 +1884,9 @@ $(function() {
 				labelCAP = $('<div class="text">80%</div>').appendTo(r2),
 
 				bg1 = $('<div class="btn-group full-width">').appendTo(colLeft),
-				btnDestroy = $('<button title="Destroy" class="btn btn-default"><span class="glyphicon glyphicon-trash"></span></button>').appendTo(bg1),
-				btnScreen = $('<button title="Open screen" class="btn btn-default"><span class="glyphicon glyphicon-eye-open"></span></button>').appendTo(bg1),
-				btnLogs = $('<a title="Open Application Website" class="btn btn-default"><span class="glyphicon glyphicon-new-window"></span></a>').appendTo(bg1),
+				btnDestroy = $('<button title="Remove Virtual Machine" class="btn btn-default"><span class="glyphicon glyphicon-trash"></span></button>').appendTo(bg1),
+				btnScreen = $('<button title="See Job Status" class="btn btn-default"><span class="glyphicon glyphicon-eye-open"></span></button>').appendTo(bg1),
+				btnLogs = $('<a title="View Job Results" class="btn btn-default"><span class="glyphicon glyphicon-new-window"></span></a>').appendTo(bg1),
 				btnApply = $('<button class="btn btn-default full-width" style="width: 90px;">Apply</button>').appendTo(bg1);
 
 			var blockStatus = $('<div></div>').appendTo(colRight),

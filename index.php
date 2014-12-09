@@ -62,12 +62,12 @@
 								<div class="row">
 								  <div class="col-xs-3">
 									<h3>Event Rate</h3>
-									<div class="details">How many events per minute your virtual machine is producing.</div>
+									<div class="details">How many events (particle collisions) your virtual machine is simulating per minute.</div>
 									<input class="ui-dial" id="inp-eventrate" value="0"></input>
 								  </div>
 								  <div class="col-xs-3">
 									<h3>Progress</h3>
-									<div class="details">What fraction of the current job is completed.</div>
+									<div class="details">What fraction of the current job is completed. (Typically, 1 job = 10,000 events)</div>
 									<input class="ui-dial" id="inp-progress" value="0"></input>
 								  </div>
 								  <div class="col-xs-3">
@@ -77,7 +77,7 @@
 								  </div>
 								  <div class="col-xs-3">
 									<h3>Ranking</h3>
-									<div class="details">Your ranking among the volunteers competing in this challenge.</div>
+									<div class="details">Your ranking among the volunteers competing in this challenge, by number of jobs completed.</div>
 									<input class="ui-dial" id="inp-ranking" value="0"></input>
 								  </div>
 								</div>
