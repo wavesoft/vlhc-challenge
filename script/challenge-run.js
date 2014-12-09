@@ -428,7 +428,7 @@ $(function() {
 			// If we are logged-in show credits
 			if (loggedIn) {
 				window.open(
-					this.creditsURL + "?vmid=" + escape(vmid) + "&user=" + escape(user),
+					this.creditsURL + "?vmid=" + escape(vmid) + "&user=" + escape(user) + "&control=1",
 					"login-window",
 					"width="+w+",height="+h+",left="+l+",top="+t+",location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no"
 				).focus();
