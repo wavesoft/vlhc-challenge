@@ -66,14 +66,14 @@
 									<input class="ui-dial" id="inp-eventrate" value="0"></input>
 								  </div>
 								  <div class="col-xs-3">
-									<h3>Jobs Completed</h3>
-									<div class="details">How many simulation jobs your virtual machine has processed.</div>
-									<input class="ui-dial" id="inp-jobs" value="0"></input>
-								  </div>
-								  <div class="col-xs-3">
 									<h3>Progress</h3>
 									<div class="details">What fraction of the current job is completed.</div>
 									<input class="ui-dial" id="inp-progress" value="0"></input>
+								  </div>
+								  <div class="col-xs-3">
+									<h3>Jobs Completed</h3>
+									<div class="details">How many simulation jobs your virtual machine has processed.</div>
+									<input class="ui-dial" id="inp-jobs" value="0"></input>
 								  </div>
 								  <div class="col-xs-3">
 									<h3>Ranking</h3>
