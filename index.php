@@ -160,13 +160,13 @@
 								<div class="label label-nevts"><span class="name">Producing: </span><span id="live-nevts"></span> events</div>
 							</div>
 							<div class="generator">
+								<p>Do you want to learn more?</p>
+								<div class="list-group">
+									<a href="http://lhcathome.web.cern.ch/vlhcathome/high-energy-physics-simulations" target="_blank" class="list-group-item">High-Energy Physics Simulations</a>
+								</div>
 								<p>Collisions generated with:</p>
 								<div class="list-group">
 									<a id="live-generator-link" href="#" class="list-group-item disabled">(No generator)</a>
-								</div>
-								<p>Do you want to learn more?</p>
-								<div class="list-group">
-									<a id="live-generator-link" href="http://lhcathome.web.cern.ch/vlhcathome/high-energy-physics-simulations" class="list-group-item disabled">High-Energy Physics Simulations</a>
 								</div>
 							</div>
 							<div class="analyses">
