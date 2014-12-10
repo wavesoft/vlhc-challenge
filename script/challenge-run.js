@@ -1992,6 +1992,7 @@ $(function() {
 					analytics.action("actions.apply");
 				}
 			});
+			/*
 			$(btnDestroy).click(function() {
 				if (!avmInstance.wa_session) return;
 				if (window.confirm("This action will remove completely the Virtual Machine from your computer.")) {
@@ -2001,6 +2002,7 @@ $(function() {
 					avmInstance.wa_session.close();
 				}
 			});
+			*/
 			$(btnScreen).click(function() {
 				if (!avmInstance.wa_session) return;
 				avmInstance.wa_session.openRDPWindow()
