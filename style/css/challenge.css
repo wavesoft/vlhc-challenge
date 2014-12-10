@@ -458,6 +458,9 @@ body.no-top-scroll .navbar .nav a:hover {
   bottom: 2px;
   width: 175px;
 }
+#challenge div.frame-description .well div.desc-live div.generator p {
+  margin: 0 0 5px;
+}
 #challenge div.frame-description .well div.desc-live div.dynamic-content {
   position: absolute;
   left: 0;
