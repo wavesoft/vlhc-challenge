@@ -196,7 +196,7 @@
 						<button class="btn btn-primary btn-lg-w btn-lg" id="btn-power">Start</button>
 						<div class="btn-group">
 							<a class="btn btn-default btn-lg" id="btn-status" data-toggle="tooltip" data-placement="top" title="More options here"><span class="glyphicon glyphicon-cog"></span></a>
-							<button id="btn-remove" class="btn btn-default btn-lg disabled" title="Remove Virtual Machine"><span class="glyphicon glyphicon-trash"></span></button>
+							<button id="btn-remove" class="btn btn-default btn-lg disabled" title="Remove Virtual Machine" data-toggle="tooltip" data-placement="top" title="Remove the challenge VM from your computer"><span class="glyphicon glyphicon-trash"></span></button>
 						</div>
 					</div>
 				</div>
