@@ -77,7 +77,7 @@
 								  </div>
 								  <div class="col-xs-3">
 									<h3>Ranking</h3>
-									<div class="details">Your ranking among the volunteers competing in this challenge, by number of jobs completed.</div>
+									<div class="details">Your ranking among the volunteers in this challenge, by number of jobs completed.</div>
 									<input class="ui-dial" id="inp-ranking" value="0"></input>
 								  </div>
 								</div>
@@ -170,7 +170,7 @@
 								</div>
 							</div>
 							<div class="analyses">
-								<p>Collisions are analyzed with the following analyses:</p>
+								<p>Collisions analyzed with:</p>
 								<div class="list-group" id="live-analyses">
 									<a href="#" class="list-group-item disabled">(No analyses)</a>
 								</div>
