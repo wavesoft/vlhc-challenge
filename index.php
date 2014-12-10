@@ -160,7 +160,7 @@
 								<div class="label label-nevts"><span class="name">Producing: </span><span id="live-nevts"></span> events</div>
 							</div>
 							<div class="generator">
-								<p>Do you want to learn more?</p>
+								<p>Learn more:</p>
 								<div class="list-group">
 									<a href="http://lhcathome.web.cern.ch/vlhcathome/high-energy-physics-simulations" target="_blank" class="list-group-item">High-Energy Physics Simulations</a>
 								</div>
