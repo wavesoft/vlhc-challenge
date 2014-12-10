@@ -162,7 +162,8 @@
 							<div class="generator">
 								<p>Learn more:</p>
 								<div class="list-group">
-									<a href="http://lhcathome.web.cern.ch/vlhcathome/high-energy-physics-simulations" target="_blank" class="list-group-item">High-Energy Physics Simulations</a>
+									<a href="http://lhcathome.web.cern.ch/vlhcathome/high-energy-physics-simulations" target="_blank" class="list-group-item">About High-Energy Physics Simulations</a>
+									<a id="live-see-sims" href="#" target="_blank" class="list-group-item disabled">See your simulations</a>
 								</div>
 								<p>Collisions generated with:</p>
 								<div class="list-group">
@@ -170,7 +171,7 @@
 								</div>
 								<p>See your own:</p>
 								<div class="list-group">
-									<a id="live-see-sims" href="#" target="_blank" class="list-group-item disabled">Virtual Machine Activity</a>
+									<a id="live-see-display" href="#" target="_blank" class="list-group-item disabled">Virtual Machine Activity</a>
 								</div>
 							</div>
 							<div class="analyses">

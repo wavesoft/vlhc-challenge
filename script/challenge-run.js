@@ -1411,6 +1411,10 @@ $(function() {
 				$("#description-frame .desc-waitjob"),	// FRAME_WAITJOB
 			];
 
+			// Description frame dynamic buttons
+			this.descFrameBtnSims = $("#live-see-sims");
+			this.descFrameBtnDisplay = $("#live-see-display");
+
 			// Initialize description frames
 			this.descFrameInit();
 
@@ -1593,6 +1597,14 @@ $(function() {
 			// Prohibition flag for showing the intro screen
 			this.dontShowIdle = true;
 
+			// Bind open VM display
+			this.descFrameBtnDisplay.click((function() {
+				if (!this.avm.wa_session) return;
+				this.avm.wa_session.openRDPWindow()
+				this.avm.wa_session.__lastRDPWindow.focus();
+				// Forward analytics event
+				analytics.action("actions.open_rdp");
+			}).bind(this));
 
 		}
 
@@ -2318,14 +2330,16 @@ $(function() {
 					// Forward analytics
 					analytics.action("vm.booted")
 					// Enable peek button
-					$("#live-see-sims").removeClass("disabled");
-					$("#live-see-sims").attr("href", api);
+					this.descFrameBtnSims.removeClass("disabled");
+					this.descFrameBtnSims.attr("href", api);
+					this.descFrameBtnDisplay.removeClass("disabled");
 				} else {
 					// Offline
 					this.gaugeFrameStatus("Disconnected from the instance");
 					// Disable peek button
-					$("#live-see-sims").addClass("disabled");
-					$("#live-see-sims").attr("href", "javascript:;");
+					this.descFrameBtnSims.addClass("disabled");
+					this.descFrameBtnSims.attr("href", "javascript:;");
+					this.descFrameBtnDisplay.removeClass("disabled");
 				}
 			}).bind(this));
 
