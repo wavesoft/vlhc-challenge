@@ -119,7 +119,7 @@
 						</div>
 
 						<div class="desc-recovery">
-							<h1>Chill... bad things happen</h1>
+							<h1>An error occured</h1>
 							<p>
 								It looks that something went wrong while trying to prepare your computer for the <em>CERN 60 Public Computing Challenge</em>.
 							</p>
@@ -135,14 +135,14 @@
 								</ul>
 							</p>
 							<p>
-								If nothing of the above works for you, you can check for a solution in the <a href="http://lhcathome2.cern.ch/vLHCathome/forum_help_desk.php" target="_blank">LHC@Home BOINC Forum</a>.
+								If nothing of the above works for you, you can check for a solution in the <a href="http://test4theory.cern.ch/challenge/#disqus" target="_blank">Challenge Discussion</a>.
 							</p>
 						</div>
 
 						<div class="desc-idle">
 							<h1>The challenge is paused</h1>
 							<p>
-								Your virtual accelerator is stopped. The gauges are all to zero. Time to relax, have a coffee, fiddle around with the interface... when your science fever is back, click <em>Start</em> to start again!
+								Your virtual accelerator is stopped... when your science fever is back, click <em>Start</em> to start again!
 							</p>
 							<div class="dynamic-content">
 							</div>
@@ -163,6 +163,10 @@
 								<p>Collisions generated with:</p>
 								<div class="list-group">
 									<a id="live-generator-link" href="#" class="list-group-item disabled">(No generator)</a>
+								</div>
+								<p>Do you want to learn more?</p>
+								<div class="list-group">
+									<a id="live-generator-link" href="http://lhcathome.web.cern.ch/vlhcathome/high-energy-physics-simulations" class="list-group-item disabled">High-Energy Physics Simulations</a>
 								</div>
 							</div>
 							<div class="analyses">
