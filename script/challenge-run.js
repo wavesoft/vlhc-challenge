@@ -843,6 +843,9 @@ $(function() {
 				this.__firstStateEvent = false;
 			}
 
+			// Forward state changed
+			this.__fireListener('vmStateChanged', state);
+
 			// Handle flags
 			if (state != 5 /*SS_RUNNING*/) {
 
@@ -1425,6 +1428,7 @@ $(function() {
 			// Footer buttons
 			this.footerBtnPower = $("#btn-power");
 			this.footerBtnGear = $("#btn-status");
+			this.footerBtnTrash = $("#btn-remove");
 
 			// Start frame shuffler
 			setInterval(this.descFrameSetShuffle.bind(this), 30000);
@@ -1778,6 +1782,18 @@ $(function() {
 				}).bind(this),
 			});
 
+			// Setup destroy button click
+			this.footerBtnTrash.click((function() {
+				if (!this.avm.wa_session) return;
+				if (this.avm.wa_last_state == 0) return;
+				if (window.confirm("This action will remove completely the Virtual Machine from your computer.")) {
+					// Forward analytics event
+					analytics.action("actions.remove");
+					// Close session
+					this.avm.wa_session.close();
+				}
+			}).bind(this));
+
 			// Setup power button click
 			this.footerBtnPower.click((function() {
 				if (this.footerBtnStart) {
@@ -1884,10 +1900,10 @@ $(function() {
 				labelCAP = $('<div class="text">80%</div>').appendTo(r2),
 
 				bg1 = $('<div class="btn-group full-width">').appendTo(colLeft),
-				btnDestroy = $('<button title="Remove Virtual Machine" class="btn btn-default"><span class="glyphicon glyphicon-trash"></span></button>').appendTo(bg1),
+				//btnDestroy = $('<button title="Remove Virtual Machine" class="btn btn-default"><span class="glyphicon glyphicon-trash"></span></button>').appendTo(bg1),
 				btnScreen = $('<button title="See Job Status" class="btn btn-default"><span class="glyphicon glyphicon-eye-open"></span></button>').appendTo(bg1),
 				btnLogs = $('<a title="View Job Results" class="btn btn-default"><span class="glyphicon glyphicon-new-window"></span></a>').appendTo(bg1),
-				btnApply = $('<button class="btn btn-default full-width" style="width: 90px;">Apply</button>').appendTo(bg1);
+				btnApply = $('<button class="btn btn-default full-width" style="width: 130px;">Apply</button>').appendTo(bg1);
 
 			var blockStatus = $('<div></div>').appendTo(colRight),
 				h1 = $('<h4>Subsystem status</h4>').appendTo(blockStatus),
@@ -2293,15 +2309,30 @@ $(function() {
 			}).bind(this));
 
 			// Hanlde API state changes
-			avm.addListener('apiStateChanged', (function(state) {
+			avm.addListener('apiStateChanged', (function(state, api) {
 				if (state) {
 					// Online!
 					this.gaugeFrameStatus("Downloading and configuring scientific software");				
 					// Forward analytics
 					analytics.action("vm.booted")
+					// Enable peek button
+					$("#live-see-sims").removeClass("disabled");
+					$("#live-see-sims").attr("href", api);
 				} else {
 					// Offline
 					this.gaugeFrameStatus("Disconnected from the instance");
+					// Disable peek button
+					$("#live-see-sims").addClass("disabled");
+					$("#live-see-sims").attr("href", "javascript:;");
+				}
+			}).bind(this));
+
+			// Handle states where destroy button is not active
+			avm.addListener('vmStateChanged', (function(state) {
+				if (state == 0) {
+					this.footerBtnTrash.addClass("disabled");
+				} else {
+					this.footerBtnTrash.removeClass("disabled");
 				}
 			}).bind(this));
 

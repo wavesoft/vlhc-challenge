@@ -168,6 +168,10 @@
 								<div class="list-group">
 									<a id="live-generator-link" href="#" class="list-group-item disabled">(No generator)</a>
 								</div>
+								<p>See your own:</p>
+								<div class="list-group">
+									<a id="live-see-sims" href="#" target="_blank" class="list-group-item disabled">Virtual Machine Activity</a>
+								</div>
 							</div>
 							<div class="analyses">
 								<p>Collisions analyzed with:</p>
@@ -190,7 +194,10 @@
 				<div class="container">
 					<div class="text-center">
 						<button class="btn btn-primary btn-lg-w btn-lg" id="btn-power">Start</button>
-						<a class="btn btn-default btn-lg" id="btn-status" data-toggle="tooltip" data-placement="top" title="More options here"><span class="glyphicon glyphicon-cog"></span></a>
+						<div class="btn-group">
+							<a class="btn btn-default btn-lg" id="btn-status" data-toggle="tooltip" data-placement="top" title="More options here"><span class="glyphicon glyphicon-cog"></span></a>
+							<button id="btn-remove" class="btn btn-default btn-lg disabled" title="Remove Virtual Machine"><span class="glyphicon glyphicon-trash"></span></button>
+						</div>
 					</div>
 				</div>
 			</div>
