@@ -190,7 +190,7 @@
 				<div class="container">
 					<div class="text-center">
 						<button class="btn btn-primary btn-lg-w btn-lg" id="btn-power">Start</button>
-						<a class="btn btn-default btn-lg" id="btn-status"><span class="glyphicon glyphicon-cog"></span></a>
+						<a class="btn btn-default btn-lg" id="btn-status" data-toggle="tooltip" data-placement="top" title="More options here"><span class="glyphicon glyphicon-cog"></span></a>
 					</div>
 				</div>
 			</div>
