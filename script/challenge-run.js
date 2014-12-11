@@ -1598,12 +1598,15 @@ $(function() {
 			this.dontShowIdle = true;
 
 			// Bind open VM display
-			this.descFrameBtnDisplay.click((function() {
+			this.descFrameBtnDisplay.click((function(e) {
 				if (!this.avm.wa_session) return;
 				this.avm.wa_session.openRDPWindow()
 				this.avm.wa_session.__lastRDPWindow.focus();
 				// Forward analytics event
 				analytics.action("actions.open_rdp");
+				// Prevent default event
+				e.preventDefault();
+				e.stopPropagation();
 			}).bind(this));
 
 		}

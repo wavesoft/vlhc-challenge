@@ -171,7 +171,7 @@
 								</div>
 								<p>See your own:</p>
 								<div class="list-group">
-									<a id="live-see-display" href="#" target="_blank" class="list-group-item disabled">Virtual Machine Activity</a>
+									<a href="javascript:;" id="live-see-display" class="list-group-item disabled">Virtual Machine Activity</a>
 								</div>
 							</div>
 							<div class="analyses">
@@ -195,9 +195,9 @@
 				<div class="container">
 					<div class="text-center">
 						<button class="btn btn-primary btn-lg-w btn-lg" id="btn-power">Start</button>
-						<div class="btn-group">
-							<a class="btn btn-default btn-lg" id="btn-status" data-toggle="tooltip" data-placement="top" title="More options here"><span class="glyphicon glyphicon-cog"></span></a>
-							<button id="btn-remove" class="btn btn-default btn-lg disabled" title="Remove Virtual Machine" data-toggle="tooltip" data-placement="top" title="Remove the challenge VM from your computer"><span class="glyphicon glyphicon-trash"></span></button>
+						<div class="btn-group" role="group">
+							<button class="btn btn-default btn-lg" id="btn-status" data-toggle="tooltip" data-placement="top" title="More options here"><span class="glyphicon glyphicon-cog"></span></button>
+							<button id="btn-remove" class="btn btn-default btn-lg disabled" data-toggle="tooltip" data-placement="top" title="Remove VM from computer"><span class="glyphicon glyphicon-trash"></span></button>
 						</div>
 					</div>
 				</div>
