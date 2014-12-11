@@ -1723,7 +1723,7 @@ $(function() {
 					'epos': 'http://arxiv.org/abs/1006.2967',
 					'phojet': '#',
 				};
-				$("#live-generator-link").text(cfg['generator']);
+				//$("#live-generator-link").text(cfg['generator']);
 				$("#live-generator-link").removeClass("disabled");
 				$("#live-generator-link").attr("href", "#");
 				$("#live-generator-link").attr("target", "");
@@ -1737,6 +1737,7 @@ $(function() {
 				$("#live-process").text(cfg['process'])
 				$("#live-energy").text(energy)
 				$("#live-nevts").text(numberWithCommas(parseInt(cfg['nevts'])));
+				$("#live-generator").text(cfg['generator']);
 
 			} else {
 
@@ -1748,8 +1749,9 @@ $(function() {
 				$("#live-process").text("---");
 				$("#live-energy").text("---");
 				$("#live-nevts").text("---");
+				$("#live-generator").text("---");
 
-				$("#live-generator-link").text("(No generator)");
+				//$("#live-generator-link").text("(No generator)");
 				$("#live-generator-link").addClass("disabled");
 				$("#live-generator-link").attr("href", "#");
 				$("#live-generator-link").attr("target", "");

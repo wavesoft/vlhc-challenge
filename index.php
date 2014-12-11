@@ -158,20 +158,15 @@
 								<div class="label label-process"><span class="name">Process: </span><span id="live-process"></span></div>
 								<div class="label label-energy"><span class="name">Energy: </span><span id="live-energy"></span></div>
 								<div class="label label-nevts"><span class="name">Producing: </span><span id="live-nevts"></span> events</div>
+								<div class="label label-generator"><span class="name">Generator: </span><span id="live-generator"></span></div>
 							</div>
 							<div class="generator">
 								<p>Learn more:</p>
 								<div class="list-group">
-									<a href="http://lhcathome.web.cern.ch/vlhcathome/high-energy-physics-simulations" target="_blank" class="list-group-item">About High-Energy Physics Simulations</a>
-									<a id="live-see-sims" href="#" target="_blank" class="list-group-item disabled">See your simulations</a>
-								</div>
-								<p>Collisions generated with:</p>
-								<div class="list-group">
-									<a id="live-generator-link" href="#" class="list-group-item disabled">(No generator)</a>
-								</div>
-								<p>See your own:</p>
-								<div class="list-group">
-									<a href="javascript:;" id="live-see-display" class="list-group-item disabled">Virtual Machine Activity</a>
+									<a href="http://lhcathome.web.cern.ch/vlhcathome/high-energy-physics-simulations" target="_blank" class="list-group-item">Introduction to high energy physics simulations</a>
+									<a id="live-see-sims" href="#" target="_blank" class="list-group-item disabled">See the simulations produced by your computer</a>
+									<a id="live-generator-link" target="_blank" href="#" class="list-group-item disabled">Learn about the software that does the simulations</a>
+									<a href="javascript:;" id="live-see-display" class="list-group-item disabled">View current activity on your virtual machine</a>
 								</div>
 							</div>
 							<div class="analyses">
