@@ -2411,9 +2411,27 @@ $(function() {
 
 
 	// Check what configuration to load based on the hash URL
-	var hash = window.location.hash, context_id = "challenge-t4t";
+	var hash = window.location.hash, context_id = "challenge-t4t", vm_suffix = "";
 	if (hash[0] == "#") hash = hash.substr(1);
-	if (hash.length > 0) context_id=hash;
+
+	// Parse additional parameters from the URL
+	if (hash.length > 0) {
+		// Tokenize
+		var result = {};
+		hash.split("&").forEach(function(part) {
+			var item = part.split("=");
+			result[item[0]] = decodeURIComponent(item[1]);
+		});
+
+		// Override parameters
+		if (result['c'] !== undefined) {
+			context_id = result['c'];
+		}
+		if (result['n'] !== undefined) {
+			vm_suffix = result['n'];
+		}
+
+	}
 
 	// Create a system messages helper class
 	var sysMessages = new SystemMessages( "messages" );
@@ -2422,7 +2440,7 @@ $(function() {
 	var loginInterface = new LoginInterface( "https://test4theory.cern.ch/challenge" );
 
 	// Create an AVM for this session
-	var avm = new AutonomousVM('http://test4theory.cern.ch/vmcp?config='+context_id);
+	var avm = new AutonomousVM('http://test4theory.cern.ch/vmcp?config='+context_id+'&suffix='+vm_suffix);
 
 	// Create the challenge interface
 	var challenge = new ChallengeInterface( sysMessages, loginInterface );
