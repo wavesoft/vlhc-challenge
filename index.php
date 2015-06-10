@@ -280,8 +280,10 @@
 		<script src="ext/js/jquery-ui.js"></script>
 		<script src="ext/js/bootstrap.min.js"></script>
 		<script src="ext/js/jquery.cookie.js"></script>
-		<script src="//cernvm.cern.ch/releases/webapi/js/cvmwebapi-latest.js"></script>
+		<script src="ext/js/creditpiggy.js"></script>
+		<script src="script/lib/analytics.min.js"></script>
 		<script src="script/lib/rundial.js"></script>
+		<script src="//cernvm.cern.ch/releases/webapi/js/cvmwebapi-latest.js"></script>
 
 		<!-- Challenge -->
 		<script src="script/challenge-common.js"></script>
@@ -296,6 +298,10 @@
 		'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 		})(window,document,'script','dataLayer','GTM-5JPWNS');</script>
 		<!-- End Google Tag Manager -->
+
+		<!-- CreditPiggy Initialization -->
+		<script>CreditPiggy.configure({'project':'8d41257d79bd4015b781ebcbd59d88ee'});</script>
+		<!-- End CreditPiggy Initialization -->
 
 	</body>
 </html>
