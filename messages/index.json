@@ -6,6 +6,13 @@
 		"random": [
 		]
 	},
+	"waitjob": {
+		"sequence": [
+			"waitjob-first.html"
+		],
+		"random": [
+		]
+	},
 	"intro": {
 		"sequence": [
 			"intro-first.html"

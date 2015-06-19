@@ -440,12 +440,18 @@ body.no-top-scroll {
 
 			> div {
 				position: absolute;
-				left: 10px; right: 10px;
-				top: 10px; bottom: 10px;
+				left: 5px; right: 5px;
+				top: 5px; bottom: 5px;
 			}
 
 			div.desc-starting {
 				background: url(../img/wm-loading.png) no-repeat left top;
+				padding-left: 270px;
+				text-align: left;
+			}
+
+			div.desc-waitjob {
+				background: url(../img/wm-landing.png) no-repeat left top;
 				padding-left: 270px;
 				text-align: left;
 			}
@@ -469,6 +475,44 @@ body.no-top-scroll {
 				}
 			}
 
+			div.desc-live {
+				overflow: hidden;
+
+				ul.nav-tabs > li > a {
+					padding: 5px;
+				}
+				div.tab-content {
+					position: absolute;
+					left: 0;
+					top: 32px;
+					bottom: 30px;
+					right: 0;
+
+					&.tab-pane-full {
+						top: 0;
+					}
+
+					div.tab-pane {
+						height: 100%;
+						iframe {
+							width: 100%;
+							height: 100%;
+						}
+					}
+
+				}
+				div.dynamic-content {
+					position: absolute;
+					bottom: -6px;
+					width: 100%;
+				}
+				div.status-flag {
+					position: absolute;
+					left: 0px;
+					bottom: 5px;
+				}
+			}
+
 			div.desc-intro {
 
 				div.arrow-center {
@@ -478,92 +522,6 @@ body.no-top-scroll {
 					left: 50%; bottom: 4px;
 					background: url(../img/arrow-down.png) no-repeat center center;
 					.transform(translate(-42px, 0px));
-				}
-
-			}
-
-			div.desc-live {
-
-				div.collider {
-					position: absolute;
-					left: 50%; top: 50%;
-					width: 705px; height: 230px;
-					background: url(../img/collider.png) no-repeat center center;
-					.transform(translate(-353px, -115px));
-
-					div.label {
-						.border-radius(6px);
-						color: #000;
-						background: #ecf0f1;
-						border: solid 1px #bdc3c7;
-						width: 128px; height: 30px;
-						font-size: 12px;
-						text-align: center;
-						line-height: 25px;
-						position: absolute;
-
-						span.name {
-							color: #e74c3c;
-						}
-
-						&.label-beam { left: 80px; top: 100px; }
-						&.label-energy { left: 490px; top: 100px; }
-						&.label-generator { left: 253px; top: 2px; }
-						&.label-process { left: 253px; top: 80px; }
-						&.label-nevts { 
-							left: 234px;
-							top: 118px;
-							width: 168px;
-						}
-
-					}
-				}
-
-				div.analyses {
-					position: absolute;
-					right: 2px; top: 2px; bottom: 2px;
-					width: 175px;
-					
-					a {
-						overflow: hidden;
-					}
-				}
-
-				div.generator {
-					position: absolute;
-					left: 2px; top: 2px; bottom: 2px;
-					width: 175px;
-
-					p {
-						margin: 0 0 5px;
-					}
-				}
-
-				div.dynamic-content {
-					position: absolute;
-					left: 0; right: 0; bottom: -8px;
-					text-align: center;
-					font-size: 16px;
-
-					a {
-						color: #333;
-					}
-				}
-
-				div.popup-message {
-					.border-radius(6px);
-					.transform(translate(-200px, -32px));
-					background: rgba(255, 255, 255, 0.9) url(../img/ajax-loader.gif) no-repeat 8px center;
-					position: absolute;
-					left: 50%;
-					top: 50%;
-					width: 400px;
-					height: 64px;
-					color: #333;
-					line-height: 56px;
-					text-align: center;
-					font-size: 14px;
-					border: solid 4px #333;
 				}
 
 			}

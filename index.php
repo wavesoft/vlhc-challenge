@@ -61,9 +61,9 @@
 							<div class="widgets">
 								<div class="row">
 								  <div class="col-xs-3">
-									<h3>Event Rate</h3>
-									<div class="details">How many events (particle collisions) your virtual machine is simulating per minute.</div>
-									<input class="ui-dial" id="inp-eventrate" value="0"></input>
+									<h3>Activity</h3>
+									<div class="details">How actively is your virtual machine utilizes your CPU.</div>
+									<input class="ui-dial" id="inp-activity" value="0"></input>
 								  </div>
 								  <div class="col-xs-3">
 									<h3>Progress</h3>
@@ -71,7 +71,7 @@
 									<input class="ui-dial" id="inp-progress" value="0"></input>
 								  </div>
 								  <div class="col-xs-3">
-									<h3>Jobs Completed</h3>
+									<h3>Contribution</h3>
 									<div class="details">How many simulation jobs your virtual machine has processed.</div>
 									<input class="ui-dial" id="inp-jobs" value="0"></input>
 								  </div>
@@ -118,6 +118,12 @@
 							</div>
 						</div>
 
+						<div class="desc-waitjob">
+							<h1>We are waiting for a project to arrive <img src="style/img/vmspinner.gif" /> </h1>
+							<div class="dynamic-content">
+							</div>
+						</div>
+						
 						<div class="desc-recovery">
 							<h1>An error occured</h1>
 							<p>
@@ -148,39 +154,17 @@
 							</div>
 						</div>
 
-						<div class="desc-waitjob">
-							<br />
-							<p><em>(We are waiting for a task. Here will be a more proper interface.)</em></p>
-						</div>
 						<div class="desc-live">
-							<div class="collider">
-								<div class="label label-beam"><span class="name">Beam: </span><span id="live-beam"></span></div>
-								<div class="label label-process"><span class="name">Process: </span><span id="live-process"></span></div>
-								<div class="label label-energy"><span class="name">Energy: </span><span id="live-energy"></span></div>
-								<div class="label label-nevts"><span class="name">Producing: </span><span id="live-nevts"></span> events</div>
-								<div class="label label-generator"><span class="name">Generator: </span><span id="live-generator"></span></div>
-							</div>
-							<div class="generator">
-								<p>Learn more:</p>
-								<div class="list-group">
-									<a href="http://lhcathome.web.cern.ch/vlhcathome/high-energy-physics-simulations" target="_blank" class="list-group-item">Introduction to high energy physics simulations</a>
-									<a id="live-see-sims" href="#" target="_blank" class="list-group-item disabled">See the simulations produced by your computer</a>
-									<a id="live-generator-link" target="_blank" href="#" class="list-group-item disabled">Learn about the software that does the simulations</a>
-									<a href="javascript:;" id="live-see-display" class="list-group-item disabled">View current activity on your virtual machine</a>
-								</div>
-							</div>
-							<div class="analyses">
-								<p>Collisions analyzed with:</p>
-								<div class="list-group" id="live-analyses">
-									<a href="#" class="list-group-item disabled">(No analyses)</a>
-								</div>
+							<ul class="nav nav-tabs" role="tablist">
+							</ul>
+							<div class="tab-content">
 							</div>
 							<div class="dynamic-content">
 							</div>
-							<div class="popup-message" id="live-popup-message">
+							<div class="status-flag">
+								<span class="label label-default">Unknown Status</span>
 							</div>
 						</div>
-
 
 					</div>
 				</div>
@@ -280,10 +264,14 @@
 		<script src="ext/js/jquery-ui.js"></script>
 		<script src="ext/js/bootstrap.min.js"></script>
 		<script src="ext/js/jquery.cookie.js"></script>
-		<script src="ext/js/creditpiggy.js"></script>
-		<script src="script/lib/analytics.min.js"></script>
 		<script src="script/lib/rundial.js"></script>
-		<script src="//cernvm.cern.ch/releases/webapi/js/cvmwebapi-latest.js"></script>
+		<script src="ext/js/cvmwebapi-2.0.12.js"></script>
+
+		<!-- In-house externals -->
+		<script src="ext/js/analytics.js"></script>
+		<script src="ext/js/creditpiggy.js"></script>
+		<script src="ext/js/dumbq.js"></script>
+		<script src="ext/js/cvmwebapi-avm.js"></script>
 
 		<!-- Challenge -->
 		<script src="script/challenge-common.js"></script>
@@ -298,10 +286,6 @@
 		'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 		})(window,document,'script','dataLayer','GTM-5JPWNS');</script>
 		<!-- End Google Tag Manager -->
-
-		<!-- CreditPiggy Initialization -->
-		<script>CreditPiggy.configure({'project':'8d41257d79bd4015b781ebcbd59d88ee'});</script>
-		<!-- End CreditPiggy Initialization -->
 
 	</body>
 </html>
