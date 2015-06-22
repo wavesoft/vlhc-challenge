@@ -23,7 +23,6 @@ wget -c -O css/images/ui-bg_glass_75_e6e6e6_1x400.png http://code.jquery.com/ui/
 wget -c -O css/images/ui-bg_glass_75_dadada_1x400.png http://code.jquery.com/ui/1.11.1/themes/smoothness/images/ui-bg_glass_75_dadada_1x400.png
 wget -c -O css/images/ui-bg_glass_65_ffffff_1x400.png http://code.jquery.com/ui/1.11.1/themes/smoothness/images/ui-bg_glass_65_ffffff_1x400.png
 wget -c -O css/images/ui-bg_flat_75_ffffff_40x100.png http://code.jquery.com/ui/1.11.1/themes/smoothness/images/ui-bg_flat_75_ffffff_40x100.png
-
 wget -c -O js/jquery-ui.js http://code.jquery.com/ui/1.11.1/jquery-ui.js
 
 # HTML5 compatibility
@@ -32,3 +31,12 @@ wget -c -O js/respond.min.js http://oss.maxcdn.com/respond/1.4.2/respond.min.js
 
 # jQuery Plugin : Cookie
 wget -c -O js/jquery.cookie.js http://cdn.rawgit.com/carhartl/jquery-cookie/master/src/jquery.cookie.js
+
+# DumbQ Front-End
+wget -c -O js/dumbq.min.js https://raw.githubusercontent.com/wavesoft/dumbq/master/frontend/dumbq.min.js
+
+# Credit Piggy
+wget -c -O js/creditpiggy.min.js https://raw.githubusercontent.com/wavesoft/creditpiggy/master/creditpiggy-api/js/creditpiggy.min.js
+
+# CCL-Tracker
+wget -c -O js/analytics.min.js https://raw.githubusercontent.com/wavesoft/ccl-tracker/master/analytics.min.js

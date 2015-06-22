@@ -264,14 +264,13 @@
 		<script src="ext/js/jquery-ui.js"></script>
 		<script src="ext/js/bootstrap.min.js"></script>
 		<script src="ext/js/jquery.cookie.js"></script>
+		<script src="ext/js/dumbq.min.js"></script>
+		<script src="ext/js/analytics.min.js"></script>
+		<script src="ext/js/creditpiggy.min.js"></script>
 		<script src="script/lib/rundial.js"></script>
-		<script src="ext/js/cvmwebapi-2.0.12.js"></script>
 
-		<!-- In-house externals -->
-		<script src="ext/js/analytics.js"></script>
-		<script src="ext/js/creditpiggy.js"></script>
-		<script src="ext/js/dumbq.js"></script>
-		<script src="ext/js/cvmwebapi-avm.js"></script>
+		<script src="http://cernvm.cern.ch/releases/webapi/js/cvmwebapi-latest.js"></script>
+		<script src="script/lib/cvmwebapi-avm.js"></script>
 
 		<!-- Challenge -->
 		<script src="script/challenge-common.js"></script>
