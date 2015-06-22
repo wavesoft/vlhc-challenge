@@ -1279,7 +1279,7 @@ $(function() {
 
 
 	// Check what configuration to load based on the hash URL
-	var hash = window.location.hash, context_id = "challenge-dumbq-local", vm_suffix = "";
+	var hash = window.location.hash, context_id = "challenge-dumbq", vm_suffix = "";
 	if (hash[0] == "#") hash = hash.substr(1);
 
 	// Parse additional parameters from the URL
