@@ -1014,7 +1014,7 @@ $(function() {
 				// Update account details
 				this.gaugeFrameUpdateAccountDetails( );
 				// Update globa ID
-				if (analytics) analytics.setGlobal('userid', profile['uuid']);
+				if (analytics) analytics.setGlobal('userid', profile['id']);
 			}).bind(this));
 
 			//
