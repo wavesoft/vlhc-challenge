@@ -1013,6 +1013,8 @@ $(function() {
 				avm.setProperty( "challenge-login", CreditPiggy.freezeSession() );
 				// Update account details
 				this.gaugeFrameUpdateAccountDetails( );
+				// Update globa ID
+				if (analytics) analytics.setGlobal('userid', profile['uuid']);
 			}).bind(this));
 
 			//
@@ -1025,6 +1027,8 @@ $(function() {
 				avm.setProperty("challenge-login", CreditPiggy.freezeSession() );
 				// Update account details
 				this.gaugeFrameUpdateAccountDetails();
+				// Switch userid to anonymous
+				if (analytics) analytics.setGlobal('userid', analytics.trackingID);
 			}).bind(this));
 
 			//
@@ -1327,6 +1331,9 @@ $(function() {
 
 	// Initialize Creditpiggy
 	CreditPiggy.configure('efc98cfc58eb4526b2babbbc871bec11');
+
+	// Initialize default analytics tracking ID (to anonymous)
+	if (analytics) analytics.setGlobal('userid', analytics.trackingID);
 
 	// Tooltips use body container
 	$('[data-toggle=tooltip]').tooltip({container: 'body'});
