@@ -202,7 +202,7 @@ $(function() {
 		ChallengeInterface.prototype.dumbqFrontendInit = function() {
 
 			// Update gauges on metrics event
-			$(this.dumbq).on('metrics.details', (function(e, metrics) {
+			$(this.dumbq).on('metrics_details', (function(e, metrics) {
 
 				// Update activity and progress
 				this.gaugeFrameGauges.activity.rundial( "value", metrics.activity * 100 );
