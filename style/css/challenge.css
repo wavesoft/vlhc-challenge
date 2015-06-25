@@ -263,6 +263,7 @@ body.no-top-scroll .navbar .nav a:hover {
   background-position: center center;
   background-size: cover;
   display: inline-block;
+  border-radius: 6px;
 }
 #challenge div.frame-status div.panel div.panel-heading div.back-progress {
   visibility: hidden;

@@ -21,12 +21,12 @@ $(function() {
 		/**
 		 * Update presentation information
 		 */
-		DynamicInfo.prototype.update = function() {
+		DynamicWebInfo.prototype.update = function() {
 
 		}
 
 		return DynamicWebInfo;
-	}
+	}();
 
 	/**
 	 */
@@ -187,6 +187,7 @@ $(function() {
 
 			// The number of running instances
 			this.instances = [];
+			this.machineVMID = null;
 			this.activeDescTab = null;
 
 		}
@@ -222,6 +223,9 @@ $(function() {
 					this.avm.statusFlags.job = CVM.FLAG_PENDING;
 					this.avm.notifyFlagChange();
 				}
+				// Claim worker
+				this.machineVMID = machine['vmid'];
+				CreditPiggy.claimWorker( machine['vmid'] );
 			}).bind(this));
 			$(this.dumbq).on('offline', (function(e, machine) {
 				// Mark offline
@@ -233,6 +237,8 @@ $(function() {
 					this.avm.statusFlags.job = CVM.FLAG_NOT_READY;
 					this.avm.notifyFlagChange();
 				}
+				// Reset machine ID
+				this.machineVMID = null;
 			}).bind(this));
 
 			// 
@@ -369,8 +375,8 @@ $(function() {
 			// Update social
 			if (profile) {
 				this.accInfoName.text( profile['display_name'] );
-				this.accInfoName.attr({ 'href': profile['profileUrl'] });
-				this.accInfoPicture.css({ 'background-image': 'url('+profile['picture']+')' });				
+				this.accInfoName.attr({ 'href': profile['profile_url'] });
+				this.accInfoPicture.css({ 'background-image': 'url('+profile['profile_image']+')' });				
 			}
 
 			// Update counters
@@ -1006,29 +1012,32 @@ $(function() {
 			//
 			// Handle Logins from CreditPiggy Interface
 			//
-			$(CreditPiggy).on('login',(function(e, profile) {
+			$(CreditPiggy).on('login',(function(e, profile, userAction) {
 				// Update frame information
 				this.accFrameDefine( profile );
-				// Update VM information
-				avm.setProperty( "challenge-login", CreditPiggy.freezeSession() );
 				// Update account details
 				this.gaugeFrameUpdateAccountDetails( );
 				// Update globa ID
 				if (analytics) analytics.setGlobal('userid', profile['id']);
+				// Claim machine if we have a this.machineVMID
+				if (this.machineVMID) CreditPiggy.claimWorker( this.machineVMID );
 			}).bind(this));
 
 			//
 			// Handle Logouts from CreditPiggy Interface
 			//
-			$(CreditPiggy).on('logout',(function(e, profile) {
+			$(CreditPiggy).on('logout',(function(e, profile, userAction) {
 				// Update frame information
 				this.accFrameUndefine();
-				// Update VM information
-				avm.setProperty("challenge-login", CreditPiggy.freezeSession() );
 				// Update account details
 				this.gaugeFrameUpdateAccountDetails();
 				// Switch userid to anonymous
-				if (analytics) analytics.setGlobal('userid', analytics.trackingID);
+				if (analytics) analytics.setGlobal('userid', 'a:'+analytics.trackingID);
+				// Reset token only if from user action
+				if (userAction) {
+					// Update VM information
+					avm.setProperty("challenge-login", "" );
+				}
 			}).bind(this));
 
 			//
@@ -1037,6 +1046,30 @@ $(function() {
 			$(CreditPiggy).on('profile',(function(e, profile) {
 				// Update account details
 				this.gaugeFrameUpdateAccountDetails();
+				// Update globa ID
+				if (analytics) analytics.setGlobal('userid', profile['id']);
+			}).bind(this));
+
+
+			//
+			// Store authentication token when it's changed
+			//
+			$(CreditPiggy).on('token', (function(e, newToken, userAction) {
+				// If this was from a user action, or if the challenge-login
+				// token is empty, update it
+				if (newToken || (!newToken && userAction)) {
+					avm.setProperty( "challenge-login", newToken || "");
+				}
+			}).bind(this));
+
+			//
+			// CreditPiggy is ready to receive a session thaw event
+			//
+			$(CreditPiggy).on('thaw', (function(e, sessionToken) {
+				// Get login information from the VM session
+				this.avm.getProperty("challenge-login", (function(data){
+					CreditPiggy.thawSession( data );
+				}).bind(this));
 			}).bind(this));
 
 			// Assume frame is undefined
@@ -1047,7 +1080,7 @@ $(function() {
 				CreditPiggy.showLogin();
 			}).bind(this));
 			this.accBtnCredits.click((function() {
-				CreditPiggy.showProfile();
+				CreditPiggy.showWebsiteStatus();
 			}).bind(this));
 			this.accBtnLogout.click((function() {
 				CreditPiggy.logout();
@@ -1100,10 +1133,11 @@ $(function() {
 			// Keep avm state
 			this.avmState = -1;
 
-			// Get login information from the VM session
-			avm.getProperty("challenge-login", (function(data){
-				CreditPiggy.thawSession( data );
-			}).bind(this));
+			// // Get login information from the VM session
+			// avm.getProperty("challenge-login", (function(data){
+			// 	alert("Thaw: "+data);
+			// 	CreditPiggy.thawSession( data );
+			// }).bind(this));
 
 			// // Bind gauge listeners
 			// var lastProgress = 0;
@@ -1176,8 +1210,6 @@ $(function() {
 			avm.addListener('webapiStateChanged', (function(state) {
 				if (state) {
 					this.descFrameSetActive( this.FRAME_INTRO );
-					// Save login information
-					avm.setProperty("challenge-login", CreditPiggy.freezeSession());
 				} else {
 					this.descFrameSetActive( this.FRAME_RECOVERY );
 					this.gaugeFrameWarn("Can you try refreshing?", "Lost connection with the CernVM WebAPI.");
@@ -1315,9 +1347,6 @@ $(function() {
 	// Bind challenge to AVM
 	challenge.bindToAVM(avm);
 
-	// Bind challenge UI to creditPiggy
-	//challenge.bindToCreditPiggy( CreditPiggy );
-
 	// Resize description frame well in order to fit height
 	var resizeDesc = function() {
 		var h = $(window).height() - 370;
@@ -1333,7 +1362,7 @@ $(function() {
 	CreditPiggy.configure('efc98cfc58eb4526b2babbbc871bec11');
 
 	// Initialize default analytics tracking ID (to anonymous)
-	if (analytics) analytics.setGlobal('userid', analytics.trackingID);
+	if (analytics) analytics.setGlobal('userid', 'a:'+analytics.trackingID);
 
 	// Tooltips use body container
 	$('[data-toggle=tooltip]').tooltip({container: 'body'});
