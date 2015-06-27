@@ -153,7 +153,7 @@ Link target is one of the following:
         <td><code>info-lhc</code></td>
         <td>Link to the <em>Large Hadron Collider</em> details to the CERN portal.</td>
     </tr>
-</talbe>
+</table>
 
 ## actions.open_rdp
 The user clicked on the 'eye' button, that opens the VM console window.
