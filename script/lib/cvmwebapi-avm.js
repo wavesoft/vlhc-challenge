@@ -22,7 +22,7 @@
 		var monthIndex = monthLookup.indexOf(m.toString().toLowerCase());
 		if (monthIndex < 0) monthIndex = 0;
 
-		// Convert to seconds (assuming month = 31 days)
+		// Rough conversion to seconds (assuming month = 31 days)
 		return monthIndex * 2678400 +
 			   parseInt(d) * 86400 +
 			   parseInt(timeParts[0]) * 3600 +

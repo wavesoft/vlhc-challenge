@@ -580,7 +580,7 @@ $(function() {
 				this.descLiveContent.removeClass("tab-pane-full");
 			}
 
-			return [tid, tab, content, iframe];
+			return [tid, tab, content, iframe, url];
 		}
 
 		/**
@@ -608,6 +608,9 @@ $(function() {
 			} else if (desc['metrics']['webinfo'] !== undefined) {
 
 			}
+
+			// Navigate
+			tab[3].attr('src', wwwroot);
 
 		}
 
