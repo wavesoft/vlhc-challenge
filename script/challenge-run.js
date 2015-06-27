@@ -605,11 +605,10 @@ $(function() {
 			var wwwroot = this.avm.wa_session.apiURL + desc.wwwroot;
 
 			// Check if we have a webapp
-			if (desc['metrics']['webapp'] !== undefined) {
+			if (desc['metrics'] && (desc['metrics']['webapp'] !== undefined)) {
 				wwwroot += "/" + desc['metrics']['webapp'];
-
 			// Check if we have a dynamic frame
-			} else if (desc['metrics']['webinfo'] !== undefined) {
+			} else if (desc['metrics'] && (desc['metrics']['webinfo'] !== undefined)) {
 
 			}
 
@@ -624,11 +623,10 @@ $(function() {
 			var wwwroot = this.avm.wa_session.apiURL + desc.wwwroot;
 
 			// Check if we have a webapp
-			if (desc['metrics']['webapp'] !== undefined) {
+			if (desc['metrics'] && (desc['metrics']['webapp'] !== undefined)) {
 				wwwroot += "/" + desc['metrics']['webapp'];
-
 			// Check if we have a dynamic frame
-			} else if (desc['metrics']['webinfo'] !== undefined) {
+			} else if (desc['metrics'] && (desc['metrics']['webinfo'] !== undefined)) {
 
 			}
 
