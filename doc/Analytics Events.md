@@ -6,6 +6,8 @@ Each event is forwarded on the window DOM, prefixed with the `analytics.` string
 
 Each analytics event has it's own particularities, as seen below:
 
+# UI Events
+
 ## blur
 The user has moved away from the game interface.
 ```javascript
@@ -20,20 +22,7 @@ The user has focused again in the game interface.
 }
 ```
 
-## login
-The user has logged in with his/her social profile. This event is also fired when the social profile is restored from the configuration saved in the VM instance.
-```javascript
-{
-    "userid": "...",    // SHA256([social profile ID])
-}
-```
-
-## logout
-The user has logged out with his/her account.
-```javascript
-{
-}
-```
+# WebAPI Events
 
 ## webapi.error
 An error occurred in the WebAPI subsystem.
@@ -64,6 +53,8 @@ The WebAPI has successfully opened a session to the challenge VM.
 {
 }
 ```
+
+# Virtual Machine Events
 
 ## vm.missing
 The Virtual Machine does not (yet) exist in the user's computer.
@@ -117,6 +108,52 @@ __NOTE:__ Due to the nature of the underlaying implementation this event might b
 }
 ```
 
+# User Actions
+
+## action.extern
+User clicked on an external link.
+```javascript
+{
+    "id": "..",         // The short name of the target
+    "url": "http:...",  // The URL of the link
+}
+```
+
+Link target is one of the following:
+<table>
+    <tr>
+        <th>Target</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td><code>x-antimatter</code></td>
+        <td>The antimatter experiment</td>
+    </tr>
+    <tr>
+        <td><code>x-clicked</code></td>
+        <td>The particle clicker.</td>
+    </tr>
+    <tr>
+        <td><code>x-higgs</code></td>
+        <td>The ATLAS higgs hunter.</td>
+    </tr>
+    <tr>
+        <td><code>x-recognize</code></td>
+        <td>The <em>Recognize This?</em> From CERN</td>
+    </tr>
+    <tr>
+        <td><code>info-vm</code></td>
+        <td>Wikipedia link to <em>Virtual Machine</em</td>
+    </tr>
+    <tr>
+        <td><code>info-cernvm</code></td>
+        <td>Link to the CernVM portal.</td>
+    </tr>
+    <tr>
+        <td><code>info-lhc</code></td>
+        <td>Link to the <em>Large Hadron Collider</em> details to the CERN portal.</td>
+    </tr>
+</talbe>
 
 ## actions.open_rdp
 The user clicked on the 'eye' button, that opens the VM console window.
@@ -174,10 +211,43 @@ The user changed only the execution cap, that can be applied without rebooting t
 ```
 
 ## actions.login
-The user logged in with his/her social profile. This event is fired only to provide more information regarding the social source.
+The user has logged in with his/her social profile. This event is also fired when the social profile is restored from the configuration saved in the VM instance.
 ```javascript
 {
-    "provider": "", // The name of the login provider (ex. 'facebook')
+    "userid": "...",    // CreditPiggy User ID
+}
+```
+
+## actions.logout
+The user has logged out with his/her account.
+```javascript
+{
+}
+```
+
+# Goals Tracking
+
+## goals.cputime
+This event is fired every time the user has contributed one more hour of computing time.
+```javascript
+{
+    "hours": 0,         // How many hours the user has contributed so far
+}
+```
+
+## goals.jobs
+This event is fired every time the user has contributed 10 more jobs. This event doesn't take in account the exit code of the job. This means that this metric includes both failed and successful jobs.
+```javascript
+{
+    "jobs": 0,         // How many jobs the user has completed so far
+}
+```
+
+## goals.start
+This event is fired every time the user click 'start' on the user interface. 
+```javascript
+{
+    "times": 0,         // How many times the user clicked 'start'
 }
 ```
 

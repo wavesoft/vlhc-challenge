@@ -1,5 +1,7 @@
 $(function() {
 
+	analytics.debug = true;
+
 	/**
 	 * Add comma thousand separator
 	 */
@@ -85,7 +87,35 @@ $(function() {
 			this.visited[key] = visit_index;
 
 			// Load that document
-			$(hostElm).load( this.baseDir + "/" + visit_doc );
+			$(hostElm).load( this.baseDir + "/" + visit_doc, function() {
+
+				// Upon completion, register analytics callbacks
+				$(hostElm).find("*[data-event]").click(function(e) {
+					var elm = $(this),
+						evName = elm.data('event'),
+						evData = elm.data(),
+						evURL = elm.attr('href'),
+						prop = {
+							'url': evURL
+						};
+
+					// Don't continue if event not defined
+					if (!evName)
+						return;
+
+					// Keep event properties
+					for (var k in evData) {
+						if ((k.substr(0,5) == "event") && (k.length > 5)) {
+							prop[k.substr(5,1).toLowerCase() + k.substr(6)] = evData[k];
+						}
+					}
+
+					// Trigger event
+					analytics.fireEvent( evName, prop );
+
+				});
+
+			});
 
 		};
 
@@ -701,6 +731,16 @@ $(function() {
 					// Forward analytics event
 					analytics.fireEvent("actions.start");
 
+					// Analytics goal tracking
+					analytics.fireIncrementalEvent(
+						'goals.start', 	// Event to fire
+						{ }, 			// Static properties
+						'times', 		// The property to store the value
+
+						// Update and get the value of the accumulator
+						analytics.accumulate('goals.start.accumulator', 1)
+					);
+
 				} else {
 					// Stop VM
 					this.avm.stop();
@@ -1018,7 +1058,10 @@ $(function() {
 				// Update account details
 				this.gaugeFrameUpdateAccountDetails( );
 				// Update globa ID
-				if (analytics) analytics.setGlobal('userid', profile['id']);
+				if (analytics) {
+					analytics.setGlobal("userid", profile["id"]);
+					analytics.fireEvent("actions.login", { "userid": profile["id"] });
+				}
 				// Claim machine if we have a this.machineVMID
 				if (this.machineVMID) CreditPiggy.claimWorker( this.machineVMID );
 			}).bind(this));
@@ -1032,7 +1075,10 @@ $(function() {
 				// Update account details
 				this.gaugeFrameUpdateAccountDetails();
 				// Switch userid to anonymous
-				if (analytics) analytics.setGlobal('userid', 'a:'+analytics.trackingID);
+				if (analytics) {
+					analytics.setGlobal("userid", "a:"+analytics.trackingID);
+					analytics.fireEvent("actions.logout");
+				}
 				// Reset token only if from user action
 				if (userAction) {
 					// Update VM information
@@ -1046,8 +1092,38 @@ $(function() {
 			$(CreditPiggy).on('profile',(function(e, profile) {
 				// Update account details
 				this.gaugeFrameUpdateAccountDetails();
-				// Update globa ID
-				if (analytics) analytics.setGlobal('userid', profile['id']);
+
+				// Analytics goal tracking
+				if (analytics) {
+					var counters = profile ? (profile.counters || {}) : {};
+
+					// Get total number of CPU Time
+					if (counters['job/cpuusage'] !== undefined) {
+						analytics.fireIncrementalEvent(
+							'goals.cputime', 	// Event to fire
+							{ },				// Static properties
+							{
+								'property'	: 'hours',							// Property to update
+								'value'		: counters['job/cpuusage'] / 3600,	// Convert to hours
+								'interval' 	: 1 								// Send every hour
+							}
+						);
+					}
+
+					// Get total number of jobs completed
+					if (counters['slots/completed'] !== undefined) {
+						analytics.fireIncrementalEvent(
+							'goals.jobs', 		// Event to fire
+							{ },				// Static properties
+							{
+								'property'	: 'jobs',							// Property to update
+								'value'		: counters['slots/completed'],		// Get completed jobs
+								'interval' 	: 10								// Send every 10 jobs
+							}
+						);
+					}
+
+				}
 			}).bind(this));
 
 
@@ -1097,10 +1173,6 @@ $(function() {
 			this.accBtnCredits.show();
 			this.accBtnLogout.show();
 			this.accBtnLogin.hide();
-
-			// Fire analytics info
-			analytics.fireEvent("actions.login", { "provider": info['provider'] });
-
 		}
 
 		/**
@@ -1112,10 +1184,6 @@ $(function() {
 			this.accBtnCredits.hide();
 			this.accBtnLogout.hide();
 			this.accBtnLogin.show();
-
-			// Fire analytics info
-			//analytics.fireEvent("actions.logout");
-
 		}
 
 		///////////////////////////////////////////////
