@@ -569,6 +569,7 @@ $(function() {
 			$(tab).click((function() {
 				this.activeDescTab = desc['uuid'];
 				this.descFrameUpdateStatus( desc );
+				this.descFrameRefreshTab( desc );
 			}).bind(this));
 
 			// If we have only one instance, make full screen
@@ -579,6 +580,9 @@ $(function() {
 				this.descLiveTabs.show();
 				this.descLiveContent.removeClass("tab-pane-full");
 			}
+
+			// Keep instances in desc
+			desc.iframe = iframe;
 
 			return [tid, tab, content, iframe, url];
 		}
@@ -593,9 +597,9 @@ $(function() {
 		}
 
 		/**
-		 * Update tab contents
+		 * Update tab status
 		 */
-		ChallengeInterface.prototype.descFrameUpdateTab = function( tab, desc ) {
+		ChallengeInterface.prototype.descFrameUpdateTab = function( desc ) {
 
 			// Calculate the URL of the iframe
 			var wwwroot = this.avm.wa_session.apiURL + desc.wwwroot;
@@ -609,8 +613,27 @@ $(function() {
 
 			}
 
-			// Navigate
-			tab[3].attr('src', wwwroot);
+		}
+
+		/**
+		 * Refresh tab contents
+		 */
+		ChallengeInterface.prototype.descFrameRefreshTab = function( desc ) {
+
+			// Calculate the URL of the iframe
+			var wwwroot = this.avm.wa_session.apiURL + desc.wwwroot;
+
+			// Check if we have a webapp
+			if (desc['metrics']['webapp'] !== undefined) {
+				wwwroot += "/" + desc['metrics']['webapp'];
+
+			// Check if we have a dynamic frame
+			} else if (desc['metrics']['webinfo'] !== undefined) {
+
+			}
+
+			// Navigate to refresh
+			desc.iframe.attr('src', wwwroot);
 
 		}
 
@@ -1203,6 +1226,34 @@ $(function() {
 
 			// Keep avm state
 			this.avmState = -1;
+
+			// Thaw possible session information
+			avm.getProperty("analytics", (function(data){
+				if (!data) return;
+				analytics.importStore(data);
+			}).bind(this));
+
+			// Listen for analytics permanent data updates and
+			// store them in the vm to share across browsers
+			$(analytics).on('changed', (function(e, data) {
+				avm.setProperty("analytics", data);
+			}).bind(this));
+
+			// When focusing, update the values
+			$(window).on('focus', (function() {
+
+				// Import analytics properties
+				avm.getProperty("analytics", (function(data){
+					if (!data) return;
+					analytics.importStore(data);
+				}).bind(this));
+
+			}).bind(this));
+
+			// When blurring, store the values
+			$(window).on('blur', (function() {
+				avm.setProperty("analytics", analytics.exportStore());
+			}).bind(this));
 
 			// // Get login information from the VM session
 			// avm.getProperty("challenge-login", (function(data){
