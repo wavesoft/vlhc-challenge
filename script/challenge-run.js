@@ -1228,7 +1228,11 @@ $(function() {
 			// Thaw possible session information
 			avm.getProperty("analytics", (function(data){
 				if (!data) return;
+				var tid = analytics.trackingID;
+				// Import new store data
 				analytics.importStore(data);
+				// Detect changes in TrackID
+				if (analytics.trackingID != tid) analytics.fireEvent("link.trackids", { "trackid2": tid })
 			}).bind(this));
 
 			// Listen for analytics permanent data updates and
@@ -1243,7 +1247,11 @@ $(function() {
 				// Import analytics properties
 				avm.getProperty("analytics", (function(data){
 					if (!data) return;
+					var tid = analytics.trackingID;
+					// Import new store data
 					analytics.importStore(data);
+					// Detect changes in TrackID
+					if (analytics.trackingID != tid) analytics.fireEvent("link.trackids", { "trackid2": tid })
 				}).bind(this));
 
 			}).bind(this));
