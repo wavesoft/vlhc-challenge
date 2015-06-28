@@ -217,6 +217,7 @@ $(function() {
 
 			// The number of running instances
 			this.instances = [];
+			this.lastMachineVMID = null;
 			this.machineVMID = null;
 			this.activeDescTab = null;
 
@@ -255,6 +256,7 @@ $(function() {
 				}
 				// Claim worker
 				this.machineVMID = machine['vmid'];
+				this.lastMachineVMID = this.machineVMID;
 				CreditPiggy.claimWorker( machine['vmid'] );
 			}).bind(this));
 			$(this.dumbq).on('offline', (function(e, machine) {
@@ -740,6 +742,8 @@ $(function() {
 					analytics.fireEvent("actions.remove");
 					// Close session
 					this.avm.wa_session.close();
+					// Remove this worker
+					if (this.lastMachineVMID) CreditPiggy.releaseWorker( this.lastMachineVMID );
 				}
 			}).bind(this));
 
@@ -747,7 +751,10 @@ $(function() {
 			this.footerBtnPower.click((function() {
 				if (this.footerBtnStart) {
 					// Start VM
-					this.avm.start();
+					this.avm.start({
+						'boinc_userid': boinc_id,
+						'boinc_hostid': boinc_host
+					});
 					// After we clicked 'start' we can show
 					// the idle screen.
 					this.dontShowIdle = false;
@@ -1443,7 +1450,8 @@ $(function() {
 
 
 	// Check what configuration to load based on the hash URL
-	var hash = window.location.hash, context_id = "challenge-dumbq", vm_suffix = "";
+	var hash = window.location.hash, context_id = "challenge-dumbq", vm_suffix = "",
+		boinc_id = "", boinc_host = "";
 	if (hash[0] == "#") hash = hash.substr(1);
 
 	// Parse additional parameters from the URL
@@ -1461,6 +1469,12 @@ $(function() {
 		}
 		if (result['n'] !== undefined) {
 			vm_suffix = result['n'];
+		}
+		if (result['boinc_id'] !== undefined) {
+			boinc_id = result['boinc_id'];
+		}
+		if (result['boinc_host'] !== undefined) {
+			boinc_host = result['boinc_host'];
 		}
 
 	}
