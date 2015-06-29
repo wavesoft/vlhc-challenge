@@ -1141,6 +1141,11 @@ $(function() {
 
 					// Get total number of jobs completed
 					if (counters['slots/completed'] !== undefined) {
+
+						// Count number of completed jobs
+						this.gaugeFrameGauges.jobsCompl.rundial("value", counters['slots/completed']);
+
+						// Alsof ire analytics events
 						analytics.fireIncrementalEvent(
 							'goals.jobs', 		// Event to fire
 							{ },				// Static properties
