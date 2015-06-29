@@ -96,7 +96,6 @@ The Virtual Machine has finished booting. This event is fired when the API port 
 __NOTE:__ Due to the nature of the underlaying implementation this event might be fired more than once on the same session. You can safely ignore all other `vm.booted` events up until you receive a `vm.paused`, `vm.saved` or `vm.poweroff` event.
 ```javascript
 {
-    "provider": "", // The name of the login provider (ex. 'facebook')
 }
 ```
 
@@ -111,7 +110,7 @@ User clicked on an external link.
 }
 ```
 
-Link target is one of the following:
+Link `id` is one of the following:
 <table>
     <tr>
         <th>Target</th>
