@@ -1,7 +1,5 @@
 $(function() {
 
-	analytics.debug = true;
-
 	/**
 	 * Add comma thousand separator
 	 */
@@ -752,7 +750,7 @@ $(function() {
 				if (this.footerBtnStart) {
 					// Start VM
 					this.avm.start({
-						'boinc_userid': boinc_id,
+						'boinc_userid': boinc_user,
 						'boinc_hostid': boinc_host
 					});
 					// After we clicked 'start' we can show
@@ -1451,7 +1449,7 @@ $(function() {
 
 	// Check what configuration to load based on the hash URL
 	var hash = window.location.hash, context_id = "challenge-dumbq", vm_suffix = "",
-		boinc_id = "", boinc_host = "";
+		boinc_user = "", boinc_host = "";
 	if (hash[0] == "#") hash = hash.substr(1);
 
 	// Parse additional parameters from the URL
@@ -1470,8 +1468,8 @@ $(function() {
 		if (result['n'] !== undefined) {
 			vm_suffix = result['n'];
 		}
-		if (result['boinc_id'] !== undefined) {
-			boinc_id = result['boinc_id'];
+		if (result['boinc_user'] !== undefined) {
+			boinc_user = result['boinc_user'];
 		}
 		if (result['boinc_host'] !== undefined) {
 			boinc_host = result['boinc_host'];
