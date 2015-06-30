@@ -62,7 +62,7 @@
 								<div class="row">
 								  <div class="col-xs-3">
 									<h3>Activity</h3>
-									<div class="details">How actively is your virtual machine utilizes your CPU.</div>
+									<div class="details">How actively your virtual machine utilizes your CPU.</div>
 									<input class="ui-dial" id="inp-activity" value="0"></input>
 								  </div>
 								  <div class="col-xs-3">

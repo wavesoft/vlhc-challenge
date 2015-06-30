@@ -101,7 +101,7 @@ __NOTE:__ Due to the nature of the underlaying implementation this event might b
 
 # User Actions
 
-## 13. `action.extern`
+## 13. `actions.extern`
 User clicked on an external link.
 ```javascript
 {
@@ -216,9 +216,18 @@ The user has logged out with his/her account.
 }
 ```
 
+## 23. `actions.cputabchanged`
+The user switched into a different CPU tab.
+```javascript
+{
+    "index": 0,         // The 1-based index of the tab
+    "uuid": '...',      // The container's unique ID
+}
+```
+
 # Goals Tracking
 
-## 23. `goals.cputime`
+## 24. `goals.cputime`
 This event is fired every time the user has contributed one more hour of computing time.
 ```javascript
 {
@@ -226,7 +235,7 @@ This event is fired every time the user has contributed one more hour of computi
 }
 ```
 
-## 24. `goals.jobs`
+## 25. `goals.jobs`
 This event is fired every time the user has contributed 10 more jobs. This event doesn't take in account the exit code of the job. This means that this metric includes both failed and successful jobs.
 ```javascript
 {
@@ -234,7 +243,7 @@ This event is fired every time the user has contributed 10 more jobs. This event
 }
 ```
 
-## 25. `goals.start`
+## 26. `goals.start`
 This event is fired every time the user click 'start' on the user interface. 
 ```javascript
 {
@@ -244,7 +253,7 @@ This event is fired every time the user click 'start' on the user interface.
 
 # Analytics Helpers
 
-## 26. `link.trackids`
+## 27. `link.trackids`
 This event is fired when two tracking IDs are realized to be part of the same tracking session.
 ```javascript
 {

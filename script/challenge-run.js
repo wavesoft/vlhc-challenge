@@ -233,8 +233,15 @@ $(function() {
 			// Update gauges on metrics event
 			$(this.dumbq).on('metrics_details', (function(e, metrics) {
 
+				// Scale acivity by the CPU vap
+				var activity = metrics.activity;
+				if (this.avm) {
+					// Scale to actual execution cap
+					activity *= (this.avm.config.cap / 100);
+				}
+
 				// Update activity and progress
-				this.gaugeFrameGauges.activity.rundial( "value", metrics.activity * 100 );
+				this.gaugeFrameGauges.activity.rundial( "value", activity * 100 );
 				this.gaugeFrameGauges.progress.rundial( "value", metrics.progress * 100 );
 
 			}).bind(this));
@@ -570,6 +577,7 @@ $(function() {
 				this.activeDescTab = desc['uuid'];
 				this.descFrameUpdateStatus( desc );
 				this.descFrameRefreshTab( desc );
+				if (analytics) analytics.fireEvent( "actions.cputabchanged", { 'index': index, 'uuid': desc['uuid'] } );
 			}).bind(this));
 
 			// If we have only one instance, make full screen
