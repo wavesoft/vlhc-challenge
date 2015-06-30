@@ -577,7 +577,7 @@ $(function() {
 				this.activeDescTab = desc['uuid'];
 				this.descFrameUpdateStatus( desc );
 				this.descFrameRefreshTab( desc );
-				if (analytics) analytics.fireEvent( "actions.cputabchanged", { 'index': index, 'uuid': desc['uuid'] } );
+				if (analytics) analytics.fireEvent( "actions.cputabchanged", { 'index': index, 'uuid': this.activeDescTab } );
 			}).bind(this));
 
 			// If we have only one instance, make full screen
@@ -757,10 +757,7 @@ $(function() {
 			this.footerBtnPower.click((function() {
 				if (this.footerBtnStart) {
 					// Start VM
-					this.avm.start({
-						'boinc_userid': boinc_user,
-						'boinc_hostid': boinc_host
-					});
+					this.avm.start();
 					// After we clicked 'start' we can show
 					// the idle screen.
 					this.dontShowIdle = false;
@@ -1496,6 +1493,10 @@ $(function() {
 	var avm = new CVM.AutonomousVM('http://test4theory.cern.ch/vmcp?config='+context_id+'&suffix='+vm_suffix);
 	// Create the challenge interface
 	var challenge = new ChallengeInterface( sysMessages );
+
+	// Apply BOINC configuration
+	avm.config.boinc_userid = boinc_user;
+	avm.config.boinc_hostid = boinc_host;
 
 	// Bind challenge to AVM
 	challenge.bindToAVM(avm);

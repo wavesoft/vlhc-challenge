@@ -67,11 +67,9 @@
 			'memory': 128,
 			'cpus'  : 1,
 			'cap'   : 80,
-			'vmid'  : 'anonymous',
 			// For concurrency with BOINC
-			'boinc_username' : '',
-			'boinc_authenticator': '',
-			'boinc_userid': ''
+			'boinc_userid': '',
+			'boinc_hostid': '',
 		};
 
 		// Setup state parameters
