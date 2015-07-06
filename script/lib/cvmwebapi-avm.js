@@ -64,7 +64,7 @@
 
 		// Setup config parameters
 		this.config = {
-			'memory': 128,
+			'memory': 1024,
 			'cpus'  : 1,
 			'cap'   : 80,
 			// For concurrency with BOINC
@@ -708,7 +708,7 @@
 		for (var k in config) {
 			if (config.hasOwnProperty(k)) {
 				// Skip unknown properties
-				if (!this.config.hasOwnProperty[k]) continue;
+				if (!this.config.hasOwnProperty(k)) continue;
 				// Look for changes
 				if (this.config[k] != config[k]) {
 					// Apply

@@ -449,10 +449,10 @@ body.no-top-scroll .navbar .nav a:hover {
   position: absolute;
   right: 10px;
   bottom: 5px;
+  color: #999;
 }
 #challenge div.disclaimer-footer a {
   font-size: 12px;
-  color: #333;
 }
 #home {
   position: relative;

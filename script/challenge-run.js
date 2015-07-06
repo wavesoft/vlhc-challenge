@@ -1162,6 +1162,12 @@ $(function() {
 						);
 					}
 
+					// Update ranking gauge
+					if (profile.rank !== undefined) {
+						// Update ranking dial
+						this.gaugeFrameGauges.ranking.rundial("value", parseInt(profile.rank) + 1);
+					}
+
 				}
 			}).bind(this));
 
@@ -1248,6 +1254,21 @@ $(function() {
 				analytics.importStore(data);
 				// Detect changes in TrackID
 				if (analytics.trackingID != tid) analytics.fireEvent("link.trackids", { "trackid2": tid })
+			}).bind(this));
+
+			// Extract boinc properties
+			avm.getProperty("boinc", (function(data){
+				if (!data) return;
+				var parts = data.split(":");
+
+				// Update boinc & host
+				avm.config.boinc_userid = parts[0] || "";
+				avm.config.boinc_hostid = parts[1] || "";
+
+				// Update boinc user and host ID
+				$("#boinc-user-id").val( avm.config.boinc_userid );
+				$("#boinc-host-id").val( avm.config.boinc_hostid );
+
 			}).bind(this));
 
 			// Listen for analytics permanent data updates and
@@ -1458,8 +1479,7 @@ $(function() {
 
 
 	// Check what configuration to load based on the hash URL
-	var hash = window.location.hash, context_id = "challenge-dumbq", vm_suffix = "",
-		boinc_user = "", boinc_host = "";
+	var hash = window.location.hash, context_id = "challenge-dumbq", vm_suffix = "";
 	if (hash[0] == "#") hash = hash.substr(1);
 
 	// Parse additional parameters from the URL
@@ -1478,12 +1498,6 @@ $(function() {
 		if (result['n'] !== undefined) {
 			vm_suffix = result['n'];
 		}
-		if (result['boinc_user'] !== undefined) {
-			boinc_user = result['boinc_user'];
-		}
-		if (result['boinc_host'] !== undefined) {
-			boinc_host = result['boinc_host'];
-		}
 
 	}
 
@@ -1493,10 +1507,6 @@ $(function() {
 	var avm = new CVM.AutonomousVM('http://test4theory.cern.ch/vmcp?config='+context_id+'&suffix='+vm_suffix);
 	// Create the challenge interface
 	var challenge = new ChallengeInterface( sysMessages );
-
-	// Apply BOINC configuration
-	avm.config.boinc_userid = boinc_user;
-	avm.config.boinc_hostid = boinc_host;
 
 	// Bind challenge to AVM
 	challenge.bindToAVM(avm);
@@ -1517,6 +1527,30 @@ $(function() {
 
 	// Initialize default analytics tracking ID (to anonymous)
 	if (analytics) analytics.setGlobal('userid', 'a:'+analytics.trackingID);
+
+	// Handle application of BOINC parameters
+	$("#btn-boinc-apply").click(function() {
+
+		// Get configuration properties
+		var config = {
+			'boinc_userid': $("#boinc-user-id").val(),
+			'boinc_hostid': $("#boinc-host-id").val(),
+		};
+
+		// Update propeties
+		if (!config.boinc_userid) {
+			avm.setProperty("boinc", "" );
+		} else {
+			avm.setProperty("boinc", config.boinc_userid + ":" + config.boinc_hostid );
+		}
+
+		// Apply changes to AVM
+		avm.apply( config );
+
+		// Hide modal
+		$("#modal-boinc").modal('hide');
+
+	});
 
 	// Tooltips use body container
 	$('[data-toggle=tooltip]').tooltip({container: 'body'});

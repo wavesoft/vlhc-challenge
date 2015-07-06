@@ -183,6 +183,7 @@
 			</div>
 
 			<div class="disclaimer-footer">
+				<a href="#" data-toggle="modal" data-target="#modal-boinc">BOINC</a> | 
 				<a href="#" data-toggle="modal" data-target="#modal-disclaimer">Credits</a>
 			</div>
 
@@ -220,35 +221,33 @@
 			  </div><!-- /.modal-dialog -->
 			</div><!-- /.modal -->
 
-			<div id="modal-credits" class="modal fade">
+			<div id="modal-boinc" class="modal fade">
 			  <div class="modal-dialog">
 				<div class="modal-content">
 				  <div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-					<h4 class="modal-title">User Credits</h4>
+					<h4 class="modal-title">BOINC Profile</h4>
 				  </div>
 				  <div class="modal-body">
 
-		  			<p>Log-in with one of your prefered social account and start collecting credits! The first 50 users with the biggest credit will participate on the preliminary beta of the upcoming <em>Virtual Atom Smasher</em> game!</p>
-				  	<div class="row">
-				  		<div class="col-sm-6" id="credits">
-				  			<div class="banner">
-				  				<div class="banner-image" style=""></div>
-				  				<div class="banner-leaves">
-				  				</div>
-				  			</div>
-				  		</div>
-				  		<div class="col-sm-6">
-							<p><button class="btn btn-block btn-primary"><img class="pull-left" src="style/img/icons/social-fb.png" /> Log-in with Facebook</button></p>
-							<p><button class="btn btn-block btn-danger"><img class="pull-left" src="style/img/icons/social-g.png" /> Log-in with Google+</button></p>
-							<p><button class="btn btn-block btn-info"><img class="pull-left" src="style/img/icons/social-twitter.png" /> Log-in with Twitter</button></p>
-							<p><button class="btn btn-block btn-success"><img class="pull-left" src="style/img/icons/social-boinc.png" /> Log-in with BOINC</button></p>
-				  		</div>
-				  	</div>
+		  			<p>
+		  				If you are coming from Test4Theory and you want to receive in <strong>addition</strong> BOINC credits for your contribution, please fill-in the following information:
+		  			</p>
+
+		  			<form>
+	  				  <div class="form-group">
+					    <label for="exampleInputEmail1">BOINC User ID:</label>
+					    <input type="text" class="form-control" id="boinc-user-id" placeholder="(None)">
+					  </div>
+	  				  <div class="form-group">
+					    <label for="exampleInputEmail1">BOINC Host ID:</label>
+					    <input type="text" class="form-control" id="boinc-host-id" placeholder="(None)">
+					  </div>
+	  				</form>
 
 				  </div>
 				  <div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-default" id="btn-boinc-apply">Apply</button>
 				  </div>
 				</div><!-- /.modal-content -->
 			  </div><!-- /.modal-dialog -->
