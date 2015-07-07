@@ -184,7 +184,7 @@
 
 			<div class="disclaimer-footer">
 				<a href="#" data-toggle="modal" data-target="#modal-boinc">BOINC</a> | 
-				<a href="#" data-toggle="modal" data-target="#modal-disclaimer">Credits</a>
+				<a href="#" data-toggle="modal" data-target="#modal-disclaimer">About</a>
 			</div>
 
 			<div id="modal-disclaimer" class="modal fade">
@@ -231,7 +231,7 @@
 				  <div class="modal-body">
 
 		  			<p>
-		  				If you are coming from Test4Theory and you want to receive in <strong>addition</strong> BOINC credits for your contribution, please fill-in the following information:
+		  				If you are coming from Test4Theory and you want to receive in <strong>addition</strong> MCPlots credits for your contribution, please fill-in the following information from your BOINC profile:
 		  			</p>
 
 		  			<form>
