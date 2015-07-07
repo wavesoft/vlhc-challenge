@@ -231,7 +231,7 @@
 				  <div class="modal-body">
 
 		  			<p>
-		  				If you are coming from Test4Theory and you want to receive in <strong>addition</strong> MCPlots stats for your contribution, please fill-in the following information from your <a href="http://lhcathome2.cern.ch/vLHCathome/login_form.php?next_url=home.php" target="_blank">Test4Theory BOINC</a> profile:
+		  				If you are coming from Test4Theory and you want to receive <strong>in addition MCPlots stats</strong> for your contribution, please fill-in the following information from your <a href="http://lhcathome2.cern.ch/vLHCathome/login_form.php?next_url=home.php" target="_blank">Test4Theory BOINC</a> profile:
 		  			</p>
 
 		  			<form>
