@@ -1269,6 +1269,13 @@ $(function() {
 				$("#boinc-user-id").val( avm.config.boinc_userid );
 				$("#boinc-host-id").val( avm.config.boinc_hostid );
 
+				// Update class
+				if (!avm.config.boinc_userid) {
+					$("#a-boinc").removeClass("active");
+				} else {
+					$("#a-boinc").addClass("active");
+				}
+
 			}).bind(this));
 
 			// Listen for analytics permanent data updates and
@@ -1540,8 +1547,10 @@ $(function() {
 		// Update propeties
 		if (!config.boinc_userid) {
 			avm.setProperty("boinc", "" );
+			$("#a-boinc").removeClass("active");
 		} else {
 			avm.setProperty("boinc", config.boinc_userid + ":" + config.boinc_hostid );
+			$("#a-boinc").addClass("active");
 		}
 
 		// Apply changes to AVM

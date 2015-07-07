@@ -183,7 +183,7 @@
 			</div>
 
 			<div class="disclaimer-footer">
-				<a href="#" data-toggle="modal" data-target="#modal-boinc">BOINC</a> | 
+				<a href="#" data-toggle="modal" data-target="#modal-boinc" id="a-boinc">BOINC</a> | 
 				<a href="#" data-toggle="modal" data-target="#modal-disclaimer">About</a>
 			</div>
 

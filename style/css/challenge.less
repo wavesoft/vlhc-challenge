@@ -24,6 +24,23 @@ h1, h2 {
 	color: #fff;
 }
 
+.active {
+	color: #4ACA42;
+	&::before {
+	    position: relative;
+	    top: 1px;
+	    display: inline-block;
+	    font-family: 'Glyphicons Halflings';
+	    font-style: normal;
+	    font-weight: 400;
+	    line-height: 1;
+	    -webkit-font-smoothing: antialiased;
+	    -moz-osx-font-smoothing: grayscale;
+	    content: "\e013";
+		margin-right: 4px;
+	}
+}
+
 .full-width {
 	width: 100%;
 }
