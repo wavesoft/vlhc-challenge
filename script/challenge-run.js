@@ -1539,8 +1539,8 @@ $(function() {
 				base_url = "http://test4theory.cern.ch/vlhc",
 				hash_suffix = (hash ? "?"+hash : "" ),
 				service = [ 'sharethis', 'googleplus', 'facebook', 'twitter', 'email' ],
-				meta_title = $("meta[property='og:title']").attr("content"),
-				meta_desc = $("meta[property='og:description']").attr("content"),
+				meta_title = $("meta[itemprop='og:headline']").attr("content"),
+				meta_desc = $("meta[itemprop='og:description']").attr("content"),
 				meta_image = $("meta[property='og:image']").attr("content");
 
 			for (var i=0; i<service.length; i++) {
