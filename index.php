@@ -6,6 +6,11 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>CernVM WebAPI</title>
 
+		<!-- OpenGraph Properties -->
+		<meta property="og:title" content="The CERN Challenge" />
+		<meta property="og:description" content="Join the CERN Computing challenge and join the big community of volunteers for science!" />
+		<meta property="og:image" content="http://test4theory.cern.ch/vlhc/style/img/thumb.png" />
+
 		<!-- Bootstrap -->
 		<link rel="stylesheet" href="ext/css/bootstrap.min.css">
 		<!-- jQuery UI -->

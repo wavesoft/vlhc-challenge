@@ -1538,7 +1538,10 @@ $(function() {
 			var footer = $(".social-footer").empty(),
 				base_url = "http://test4theory.cern.ch/vlhc",
 				hash_suffix = (hash ? "#"+hash : "" ),
-				service = [ 'sharethis', 'googleplus', 'facebook', 'twitter', 'email' ];
+				service = [ 'sharethis', 'googleplus', 'facebook', 'twitter', 'email' ],
+				meta_title = $("meta[property='og:title']").attr("content"),
+				meta_desc = $("meta[property='og:description']").attr("content"),
+				meta_image = $("meta[property='og:image']").attr("content");
 
 			for (var i=0; i<service.length; i++) {
 				stWidget.addEntry({
@@ -1548,9 +1551,9 @@ $(function() {
 					"url": 		base_url + hash_suffix,
 					"type": 	"large",
 
-					"title": 	"The CERN Challenge",
-					"summary": 	"Join the CERN Computing challenge and join the big community of volunteers for science!",
-					"image": 	"http://test4theory.cern.ch/vlhc/style/img/thumb.png"
+					"title": 	meta_title,
+					"summary": 	meta_desc,
+					"image": 	meta_image
 				});
 			}
 			
