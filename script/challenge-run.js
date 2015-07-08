@@ -1271,9 +1271,9 @@ $(function() {
 
 				// Update class
 				if (!avm.config.boinc_userid) {
-					$("#a-boinc").removeClass("active");
+					$("#a-boinc").removeClass("flag-active");
 				} else {
-					$("#a-boinc").addClass("active");
+					$("#a-boinc").addClass("flag-active");
 				}
 
 			}).bind(this));
@@ -1532,6 +1532,37 @@ $(function() {
 	// Initialize Creditpiggy
 	CreditPiggy.configure('efc98cfc58eb4526b2babbbc871bec11');
 
+	// Setup shareThis widgets
+	var lastHash = "", setupWidgets = function(hash) {
+		if (lastHash != hash) {
+			var footer = $(".social-footer").empty(),
+				base_url = "http://test4theory.cern.ch/vlhc",
+				hash_suffix = (hash ? "#"+hash : "" ),
+				service = [ 'sharethis', 'googleplus', 'facebook', 'twitter', 'email' ];
+
+			for (var i=0; i<service.length; i++) {
+				stWidget.addEntry({
+					"service": 	service[i],
+
+					"element": 	$('<span class="stButton"></span>').appendTo(footer)[0],
+					"url": 		base_url + hash_suffix,
+					"type": 	"large",
+
+					"title": 	"The CERN Challenge",
+					"summary": 	"Join the CERN Computing challenge and join the big community of volunteers for science!",
+					"image": 	"http://test4theory.cern.ch/vlhc/style/img/thumb.png"
+				});
+			}
+			
+		}
+	}
+
+	// Update hash when tracking ID is arrived
+	$(CreditPiggy).on('referrer', function( e, hash, id ) {
+		setupWidgets(hash);
+	});
+	setupWidgets(null);
+
 	// Initialize default analytics tracking ID (to anonymous)
 	if (analytics) analytics.setGlobal('userid', 'a:'+analytics.trackingID);
 
@@ -1547,10 +1578,10 @@ $(function() {
 		// Update propeties
 		if (!config.boinc_userid) {
 			avm.setProperty("boinc", "" );
-			$("#a-boinc").removeClass("active");
+			$("#a-boinc").removeClass("flag-active");
 		} else {
 			avm.setProperty("boinc", config.boinc_userid + ":" + config.boinc_hostid );
-			$("#a-boinc").addClass("active");
+			$("#a-boinc").addClass("flag-active");
 		}
 
 		// Apply changes to AVM

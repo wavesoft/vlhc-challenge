@@ -187,6 +187,14 @@
 				<a href="#" data-toggle="modal" data-target="#modal-disclaimer">About</a>
 			</div>
 
+			<div class="social-footer">
+				<span class="st_sharethis_large" displayText="ShareThis"></span>
+				<span class="st_googleplus_large" displayText="Google +"></span>
+				<span class="st_facebook_large" displayText="Facebook"></span>
+				<span class="st_twitter_large" displayText="Tweet"></span>
+				<span class="st_email_large" displayText="Email"></span>
+			</div>
+
 			<div id="modal-disclaimer" class="modal fade">
 			  <div class="modal-dialog">
 				<div class="modal-content">
@@ -284,6 +292,12 @@
 		'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 		})(window,document,'script','dataLayer','GTM-5JPWNS');</script>
 		<!-- End Google Tag Manager -->
+	
+		<!-- ShareThis -->
+		<script type="text/javascript">var switchTo5x=true;</script>
+		<script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+		<script type="text/javascript">stLight.options({publisher: "b6ab7194-4d0a-4d5e-b1bf-762e8b833510", doNotHash: false, doNotCopy: true, hashAddressBar: false});</script>
+		<!-- End of ShareThis -->
 
 	</body>
 </html>

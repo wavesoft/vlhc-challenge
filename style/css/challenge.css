@@ -18,10 +18,10 @@ h2 {
   background-color: #003366;
   color: #fff;
 }
-.active {
+.flag-active {
   color: #4ACA42;
 }
-.active::before {
+.flag-active::before {
   position: relative;
   top: 1px;
   display: inline-block;
@@ -469,6 +469,15 @@ body.no-top-scroll .navbar .nav a:hover {
 }
 #challenge div.disclaimer-footer a {
   font-size: 12px;
+}
+#challenge div.social-footer {
+  position: absolute;
+  left: 10px;
+  bottom: 12px;
+}
+#challenge div.social-footer .stButton {
+  margin-left: 0px;
+  margin-right: 1px;
 }
 #home {
   position: relative;
