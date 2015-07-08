@@ -8,8 +8,8 @@
 
 		<!-- OpenGraph Properties -->
 		<meta property="og:title" content="The CERN Challenge" />
-		<meta itemprop="og:headline" content="Be part of the CERN Challenge" />
-		<meta itemprop="og:description" content="Join the CERN Computing challenge and join the big community of volunteers for science!" />
+		<meta property="og:headline" content="Be part of the CERN Challenge" />
+		<meta property="og:description" content="Join the CERN Computing challenge and join the big community of volunteers for science!" />
 		<meta property="og:image" content="http://test4theory.cern.ch/vlhc/style/img/thumb.png" />
 		<meta property="og:image:secure_url" content="https://test4theory.cern.ch/vlhc/style/img/thumb.png" />
 
