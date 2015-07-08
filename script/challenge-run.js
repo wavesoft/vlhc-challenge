@@ -1537,7 +1537,7 @@ $(function() {
 		if (lastHash != hash) {
 			var footer = $(".social-footer").empty(),
 				base_url = "http://test4theory.cern.ch/vlhc",
-				hash_suffix = (hash ? "#"+hash : "" ),
+				hash_suffix = (hash ? "?"+hash : "" ),
 				service = [ 'sharethis', 'googleplus', 'facebook', 'twitter', 'email' ],
 				meta_title = $("meta[property='og:title']").attr("content"),
 				meta_desc = $("meta[property='og:description']").attr("content"),
