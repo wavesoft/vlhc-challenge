@@ -1562,6 +1562,9 @@ $(function() {
 
 	// Update hash when tracking ID is arrived
 	$(CreditPiggy).on('referrer', function( e, hash, id ) {
+		// Update location hash
+		window.location = String(window.location).split("#")[0] + ( hash ? ("#"+hash) : "" );
+		// Setup widget
 		setupWidgets(hash);
 	});
 	setupWidgets(null);
