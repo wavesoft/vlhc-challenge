@@ -762,6 +762,9 @@ $(function() {
 					// the idle screen.
 					this.dontShowIdle = false;
 
+					// Now we CAN fire 'vm.booted'
+					analytics.setPermanent("can_vmbooted", 1);
+
 					// Forward analytics event
 					analytics.fireEvent("actions.start");
 
@@ -784,6 +787,10 @@ $(function() {
 
 					// Forward analytics event
 					analytics.fireEvent("actions.stop");
+
+					// Now we CAN NOT fire 'vm.booted'
+					analytics.setPermanent("can_vmbooted", 0);
+
 				}
 			}).bind(this));
 
@@ -1139,7 +1146,7 @@ $(function() {
 							{
 								'property'	: 'hours',							// Property to update
 								'value'		: counters['job/cpuusage'] / 3600,	// Convert to hours
-								'interval' 	: 1 								// Send every hour
+								'interval' 	: [1,10,100] 						// Send every 1, 10 and 100 hours
 							}
 						);
 					}
@@ -1157,7 +1164,7 @@ $(function() {
 							{
 								'property'	: 'jobs',							// Property to update
 								'value'		: counters['slots/completed'],		// Get completed jobs
-								'interval' 	: 10								// Send every 10 jobs
+								'interval' 	: [1,10,100]						// Send every 10 jobs
 							}
 						);
 					}
@@ -1393,8 +1400,11 @@ $(function() {
 				if (state) {
 					// Online!
 					this.gaugeFrameStatus("Downloading and configuring scientific software");				
-					// Forward analytics
-					analytics.fireEvent("vm.booted")
+					// Fire 'vm.booted' event only once after a start
+					if (parseInt(analytics.getPermanent("can_vmbooted")) == 1) {
+						analytics.fireEvent("vm.booted");
+						analytics.setPermanent("can_vmbooted", 0);
+					}
 					// Enable peek button
 					this.descFrameBtnSims.removeClass("disabled");
 					this.descFrameBtnSims.attr("href", api);
