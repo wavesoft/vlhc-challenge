@@ -111,7 +111,7 @@
 					<div class="well">
 
 						<div class="desc-install">
-							<h1>Welcome to the CERN 60 Public Computing Challenge</h1>
+							<h1>Welcome to the CERN Public Computing Challenge</h1>
 						</div>
 
 						<div class="desc-intro">
@@ -134,7 +134,7 @@
 						<div class="desc-recovery">
 							<h1>An error occured</h1>
 							<p>
-								It looks that something went wrong while trying to prepare your computer for the <em>CERN 60 Public Computing Challenge</em>.
+								It looks that something went wrong while trying to prepare your computer for the <em>CERN Public Computing Challenge</em>.
 							</p>
 							<p>
 								Try the following solutions:
@@ -218,7 +218,7 @@
 						<img src="style/img/logo/ccc.png" height="64" alt="Citizen Cyberscience Center" />
 					</p>
 					<p>
-						The <em>CERN 60 Public Computing Challenge</em> is a project developed by <a target="_blank" href="http://cern.ch">CERN</a>with the support of the EC project <a target="_blank" href="http://citizencyberlab.eu/">Citizen Cyberlab</a>, and the Citizen <a target="_blank" href="http://www.citizencyberscience.net">Cyberscience Centre</a>.
+						The <em>CERN Public Computing Challenge</em> is a project developed by <a target="_blank" href="http://cern.ch">CERN</a>with the support of the EC project <a target="_blank" href="http://citizencyberlab.eu/">Citizen Cyberlab</a>, and the Citizen <a target="_blank" href="http://www.citizencyberscience.net">Cyberscience Centre</a>.
 					</p>
 					<p>
 						Information about resources used in this page:
