@@ -219,6 +219,7 @@ body.no-top-scroll .navbar .nav a:hover {
 }
 #challenge div.frame-status div.panel {
   position: relative;
+  margin-bottom: 10px;
 }
 #challenge div.frame-status div.panel div.panel-alert,
 #challenge div.frame-status div.panel div.panel-warn {
@@ -304,7 +305,7 @@ body.no-top-scroll .navbar .nav a:hover {
   transform: rotate(25deg) translate(-75%, -25%);
 }
 #challenge div.frame-status div.panel div.panel-body {
-  height: 200px;
+  height: 190px;
   overflow: hidden;
 }
 #challenge div.frame-status div.panel div.panel-body div.widgets {
@@ -325,7 +326,7 @@ body.no-top-scroll .navbar .nav a:hover {
   overflow: hidden;
 }
 #challenge div.frame-status div.panel div.panel-body div.widgets div.row .ui-dial {
-  height: 94px;
+  height: 80px;
   margin: 0 auto;
 }
 #challenge div.frame-status div.panel div.panel-body div.widgets div.row .ui-dial .rundial-value {

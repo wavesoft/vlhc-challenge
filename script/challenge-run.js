@@ -215,6 +215,7 @@ $(function() {
 
 			// The number of running instances
 			this.instances = [];
+			this.instanceErrors = { };
 			this.lastMachineVMID = null;
 			this.machineVMID = null;
 			this.activeDescTab = null;
@@ -253,6 +254,7 @@ $(function() {
 				this.descFrameSetActive( this.FRAME_WAITJOB );
 				this.descFrameResetTabs();
 				this.instances = [];
+				this.instanceErrors = {};
 				// Update AVM
 				if (this.avm) {
 					this.avm.statusFlags.agent = CVM.FLAG_READY;
@@ -285,6 +287,8 @@ $(function() {
 				// Update instance record
 				instance['tab'] = this.descFrameCreateTab( instance );
 				this.instances.push(instance);
+				// Reset errors
+				this.instanceErrors[ instance.uuid ] = 0;
 				// Check for what to show
 				if (this.instances.length == 1) {
 					this.descFrameSetActive( this.FRAME_LIVE );
@@ -297,6 +301,8 @@ $(function() {
 				}
 			}).bind(this));
 			$(this.dumbq).on('offline_instance', (function(e, instance) {
+				// Delete errors
+				delete this.instanceErrors[ instance.uuid ];
 				// Remove instance record
 				this.descFrameRemoveTab( instance['tab'] );
 				for (var i=0; i<this.instances.length; i++) {
@@ -319,6 +325,41 @@ $(function() {
 				}
 			}).bind(this));
 			$(this.dumbq).on('metrics_instance', (function(e, metrics, instance ) {
+				// Trace errors
+				if (metrics['error_counter'] !== undefined) {
+
+					// Get the timestamp of the last known error
+					var vmerr_ts = analytics.getPermanent("vmerr_ts", 0);
+
+					// Check if we have new errors
+					if (metrics['error_counter'] > this.instanceErrors[instance.uuid]) {
+
+						// Fire new error events
+						for (var i=this.instanceErrors[instance.uuid]; i<metrics['error_counter']; i++) {
+							var error = metrics['errors'][i];
+
+							// Ignore old errors and update error timestamp tracker
+							if (error[0] <= vmerr_ts) continue;
+							if (error[0] > vmerr_ts) vmerr_ts = error[0];
+
+							// Fire error
+							console.error("VM "+instance.uuid+" Error: "+error[1]);
+							analytics.fireEvent("vm.error", {
+								'ts': error[0],
+								'message': error[1],
+								'code': error[2],
+								'level': error[3]
+							});
+						}
+
+						// Set error counter
+						this.instanceErrors[instance.uuid] = metrics['error_counter'];
+					}
+
+					// Update the timestamp of the last known error
+					analytics.setPermanent("vmerr_ts", vmerr_ts);
+
+				}
 				// Update instance metrics
 				instance['metrics'] = metrics;
 				// Update tab
@@ -927,8 +968,8 @@ $(function() {
 			var onlyCap = true;
 			$(inputRAM).slider({
 				'min'   : 128,
-				'max'	: 2048,
-				'step'	: 64,
+				'max'	: 4096,
+				'step'	: 128,
 				'value'	: avmInstance.config.memory,
 				'change': function( ev, ui ) {
 					avmInstance.config.memory = parseInt(ui.value);
@@ -1530,7 +1571,7 @@ $(function() {
 
 	// Resize description frame well in order to fit height
 	var resizeDesc = function() {
-		var h = $(window).height() - 370;
+		var h = $(window).height() - 350;
 		if (h<100) h=100;
 		$("#description-frame .well").css({
 			'height': h

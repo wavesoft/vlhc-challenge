@@ -99,9 +99,21 @@ __NOTE:__ Due to the nature of the underlaying implementation this event might b
 }
 ```
 
+## 13. `vm.error`
+This event is fired when an error occurs in the application hosted inside the VM. Error details are available in the object
+```javascript
+{
+    'errts': 0,             // Error timestamp in unix time seconds
+    'error': "...",         // The error message
+    'code': "...",          // The error code
+    'level': 2,             // The error level (0=Debug ~ 4=Critical)
+    }
+```
+
+
 # User Actions
 
-## 13. `actions.extern`
+## 14. `actions.extern`
 User clicked on an external link.
 ```javascript
 {
@@ -146,42 +158,42 @@ Link `id` is one of the following:
     </tr>
 </table>
 
-## 14. `actions.open_rdp`
+## 15. `actions.open_rdp`
 The user clicked on the 'eye' button, that opens the VM console window.
 ```javascript
 {
 }
 ```
 
-## 15. `actions.open_web`
+## 16. `actions.open_web`
 The user clicked on the 'pop-out' button, that opens a new tab with the website of the application that runs inside the VM.
 ```javascript
 {
 }
 ```
 
-## 16. `actions.remove`
+## 17. `actions.remove`
 The user clicked on the 'trash' button, that removes the VM from his/her computer.
 ```javascript
 {
 }
 ```
 
-## 17. `actions.start`
+## 18. `actions.start`
 The user clicked on the 'start' button, that starts the Virtual Machine.
 ```javascript
 {
 }
 ```
 
-## 18. `actions.stop`
+## 19. `actions.stop`
 The user clicked on the 'stop' button, that stops and saves the state of the Virtual Machine.
 ```javascript
 {
 }
 ```
 
-## 19. `actions.apply`
+## 20. `actions.apply`
 The user clicked on the 'apply' button, that applies the specified configuration to the Virtual Machine (memory, number of CPUs and execution cap).
 
 __NOTE:__ This action will force the VM to reboot, so expect the vm.* events to be fired after this.
@@ -193,7 +205,7 @@ __NOTE:__ This action will force the VM to reboot, so expect the vm.* events to 
 }
 ```
 
-## 20. `actions.cap`
+## 21. `actions.cap`
 The user changed only the execution cap, that can be applied without rebooting the Virtual Machine. 
 ```javascript
 {
@@ -201,7 +213,7 @@ The user changed only the execution cap, that can be applied without rebooting t
 }
 ```
 
-## 21. `actions.login`
+## 22. `actions.login`
 The user has logged in with his/her social profile. This event is also fired when the social profile is restored from the configuration saved in the VM instance.
 ```javascript
 {
@@ -209,14 +221,14 @@ The user has logged in with his/her social profile. This event is also fired whe
 }
 ```
 
-## 22. `actions.logout`
+## 23. `actions.logout`
 The user has logged out with his/her account.
 ```javascript
 {
 }
 ```
 
-## 23. `actions.cputabchanged`
+## 24. `actions.cputabchanged`
 The user switched into a different CPU tab.
 ```javascript
 {
@@ -227,7 +239,7 @@ The user switched into a different CPU tab.
 
 # Goals Tracking
 
-## 24. `goals.cputime`
+## 25. `goals.cputime`
 This event is fired every time the user has contributed one more hour of computing time.
 ```javascript
 {
@@ -235,7 +247,7 @@ This event is fired every time the user has contributed one more hour of computi
 }
 ```
 
-## 25. `goals.jobs`
+## 26. `goals.jobs`
 This event is fired every time the user has contributed 10 more jobs. This event doesn't take in account the exit code of the job. This means that this metric includes both failed and successful jobs.
 ```javascript
 {
@@ -243,7 +255,7 @@ This event is fired every time the user has contributed 10 more jobs. This event
 }
 ```
 
-## 26. `goals.start`
+## 27. `goals.start`
 This event is fired every time the user click 'start' on the user interface. 
 ```javascript
 {
@@ -253,7 +265,7 @@ This event is fired every time the user click 'start' on the user interface.
 
 # Analytics Helpers
 
-## 27. `link.trackids`
+## 28. `link.trackids`
 This event is fired when two tracking IDs are realized to be part of the same tracking session.
 ```javascript
 {
