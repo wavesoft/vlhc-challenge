@@ -345,8 +345,8 @@ $(function() {
 							// Fire error
 							console.error("VM "+instance.uuid+" Error: "+error[1]);
 							analytics.fireEvent("vm.error", {
-								'ts': error[0],
-								'message': error[1],
+								'err_ts': error[0],
+								'error': error[1],
 								'code': error[2],
 								'level': error[3]
 							});

@@ -103,7 +103,7 @@ __NOTE:__ Due to the nature of the underlaying implementation this event might b
 This event is fired when an error occurs in the application hosted inside the VM. Error details are available in the object
 ```javascript
 {
-    'errts': 0,             // Error timestamp in unix time seconds
+    'err_ts': 0,            // Error timestamp in unix time seconds
     'error': "...",         // The error message
     'code': "...",          // The error code
     'level': 2,             // The error level (0=Debug ~ 4=Critical)
