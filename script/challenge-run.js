@@ -1587,7 +1587,7 @@ $(function() {
 	var lastHash = "", setupWidgets = function(hash) {
 		if (lastHash != hash) {
 			var footer = $(".social-footer").empty(),
-				base_url = "http://test4theory.cern.ch/vlhc",
+				base_url = "http://test4theory.cern.ch/challenge/",
 				hash_suffix = (hash ? "?"+hash : "" ),
 				service = [ 'sharethis', 'googleplus', 'facebook', 'twitter', 'email' ],
 				meta_title = $("meta[property='og:headline']").attr("content"),
