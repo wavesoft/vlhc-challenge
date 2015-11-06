@@ -89,6 +89,10 @@
 								  </div>
 								</div>
 							</div>
+
+							<div class="dynamic-content" id="global-dynamic-content">
+							</div>
+
 						</div>
 
 						<div class="panel-alert">
@@ -157,19 +161,18 @@
 							<p>
 								Your virtual accelerator is stopped... when your science fever is back, click <em>Start</em> to start again!
 							</p>
-							<div class="dynamic-content">
-							</div>
 						</div>
 
 						<div class="desc-live">
 							<ul class="nav nav-tabs" role="tablist">
+								<li role="presentation">
+									<a href="#t-status-tab">My Contribution</a>
+								</li>
 							</ul>
 							<div class="tab-content">
-							</div>
-							<div class="dynamic-content">
-							</div>
-							<div class="status-flag">
-								<span class="label label-default">Unknown Status</span>
+								<div role="tabpanel" class="tab-pane" id="t-status-tab">
+									<div id="creditpiggy-embed"></div>
+								</div>
 							</div>
 						</div>
 
@@ -244,11 +247,9 @@
 					<h4 class="modal-title">BOINC Profile</h4>
 				  </div>
 				  <div class="modal-body">
-
 		  			<p>
 		  				If you are coming from Test4Theory and you want to receive <strong>in addition MCPlots stats</strong> for your contribution, please fill-in the following information from your <a href="http://lhcathome2.cern.ch/vLHCathome/login_form.php?next_url=home.php" target="_blank">Test4Theory BOINC</a> profile:
 		  			</p>
-
 		  			<form>
 	  				  <div class="form-group">
 					    <label for="exampleInputEmail1">BOINC User ID:</label>
@@ -269,9 +270,6 @@
 			</div><!-- /.modal -->
 
 		</div>
-
-		<!-- CERN Experiment -->
-		<div class="experiment"></div>
 
 		<!-- Libraries -->
 		<script src="ext/js/jquery-1.11.0.min.js"></script>

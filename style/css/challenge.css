@@ -64,6 +64,13 @@ body .experiment {
   right: 0;
   top: 0;
 }
+div.desc-intro .dynamic-content {
+  height: 100%;
+}
+.back-target {
+  background: url(../img/back-target.png) no-repeat center bottom;
+  min-height: 100%;
+}
 .btn.btn-ghost {
   background: none;
   border: solid 1px #fff;
@@ -257,9 +264,6 @@ body.no-top-scroll .navbar .nav a:hover {
   position: relative;
   text-align: right;
 }
-#challenge div.frame-status div.panel div.panel-heading div.account-frame {
-  padding-right: 32px;
-}
 #challenge div.frame-status div.panel div.panel-heading span#gauge-frame-title {
   line-height: 30px;
   height: 30px;
@@ -305,8 +309,9 @@ body.no-top-scroll .navbar .nav a:hover {
   transform: rotate(25deg) translate(-75%, -25%);
 }
 #challenge div.frame-status div.panel div.panel-body {
-  height: 190px;
+  height: 155px;
   overflow: hidden;
+  padding: 5px 15px;
 }
 #challenge div.frame-status div.panel div.panel-body div.widgets {
   display: block;
@@ -324,6 +329,7 @@ body.no-top-scroll .navbar .nav a:hover {
   margin: 5px 0 10px;
   height: 42px;
   overflow: hidden;
+  display: none;
 }
 #challenge div.frame-status div.panel div.panel-body div.widgets div.row .ui-dial {
   height: 80px;
@@ -332,6 +338,18 @@ body.no-top-scroll .navbar .nav a:hover {
 #challenge div.frame-status div.panel div.panel-body div.widgets div.row .ui-dial .rundial-value {
   line-height: 47px;
   font-size: 25px;
+}
+#challenge div.frame-status div.panel div.panel-body div.dynamic-content {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+}
+#challenge div.frame-status div.panel div.panel-body div.dynamic-content img {
+  width: 32px;
+  height: 32px;
 }
 #challenge div.frame-status.progress-active div.panel div.panel-heading div.back-progress {
   visibility: visible;
@@ -413,13 +431,16 @@ body.no-top-scroll .navbar .nav a:hover {
   position: absolute;
   left: 0;
   top: 32px;
-  bottom: 40px;
+  bottom: 0;
   right: 0;
 }
 #challenge div.frame-description .well div.desc-live div.tab-content.tab-pane-full {
   top: 0;
 }
 #challenge div.frame-description .well div.desc-live div.tab-content div.tab-pane {
+  height: 100%;
+}
+#challenge div.frame-description .well div.desc-live div.tab-content div.tab-pane > * {
   height: 100%;
 }
 #challenge div.frame-description .well div.desc-live div.tab-content div.tab-pane iframe {
@@ -485,6 +506,14 @@ body.no-top-scroll .navbar .nav a:hover {
 #challenge div.social-footer .stButton {
   margin-left: 0px;
   margin-right: 1px;
+}
+@media (min-height: 600px) {
+  #gauge-frame div.panel-body {
+    height: 205px !important;
+  }
+  #gauge-frame div.panel-body div.widgets div.details {
+    display: block !important;
+  }
 }
 #home {
   position: relative;

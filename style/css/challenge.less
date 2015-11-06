@@ -74,6 +74,14 @@ body {
 	}
 }
 
+div.desc-intro .dynamic-content {
+	height: 100%;
+}
+.back-target {
+	background: url(../img/back-target.png) no-repeat center bottom;
+	min-height: 100%;
+}
+
 /////////////////////////////////////////////
 // Ghost button
 /////////////////////////////////////////////
@@ -309,10 +317,6 @@ body.no-top-scroll {
 				position: relative;
 				text-align: right;
 
-				div.account-frame {
-					padding-right: 32px;
-				}
-
 				span#gauge-frame-title {
 					line-height: 30px;
 					height: 30px;
@@ -359,8 +363,9 @@ body.no-top-scroll {
 			}
 
 			div.panel-body {
-				height: 190px;
+				height: 155px;
 				overflow: hidden;
+				padding: 5px 15px;
 
 				div.widgets {
 					display: block;
@@ -379,6 +384,7 @@ body.no-top-scroll {
 							margin: 5px 0 10px;
 							height: 42px;
 							overflow: hidden;
+							display: none;
 						}
 
 						.ui-dial {
@@ -393,6 +399,18 @@ body.no-top-scroll {
 
 					}
 
+				}
+
+				div.dynamic-content {
+					position: absolute;
+					left: 0; bottom: 0;
+					width: 100%;
+					text-align: center;
+					font-size: 14px;
+					img {
+						width: 32px;
+						height: 32px;
+					}
 				}
 
 			}
@@ -504,7 +522,7 @@ body.no-top-scroll {
 					position: absolute;
 					left: 0;
 					top: 32px;
-					bottom: 40px;
+					bottom: 0;
 					right: 0;
 
 					&.tab-pane-full {
@@ -513,6 +531,9 @@ body.no-top-scroll {
 
 					div.tab-pane {
 						height: 100%;
+						> * {
+							height: 100%;
+						}
 						iframe {
 							width: 100%;
 							height: 100%;
@@ -589,6 +610,18 @@ body.no-top-scroll {
 	    }
 	}
 
+}
+
+@media(min-height: 600px) {
+	#gauge-frame {
+		div.panel-body {
+			height: 205px !important;
+
+			div.widgets div.details {
+				display: block !important;
+			}
+		}
+	}
 }
 
 /////////////////////////////////////////////

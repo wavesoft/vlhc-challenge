@@ -191,6 +191,7 @@ $(function() {
 			this.footerBtnTrash = $("#btn-remove");
 
 			// Start frame shuffler
+			setTimeout(this.descFrameSetShuffle.bind(this), 500);
 			setInterval(this.descFrameSetShuffle.bind(this), 30000);
 
 			// Start account information probing
@@ -530,7 +531,6 @@ $(function() {
 			// Get live-content tab elements
 			this.descLiveTabs = this.descriptionFrames[ this.FRAME_LIVE ].find(".nav-tabs");
 			this.descLiveContent = this.descriptionFrames[ this.FRAME_LIVE ].find(".tab-content");
-			this.descLiveStatus = this.descriptionFrames[ this.FRAME_LIVE ].find('.status-flag > span');
 
 		}
 
@@ -538,8 +538,8 @@ $(function() {
 		 * Reset all tabs in the live desc frame
 		 */
 		ChallengeInterface.prototype.descFrameResetTabs = function() {
-			this.descLiveTabs.empty();
-			this.descLiveContent.empty();
+			this.descLiveTabs.find(".disposable").remove();
+			this.descLiveContent.find(".disposable").remove();
 			this.activeDescTab = null;
 		}
 
@@ -548,45 +548,45 @@ $(function() {
 		 */
 		ChallengeInterface.prototype.descFrameUpdateStatus = function( inst ) {
 
-			// Keyword-color mapping
-			var kw = {
-				'label label-success' : [ 'ok','live','working','active','run','executing','ready','success' ],
-				'label label-warning' : [ 'warn','warning','unexpected','terminated','exception' ],
-				'label label-danger'  : [ 'error','problem','danger','fault' ],
-				'label label-info'    : [ 'wait','pend','schedule','paused','sleep','stale' ],
-			};
+			// // Keyword-color mapping
+			// var kw = {
+			// 	'label label-success' : [ 'ok','live','working','active','run','executing','ready','success' ],
+			// 	'label label-warning' : [ 'warn','warning','unexpected','terminated','exception' ],
+			// 	'label label-danger'  : [ 'error','problem','danger','fault' ],
+			// 	'label label-info'    : [ 'wait','pend','schedule','paused','sleep','stale' ],
+			// };
 
-			// If we don't have an instance, hide it
-			if (!inst) {
-				this.descLiveStatus.hide();
-				return;
-			}
+			// // If we don't have an instance, hide it
+			// if (!inst) {
+			// 	this.descLiveStatus.hide();
+			// 	return;
+			// }
 
-			// Look for status
-			var status = 'running';
-			if (inst['metrics'] && inst['metrics']['status'])
-				status = inst['metrics']['status'];
+			// // Look for status
+			// var status = 'running';
+			// if (inst['metrics'] && inst['metrics']['status'])
+			// 	status = inst['metrics']['status'];
 
-			// Show and update
-			this.descLiveStatus.show().text(status.charAt(0).toUpperCase() + status.slice(1));
+			// // Show and update
+			// this.descLiveStatus.show().text(status.charAt(0).toUpperCase() + status.slice(1));
 
-			// Pick color
-			var color = 'label label-primary',
-				lstatus = status.toLowerCase();
+			// // Pick color
+			// var color = 'label label-primary',
+			// 	lstatus = status.toLowerCase();
 
-			colorpick:
-			for (var k in kw) {
-				var words = kw[k];
-				for (var i=0; i<words.length; i++) {
-					if (lstatus.indexOf(words[i]) >= 0) {
-						color = k;
-						break colorpick;
-					}
-				}
-			}
+			// colorpick:
+			// for (var k in kw) {
+			// 	var words = kw[k];
+			// 	for (var i=0; i<words.length; i++) {
+			// 		if (lstatus.indexOf(words[i]) >= 0) {
+			// 			color = k;
+			// 			break colorpick;
+			// 		}
+			// 	}
+			// }
 
-			// Set color
-			this.descLiveStatus.attr('class', color);
+			// // Set color
+			// this.descLiveStatus.attr('class', color);
 
 		}
 
@@ -598,9 +598,9 @@ $(function() {
 				index = (this.instances.length + 1),
 				title = desc['metrics']['title'] || desc.project,
 				url = this.avm.wa_session.apiURL + desc.wwwroot,
-				tab = $('<li role="presentation"><a href="#'+tid+'" aria-controls="home" role="tab" data-toggle="tab"> CPU-'+index+' <em>('+title+')</em></a></li>')
+				tab = $('<li role="presentation" class="disposable"><a href="#'+tid+'" aria-controls="'+tid+'" role="tab" data-toggle="tab"> CPU-'+index+' <em>('+title+')</em></a></li>')
 						.appendTo(this.descLiveTabs),
-				content = $('<div role="tabpanel" class="tab-pane" id="'+tid+'"></div>')
+				content = $('<div role="tabpanel" class="tab-pane disposable" id="'+tid+'"></div>')
 						.appendTo(this.descLiveContent),
 				iframe = $('<iframe src="'+url+'" frameborder="0"></iframe>')
 						.appendTo(content);
@@ -621,14 +621,14 @@ $(function() {
 				if (analytics) analytics.fireEvent( "actions.cputabchanged", { 'index': index, 'uuid': this.activeDescTab } );
 			}).bind(this));
 
-			// If we have only one instance, make full screen
-			if (index == 1) {
-				this.descLiveTabs.hide();
-				this.descLiveContent.addClass("tab-pane-full");
-			} else {
-				this.descLiveTabs.show();
-				this.descLiveContent.removeClass("tab-pane-full");
-			}
+			// // If we have only one instance, make full screen
+			// if (index == 1) {
+			// 	this.descLiveTabs.hide();
+			// 	this.descLiveContent.addClass("tab-pane-full");
+			// } else {
+			// 	this.descLiveTabs.show();
+			// 	this.descLiveContent.removeClass("tab-pane-full");
+			// }
 
 			// Keep instances in desc
 			desc.iframe = iframe;
@@ -737,10 +737,8 @@ $(function() {
 		/**
 		 * Automatic shuffling of the description frame system messages
 		 */
-		ChallengeInterface.prototype.descFrameSetShuffle = function( index ) {
-			if (this.descriptionActiveFrame == this.FRAME_LIVE) {
-				this.systemMessages.fetchAndRender( "live", this.descriptionDynamicDocElm );
-			}
+		ChallengeInterface.prototype.descFrameSetShuffle = function() {
+			this.systemMessages.fetchAndRender( "live", $("#global-dynamic-content") );
 		}
 
 		///////////////////////////////////////////////
@@ -1571,7 +1569,7 @@ $(function() {
 
 	// Resize description frame well in order to fit height
 	var resizeDesc = function() {
-		var h = $(window).height() - 350;
+		var h = $(window).height() - $("#gauge-frame").outerHeight() - 90;
 		if (h<100) h=100;
 		$("#description-frame .well").css({
 			'height': h
@@ -1581,7 +1579,7 @@ $(function() {
 	resizeDesc();
 
 	// Initialize Creditpiggy
-	CreditPiggy.configure('efc98cfc58eb4526b2babbbc871bec11');
+	CreditPiggy.configure('efc98cfc58eb4526b2babbbc871bec11', '//127.0.0.1:8000');
 
 	// Setup shareThis widgets
 	var lastHash = "", setupWidgets = function(hash) {
@@ -1595,17 +1593,20 @@ $(function() {
 				meta_image = $("meta[property='og:image']").attr("content");
 
 			for (var i=0; i<service.length; i++) {
-				stWidget.addEntry({
-					"service": 	service[i],
+				try {
+					stWidget.addEntry({
+						"service": 	service[i],
 
-					"element": 	$('<span class="stButton"></span>').appendTo(footer)[0],
-					"url": 		base_url + hash_suffix,
-					"type": 	"large",
+						"element": 	$('<span class="stButton"></span>').appendTo(footer)[0],
+						"url": 		base_url + hash_suffix,
+						"type": 	"large",
 
-					"title": 	meta_title,
-					"summary": 	meta_desc,
-					"image": 	meta_image
-				});
+						"title": 	meta_title,
+						"summary": 	meta_desc,
+						"image": 	meta_image
+					});
+				} catch (e) {
+				}
 			}
 			
 		}
@@ -1619,6 +1620,9 @@ $(function() {
 		setupWidgets(hash);
 	});
 	setupWidgets(null);
+
+	// Create a creditpiggy embed with the user status
+	CreditPiggy.createEmbed("mystatus", $("#creditpiggy-embed"));
 
 	// Initialize default analytics tracking ID (to anonymous)
 	if (analytics) analytics.setGlobal('userid', 'a:'+analytics.trackingID);
@@ -1651,6 +1655,12 @@ $(function() {
 
 	// Tooltips use body container
 	$('[data-toggle=tooltip]').tooltip({container: 'body'});
+
+	// Activate status tab
+	$(".desc-live > ul > li > a").click(function(e) {
+		e.preventDefault()
+		$(this).tab('show')
+	});
 
 
 });
