@@ -1579,7 +1579,7 @@ $(function() {
 	resizeDesc();
 
 	// Initialize Creditpiggy
-	CreditPiggy.configure('efc98cfc58eb4526b2babbbc871bec11', '//127.0.0.1:8000');
+	CreditPiggy.configure('efc98cfc58eb4526b2babbbc871bec11');
 
 	// Setup shareThis widgets
 	var lastHash = "", setupWidgets = function(hash) {
