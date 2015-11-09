@@ -166,7 +166,7 @@
 						<div class="desc-live">
 							<ul class="nav nav-tabs" role="tablist">
 								<li role="presentation">
-									<a href="#t-status-tab">My Contribution</a>
+									<a href="#t-status-tab">My Achievements</a>
 								</li>
 							</ul>
 							<div class="tab-content">

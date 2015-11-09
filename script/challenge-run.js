@@ -1,5 +1,7 @@
 $(function() {
 
+	var DEFAULT_TITLE = '<span style="font-size: 1.4em; color: #999">Challenge Dashboard</span>';
+
 	/**
 	 * Add comma thousand separator
 	 */
@@ -293,7 +295,7 @@ $(function() {
 				// Check for what to show
 				if (this.instances.length == 1) {
 					this.descFrameSetActive( this.FRAME_LIVE );
-					this.gaugeFrameStatus("You are now contributing");
+					this.gaugeFrameStatus(DEFAULT_TITLE); //"You are now contributing");
 				}
 				// Update AVM
 				if (this.avm) {
@@ -473,7 +475,7 @@ $(function() {
 		 * Update gauge frame status label
 		 */
 		ChallengeInterface.prototype.gaugeFrameStatus = function(text) {
-			this.gagueFrameTitle.text( text );
+			this.gagueFrameTitle.html( text );
 		}
 
 		/**
@@ -1510,7 +1512,7 @@ $(function() {
 						this.descFrameSetActive( this.FRAME_IDLE );
 
 					// Any shutdown command is not any more active
-					this.gaugeFrameStatus("The Virtual Machine is ready");
+					this.gaugeFrameStatus(DEFAULT_TITLE); //"The Virtual Machine is ready");
 					this.shutdownCommandActive = false;
 
 				} else {
