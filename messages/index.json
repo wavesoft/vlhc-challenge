@@ -26,8 +26,10 @@
 		"random": [
 			"live-antimatter.html",
 			"live-clicker.html",
-			"live-recognize.html",
-			"live-higgs.html"
+			"live-vas.html",
+			"live-higgs.html",
+			"live-quarks.html",
+			"live-computing.html"
 		]
 	},
 	"live": {
@@ -36,8 +38,10 @@
 		"random": [
 			"live-antimatter.html",
 			"live-clicker.html",
-			"live-recognize.html",
-			"live-higgs.html"
+			"live-vas.html",
+			"live-higgs.html",
+			"live-quarks.html",
+			"live-computing.html"
 		]
 	}
 }
