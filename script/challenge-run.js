@@ -1213,7 +1213,7 @@ $(function() {
 					// Update ranking gauge
 					if (profile.rank !== undefined) {
 						// Update ranking dial
-						this.gaugeFrameGauges.ranking.rundial("value", parseInt(profile.rank) + 1);
+						this.gaugeFrameGauges.ranking.rundial("value", parseInt(profile.rank));
 					}
 
 				}
