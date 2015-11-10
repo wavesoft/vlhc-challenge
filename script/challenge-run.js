@@ -271,7 +271,7 @@ $(function() {
 			}).bind(this));
 			$(this.dumbq).on('offline', (function(e, machine) {
 				// Mark offline
-				this.gaugeFrameStatus("Disconnected from the Virtual Machine");
+				this.gaugeFrameStatus(DEFAULT_TITLE); // "Disconnected from the Virtual Machine");
 				this.descFrameSetActive( this.FRAME_IDLE );
 				// Update AVM
 				if (this.avm) {
